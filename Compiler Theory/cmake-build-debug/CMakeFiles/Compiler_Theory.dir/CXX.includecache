@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/User/Documents/Compiler Theory/HeaderFile.h
+iostream
+-
+fstream
+-
+sstream
+-
+string
+-
+memory
+-
+map
+-
+stack
+-
+
+C:/Users/User/Documents/Compiler Theory/Lexer.cpp
+HeaderFile.h
+C:/Users/User/Documents/Compiler Theory/HeaderFile.h
+
