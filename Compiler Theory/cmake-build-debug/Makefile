@@ -176,6 +176,54 @@ MainClass.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/MainClass.cpp.s
 .PHONY : MainClass.cpp.s
 
+Parser.obj: Parser.cpp.obj
+.PHONY : Parser.obj
+
+# target to build an object file
+Parser.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj
+.PHONY : Parser.cpp.obj
+
+Parser.i: Parser.cpp.i
+.PHONY : Parser.i
+
+# target to preprocess a source file
+Parser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Parser.cpp.i
+.PHONY : Parser.cpp.i
+
+Parser.s: Parser.cpp.s
+.PHONY : Parser.s
+
+# target to generate assembly for a file
+Parser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Parser.cpp.s
+.PHONY : Parser.cpp.s
+
+Token.obj: Token.cpp.obj
+.PHONY : Token.obj
+
+# target to build an object file
+Token.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Token.cpp.obj
+.PHONY : Token.cpp.obj
+
+Token.i: Token.cpp.i
+.PHONY : Token.i
+
+# target to preprocess a source file
+Token.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Token.cpp.i
+.PHONY : Token.cpp.i
+
+Token.s: Token.cpp.s
+.PHONY : Token.s
+
+# target to generate assembly for a file
+Token.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Token.cpp.s
+.PHONY : Token.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -191,6 +239,12 @@ help:
 	@echo ... MainClass.obj
 	@echo ... MainClass.i
 	@echo ... MainClass.s
+	@echo ... Parser.obj
+	@echo ... Parser.i
+	@echo ... Parser.s
+	@echo ... Token.obj
+	@echo ... Token.i
+	@echo ... Token.s
 .PHONY : help
 
 

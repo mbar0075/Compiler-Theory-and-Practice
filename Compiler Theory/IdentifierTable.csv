@@ -1,0 +1,16 @@
+float,<Type>
+int,<Type>
+bool,<Type>
+colour,<Type>
+true,<BooleanLiteral>
+false,<BooleanLiteral>
+and,<MultiplicativeOp>
+or,<AdditiveOp>
+not,<not>
+return,<return>
+if,<if>
+else,<else>
+for,<for>
+let,<let>
+while,<while>
+fun,<fun>

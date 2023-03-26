@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/User/Documents/Compiler Theory/Lexer.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/MainClass.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj"
+  "C:/Users/User/Documents/Compiler Theory/Parser.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj"
+  "C:/Users/User/Documents/Compiler Theory/Token.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Token.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

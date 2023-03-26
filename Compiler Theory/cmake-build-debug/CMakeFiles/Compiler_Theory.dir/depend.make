@@ -7,3 +7,8 @@ CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj: \
 CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj: \
  ../HeaderFile.h \
  ../MainClass.cpp
+CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj: \
+ ../Parser.cpp
+CMakeFiles/Compiler_Theory.dir/Token.cpp.obj: \
+ ../HeaderFile.h \
+ ../Token.cpp
