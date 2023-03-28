@@ -8,6 +8,7 @@ CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj: \
  ../HeaderFile.h \
  ../MainClass.cpp
 CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj: \
+ ../HeaderFile.h \
  ../Parser.cpp
 CMakeFiles/Compiler_Theory.dir/Token.cpp.obj: \
  ../HeaderFile.h \
