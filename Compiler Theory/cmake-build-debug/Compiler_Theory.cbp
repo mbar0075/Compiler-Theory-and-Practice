@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/ASTNode.cpp">
+			<Option target="Compiler_Theory"/>
+		</Unit>
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Lexer.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>

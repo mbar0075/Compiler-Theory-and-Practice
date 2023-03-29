@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj"
   "CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj"
   "CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj"
   "CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj"

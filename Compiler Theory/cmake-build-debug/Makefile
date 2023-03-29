@@ -128,6 +128,30 @@ Compiler_Theory/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/build
 .PHONY : Compiler_Theory/fast
 
+ASTNode.obj: ASTNode.cpp.obj
+.PHONY : ASTNode.obj
+
+# target to build an object file
+ASTNode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj
+.PHONY : ASTNode.cpp.obj
+
+ASTNode.i: ASTNode.cpp.i
+.PHONY : ASTNode.i
+
+# target to preprocess a source file
+ASTNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.i
+.PHONY : ASTNode.cpp.i
+
+ASTNode.s: ASTNode.cpp.s
+.PHONY : ASTNode.s
+
+# target to generate assembly for a file
+ASTNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.s
+.PHONY : ASTNode.cpp.s
+
 Lexer.obj: Lexer.cpp.obj
 .PHONY : Lexer.obj
 
@@ -233,6 +257,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Compiler_Theory
+	@echo ... ASTNode.obj
+	@echo ... ASTNode.i
+	@echo ... ASTNode.s
 	@echo ... Lexer.obj
 	@echo ... Lexer.i
 	@echo ... Lexer.s

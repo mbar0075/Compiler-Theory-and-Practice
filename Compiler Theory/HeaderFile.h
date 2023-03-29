@@ -9,6 +9,8 @@
 #include <memory>//unique pointers
 #include <map>//Dictionary/tables
 #include <stack>//stack
+#include <list>//For AST dynamic list
+#include <utility>//For shared ptr
 
 using namespace std;
 
@@ -25,6 +27,25 @@ public:
     ~Token()=default;
 };
 
+class ASTNode{
+private:
+    string ASTType;
+    string nodeName;
+    shared_ptr<ASTNode> parent;
+    list< shared_ptr<ASTNode>> children;
+public:
+    ASTNode(string ASTType,string nodeName,shared_ptr<ASTNode> newparent);
+    string GetASTType();
+    string GetNodeName();
+    shared_ptr<ASTNode> GetNodeParent();
+    list< shared_ptr<ASTNode>> GetChildren();
+    void CreateChild(const shared_ptr<ASTNode>& child);
+    void ShowChildren();
+    void SetNodeParent(shared_ptr<ASTNode> newparent);
+    ASTNode()=default;
+    ~ASTNode();
+};
+
 class Lexer{
 private:
     stack<string> stack;//Stack
@@ -33,8 +54,8 @@ private:
     map<string,string> identifierTable;
     map<string,map<string,string>> transitionTable;
     void ClearStack();
-public:
     void LoadTables();
+public:
     shared_ptr<Token> GetNextToken(fstream &readFilePointer);
     Lexer();
     ~Lexer()=default;
@@ -47,12 +68,17 @@ private:
     map<string,string> specialCase2={{ "__randi", "<__randi>" },{ "__print", "<__print>" },{ "__delay", "<__delay>" },{ "__pixel", "<__pixel>" },{ "__width", "<PadWidth>" }};
     map<string,string> specialCase3={{ "__pixelr", "<__pixelr>" },{ "__height", "<PadHeight>" }};
     unique_ptr<Lexer> lexer= make_unique<Lexer>();
-    void CheckValidToken(const shared_ptr<Token>& token);
+    shared_ptr<Token> currentToken;
+    shared_ptr<Token> lookaheadToken1;
     stack<string> stack;//Stack
-    //map<string,map<string,string>> parseTable;
+    map<string,string> tmpTable;
+    map<string,string> terminals;
+    map<string,map<string,string>> parseTable;
+    //shared_ptr<ASTNode> ASTROOT;
+    void CheckValidToken(const shared_ptr<Token>& token);
+    void LoadTables();
 public:
-    //void LoadTables();
     void LLKParse(fstream &readFilePointer);
-    Parser()=default;
+    Parser();
     ~Parser();
 };
