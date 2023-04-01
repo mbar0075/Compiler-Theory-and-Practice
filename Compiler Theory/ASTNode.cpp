@@ -1,45 +1,101 @@
+#include <utility>
+
 #include "HeaderFile.h"
 
-ASTNode::ASTNode(string ASTType, string nodeName,shared_ptr<ASTNode> newparent) {
-    this->ASTType=move(ASTType);
-    this->nodeName=move(nodeName);
-    this->parent=move(newparent);
+
+ASTProgram::ASTProgram(const vector<shared_ptr<ASTStatement>>& program) {
+    this->program=program;
 }
 
-string ASTNode::GetASTType() {
-    return ASTType;
+ASTProgram::~ASTProgram() {
+    program.clear();
 }
 
-string ASTNode::GetNodeName() {
-    return nodeName;
+ASTIdentifier::ASTIdentifier(string identifier) {
+    this->identifier=move(identifier);
 }
 
-shared_ptr<ASTNode> ASTNode::GetNodeParent() {
-    return parent;
+ASTAssignment::ASTAssignment(const shared_ptr<ASTIdentifier>& identifier, const shared_ptr<ASTExpr>& expression) {
+    this->identifier=identifier;
+    this->expression=expression;
 }
 
-void ASTNode::SetNodeParent(shared_ptr<ASTNode> newparent) {
-    this->parent=move(newparent);
+ASTAssignment::~ASTAssignment() {
+    identifier.reset();
+    expression.reset();
 }
 
-void ASTNode::CreateChild(const shared_ptr<ASTNode>& child) {
-    children.push_back(child);
+ASTIntLiteral::ASTIntLiteral(const string& value) {
+    this->value=stoi(value);
 }
 
-list< shared_ptr<ASTNode>> ASTNode::GetChildren() {
-    return children;
+ASTColourLiteral::ASTColourLiteral(const string &value) {
+    this->value=value;
 }
 
-void ASTNode::ShowChildren() {
-    list<shared_ptr<ASTNode>>:: iterator it;
+ASTFloatLiteral::ASTFloatLiteral(const string &value) {
+    this->value =stof(value);
+}
 
-    cout<<"\nASTType: "<<ASTType<<" Node: "<<nodeName<<" Children:"<<endl;
-    for(it=children.begin();it!=children.end();it++){
-        cout<<"ASTType: "<<(*it)->GetASTType()<<" Node: "<<(*it)->GetNodeName()<<endl;
+ASTBoolLiteral::ASTBoolLiteral(const string &value) {
+    if(value=="true"){
+        this->value=true;
+    }
+    else if(value=="false"){
+        this->value=false;
     }
 }
 
-ASTNode::~ASTNode() {
-    parent.reset();
-    children.clear();
+ASTPadHeight::ASTPadHeight(const string &value) {
+    this->value;
+}
+
+ASTPadRead::ASTPadRead(const string &value) {
+    this->value;
+}
+
+ASTPadWidth::ASTPadWidth(const string &value) {
+    this->value;
+}
+
+ASTFunctionCall::ASTFunctionCall(shared_ptr<ASTIdentifier> identifier, shared_ptr<ASTActualParams> actualParams) {
+    this->identifier=move(identifier);
+    this->actualParams=move(actualParams);
+}
+
+ASTFunctionCall::~ASTFunctionCall() {
+    identifier.reset();
+    actualParams.reset();
+}
+
+ASTActualParams::ASTActualParams(const vector<shared_ptr<ASTExpr>> &expressions) {
+    this->expressions=expressions;
+}
+
+ASTActualParams::~ASTActualParams(){
+    expressions.clear();
+}
+
+ASTExpr::ASTExpr(const vector<shared_ptr<ASTSimpleExpr>> &simpleExpressions) {
+    this->simpleExpressions=simpleExpressions;
+}
+
+ASTExpr::~ASTExpr() {
+    simpleExpressions.clear();
+}
+
+ASTSimpleExpr::ASTSimpleExpr(const vector<shared_ptr<ASTTerm>> &terms) {
+    this->terms=terms;
+}
+
+ASTSimpleExpr::~ASTSimpleExpr(){
+    this->terms.clear();
+}
+
+ASTTerm::ASTTerm(const vector<shared_ptr<ASTFactor>> &factors) {
+    this->factors=factors;
+}
+
+ASTTerm::~ASTTerm(){
+    factors.clear();
 }

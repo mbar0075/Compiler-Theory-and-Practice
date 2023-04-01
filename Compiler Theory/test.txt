@@ -1,1 +1,1 @@
-__print __randi
+x = 5;
