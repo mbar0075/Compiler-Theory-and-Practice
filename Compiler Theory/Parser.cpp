@@ -6,167 +6,483 @@ shared_ptr<ASTProgram> Parser::ParseProgram(fstream &readFilePointer) {
     GetNextToken();
     GetNextToken();
     while (!file.eof()) {
-        cout<<"token: "<<lookaheadToken1->GetTokenAttribute();
         allStatements.push_back(ParseStatement());
+        if(EOFFlag){
+            cout<<"End of File Reached"<<endl;
+            break;
+        }
     }
-
     return shared_ptr<ASTProgram>(make_shared<ASTProgram>(allStatements));
-
 }
 
 shared_ptr<ASTStatement> Parser::ParseStatement() {
-    auto singleStatement = make_shared<ASTStatement>();
+    shared_ptr<ASTStatement> singleStatement;
     bool checkSemiColon=false;
+
     if(lookaheadToken1->GetTokenName()=="<Identifier>"){
         singleStatement = ParseAssignment();
         checkSemiColon= true;
     }
     else if(lookaheadToken1->GetTokenName()=="<{>"){
-//        GetNextToken();
-//        singleStatement = ParseBlock();
+        singleStatement = ParseBlock();
     }
     else if(lookaheadToken1->GetTokenName()=="<let>"){
-//        GetNextToken();
-//        singleStatement = ParseVariableDecl();
-//        checkSemiColon= true;
+        singleStatement = ParseVariableDecl();
+        checkSemiColon= true;
     }
     else if(lookaheadToken1->GetTokenName()=="<__print>"){
-//        GetNextToken();
-//        singleStatement = ParsePrintStatement();
-//        checkSemiColon= true;
+        singleStatement = ParsePrintStatement();
+        checkSemiColon= true;
     }
     else if(lookaheadToken1->GetTokenName()=="<return>"){
-//        GetNextToken();
-//        singleStatement = ParseReturnStatement();
-//        checkSemiColon= true;
+        singleStatement = ParseReturnStatement();
+        checkSemiColon= true;
     }
     else if(lookaheadToken1->GetTokenName()=="<while>"){
-//        GetNextToken();
-//        singleStatement = ParseWhileStatement();
+        singleStatement = ParseWhileStatement();
     }
     else if(lookaheadToken1->GetTokenName()=="<if>"){
-        //GetNextToken();
-        //singleStatement = ParseIfStatement();
+        singleStatement = ParseIfStatement();
     }
     else if(lookaheadToken1->GetTokenName()=="<for>"){
-        //GetNextToken();
-        //singleStatement = ParseForStatement();
+        singleStatement = ParseForStatement();
     }
-    else if(lookaheadToken1->GetTokenName()=="<__pixelr>"){
-        //GetNextToken();
-        //singleStatement = ParsePixel1Statement();
-        //checkSemiColon= true;
-    }
-    else if(lookaheadToken1->GetTokenName()=="<__pixel>"){
-        //GetNextToken();
-        //singleStatement = ParsePixel2Statement();
-        //checkSemiColon= true;
+    else if(lookaheadToken1->GetTokenName()=="<__pixelr>" ||lookaheadToken1->GetTokenName()=="<__pixel>"){
+        singleStatement = ParsePixelStatement();
+        checkSemiColon= true;
     }
     else if(lookaheadToken1->GetTokenName()=="<fun>"){
-        //GetNextToken();
-        //singleStatement = ParseFunStatement();
+        singleStatement = ParseFunctionDecl();
     }
     else if(lookaheadToken1->GetTokenName()=="<__delay>"){
-        //GetNextToken();
-        //singleStatement = ParseDelayStatement();
-        //checkSemiColon= true;
+        singleStatement = ParseDelayStatement();
+        checkSemiColon= true;
     }
     else{
         cerr<<"\nError: Unexpected: "<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
 
-
     if(checkSemiColon){
         if(lookaheadToken1->GetTokenName()!="<;>"){
             cerr<<"\nError: "<<lookaheadToken1->GetTokenAttribute()<<" ; expected "<<endl;
             exit(4);
         }
+        GetNextToken();
     }
-
     return singleStatement;
 }
 
+shared_ptr<ASTBlock> Parser::ParseBlock() {
+    cout<<"\nBlock start"<<endl;
+    vector<shared_ptr<ASTStatement>> statements;
+    if(lookaheadToken1->GetTokenName()!="<{>"){
+        cerr<<"\nError: Expected {, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    while (lookaheadToken1->GetTokenName()!="<}>") {
+        statements.push_back(ParseStatement());
+    }
+    //Check for closing brackets
+    if(lookaheadToken1->GetTokenName()!="<}>"){
+        cerr<<"\nError: Expected }, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+
+    cout<<"\nBlock end"<<endl;
+    return shared_ptr<ASTBlock>(make_shared<ASTBlock>(statements));
+}
+
+shared_ptr<ASTIfStatement> Parser::ParseIfStatement() {
+    shared_ptr<ASTExpr> expression;
+    shared_ptr<ASTBlock> firstBlock;
+    shared_ptr<ASTBlock> secondBlock;
+    if(lookaheadToken1->GetTokenName()=="<if>"&&lookaheadToken2->GetTokenName()=="<(>"){
+        GetNextToken();
+        GetNextToken();
+        expression=ParseExpression();
+        if(lookaheadToken1->GetTokenName()!="<)>"){
+            cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            exit(4);
+        }
+        GetNextToken();
+        firstBlock=ParseBlock();
+
+        if(lookaheadToken1->GetTokenName()=="<else>"){
+            GetNextToken();
+            secondBlock=ParseBlock();
+        }
+        else{
+            secondBlock=nullptr;
+        }
+    }else{
+        cerr<<"\nError: Expected if, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    return shared_ptr<ASTIfStatement>(make_shared<ASTIfStatement>(expression,firstBlock,secondBlock));
+}
+
+shared_ptr<ASTWhileStatement> Parser::ParseWhileStatement() {
+    shared_ptr<ASTExpr> expression;
+    shared_ptr<ASTBlock> block;
+    shared_ptr<ASTBlock> secondBlock;
+    if(lookaheadToken1->GetTokenName()=="<while>"&&lookaheadToken2->GetTokenName()=="<(>"){
+        GetNextToken();
+        GetNextToken();
+        expression=ParseExpression();
+        if(lookaheadToken1->GetTokenName()!="<)>"){
+            cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            exit(4);
+        }
+        GetNextToken();
+        block=ParseBlock();
+    }else{
+        cerr<<"\nError: Expected while, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    return shared_ptr<ASTWhileStatement>(make_shared<ASTWhileStatement>(expression,block));
+}
+
+shared_ptr<ASTFormalParam> Parser::ParseFormalParam() {
+    shared_ptr<ASTIdentifier> identifier;
+    shared_ptr<ASTType> type;
+
+    identifier=ParseIdentifier();
+    GetNextToken();
+    if(lookaheadToken1->GetTokenName()!="<:>"){
+        cerr<<"\nError: Expected :, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    type=ParseType();
+    GetNextToken();
+    return shared_ptr<ASTFormalParam>(make_shared<ASTFormalParam>(identifier,type));
+}
+
+shared_ptr<ASTFormalParams> Parser::ParseFormalParams() {
+    vector<shared_ptr<ASTFormalParam>> formalParams;
+    formalParams.push_back(ParseFormalParam());
+
+    while(lookaheadToken1->GetTokenName()=="<Comma>" ){
+        GetNextToken();
+        formalParams.push_back(ParseFormalParam());
+    }
+
+    return shared_ptr<ASTFormalParams>(make_shared<ASTFormalParams>(formalParams));
+}
+
+shared_ptr<ASTFunctionDecl> Parser::ParseFunctionDecl() {
+    shared_ptr<ASTIdentifier> identifier;
+    shared_ptr<ASTFormalParams> formalParams=nullptr;
+    shared_ptr<ASTType> type;
+    shared_ptr<ASTBlock> block;
+    if(lookaheadToken1->GetTokenName()=="<fun>"){
+        GetNextToken();
+        identifier=ParseIdentifier();
+        GetNextToken();
+        if(lookaheadToken1->GetTokenName()=="<(>"){
+            GetNextToken();
+            if(lookaheadToken1->GetTokenName()!="<)>"){
+                formalParams=ParseFormalParams();
+            }
+            if(lookaheadToken1->GetTokenName()!="<)>"){
+                cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                exit(4);
+            }
+            GetNextToken();
+            if(lookaheadToken1->GetTokenName()!="<->>"){
+                cerr<<"\nError: Expected ->, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                exit(4);
+            }
+            GetNextToken();
+            type=ParseType();
+            GetNextToken();
+            block=ParseBlock();
+        }
+    }else{
+        cerr<<"\nError: Expected fun, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    return shared_ptr<ASTFunctionDecl>(make_shared<ASTFunctionDecl>(identifier, formalParams, type, block));
+}
+
+shared_ptr<ASTForStatement> Parser::ParseForStatement() {
+    shared_ptr<ASTExpr> expression;
+    shared_ptr<ASTAssignment> assignment=nullptr;
+    shared_ptr<ASTVariableDecl> variableDecl=nullptr;
+    shared_ptr<ASTBlock> block;
+    if(lookaheadToken1->GetTokenName()=="<for>"){
+        GetNextToken();
+        if(lookaheadToken1->GetTokenName()!="<(>") {
+            cerr<<"\nError: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            exit(4);
+        }
+        GetNextToken();
+        if(lookaheadToken1->GetTokenName()!="<;>") {
+            variableDecl = ParseVariableDecl();
+        }
+        if(lookaheadToken1->GetTokenName()!="<;>") {
+            cerr<<"\nError: Expected ;, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            exit(4);
+        }
+        GetNextToken();
+        expression=ParseExpression();
+        if(lookaheadToken1->GetTokenName()!="<;>") {
+            cerr<<"\nError: Expected ;, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            exit(4);
+        }
+        GetNextToken();
+        if(lookaheadToken1->GetTokenName()!="<)>") {
+            assignment=ParseAssignment();
+        }
+        if(lookaheadToken1->GetTokenName()!="<)>") {
+            cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            exit(4);
+        }
+        GetNextToken();
+        block=ParseBlock();
+    }else{
+        cerr<<"\nError: Expected for, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    return shared_ptr<ASTForStatement>(make_shared<ASTForStatement>(expression,assignment,variableDecl,block));
+}
+
+shared_ptr<ASTPixelStatement> Parser::ParsePixelStatement() {
+    vector<shared_ptr<ASTExpr>> expressions;
+    string value;
+    if(lookaheadToken1->GetTokenName()=="<__pixelr>"){
+        GetNextToken();
+        value=lookaheadToken1->GetTokenName();
+        for(int c =0; c<5;c++){
+            expressions.push_back(ParseExpression());
+            if(c<4 && lookaheadToken1->GetTokenName()!="<Comma>"){
+                cerr<<"\nError: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                exit(4);
+            }
+            else if(c<4){
+                GetNextToken();
+            }
+        }
+    }
+    else if(lookaheadToken1->GetTokenName()=="<__pixel>"){
+        GetNextToken();
+        value=lookaheadToken1->GetTokenName();
+        for(int c =0; c<3;c++){
+            expressions.push_back(ParseExpression());
+            if(c<2 && lookaheadToken1->GetTokenName()!="<Comma>"){
+                cerr<<"\nError: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                exit(4);
+            }
+            else if(c<2){
+                GetNextToken();
+            }
+        }
+    }
+    else{
+        cerr<<"\nError: Expected __pixelr or __pixel, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    return shared_ptr<ASTPixelStatement>(make_shared<ASTPixelStatement>(value,expressions));
+}
+
+shared_ptr<ASTPrintStatement> Parser::ParsePrintStatement() {
+    cout<<"\nPrint Statement start"<<endl;
+
+    shared_ptr<ASTExpr> expression;
+    if(lookaheadToken1->GetTokenName()!="<__print>"){
+        cerr<<"\nError: Expected __print, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    expression=ParseExpression();
+    cout<<"\nPrint Statement end"<<endl;
+    return shared_ptr<ASTPrintStatement>(make_shared<ASTPrintStatement>(expression));
+}
+
+shared_ptr<ASTDelayStatement> Parser::ParseDelayStatement() {
+    cout<<"\nDelay Statement start"<<endl;
+
+    shared_ptr<ASTExpr> expression;
+    if(lookaheadToken1->GetTokenName()!="<__delay>"){
+        cerr<<"\nError: Expected __delay, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    expression=ParseExpression();
+    cout<<"\nDelay Statement end"<<endl;
+    return shared_ptr<ASTDelayStatement>(make_shared<ASTDelayStatement>(expression));
+}
+
+shared_ptr<ASTRtrnStatement> Parser::ParseReturnStatement() {
+    cout<<"\nReturn Statement start"<<endl;
+
+    shared_ptr<ASTExpr> expression;
+    if(lookaheadToken1->GetTokenName()!="<return>"){
+        cerr<<"\nError: Expected return, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    expression=ParseExpression();
+    cout<<"\nReturn Statement end"<<endl;
+    return shared_ptr<ASTRtrnStatement>(make_shared<ASTRtrnStatement>(expression));
+}
+
+shared_ptr<ASTVariableDecl> Parser::ParseVariableDecl() {
+    cout<<"\nVariable Decl start"<<endl;
+    GetNextToken();
+    shared_ptr<ASTIdentifier> identifier = ParseIdentifier();
+    GetNextToken();
+    if(lookaheadToken1->GetTokenName()!="<:>"){
+        cerr<<"\nError: Expected :, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+
+    shared_ptr<ASTType> type;
+    if(lookaheadToken1->GetTokenName()!="<Type>"){
+        cerr<<"\nError: Expected Type, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    type=ParseType();
+    GetNextToken();
+
+    if(lookaheadToken1->GetTokenName()!="<=>"){
+        cerr<<"\nError: Expected =, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+
+    shared_ptr<ASTExpr> expression=ParseExpression();
+    cout<<"\nVariable Decl end"<<endl;
+    return shared_ptr<ASTVariableDecl>(make_shared<ASTVariableDecl>(identifier,type,expression));
+}
+
 shared_ptr<ASTAssignment> Parser::ParseAssignment() {
-    auto identifier = ParseIdentifier();
+    cout<<"\nAssignment"<<endl;
+    shared_ptr<ASTIdentifier> identifier = ParseIdentifier();
     GetNextToken();
     if(lookaheadToken1->GetTokenName()!="<=>"){
         cerr<<"\nError: Expected =, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
-    auto expression = ParseExpression();
-    cout<<identifier->identifier<<" "<<expression->simpleExpressions[0]<<endl;
-    return make_shared<ASTAssignment>(identifier,expression);
+    shared_ptr<ASTExpr> expression = ParseExpression();
+    cout<<"\nAssignment end"<<endl;
+    return shared_ptr<ASTAssignment>(make_shared<ASTAssignment>(identifier,expression));
 }
 
 shared_ptr<ASTIdentifier> Parser::ParseIdentifier(){
+    cout<<"\nIdentifier start"<<endl;
     if(lookaheadToken1->GetTokenName()!="<Identifier>"){
-        cerr<<"\nError: Expected identifier, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nError: Expected Identifier, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
-    return make_shared<ASTIdentifier>(lookaheadToken1->GetTokenAttribute());
+    cout<<"\nIdentifier end"<<endl;
+    return shared_ptr<ASTIdentifier>(make_shared<ASTIdentifier>(lookaheadToken1->GetTokenAttribute()));
+}
+
+shared_ptr<ASTType> Parser::ParseType() {
+    cout<<"\nType"<<endl;
+    return shared_ptr<ASTType>(make_shared<ASTType>(lookaheadToken1->GetTokenAttribute()));
 }
 
 shared_ptr<ASTExpr> Parser::ParseExpression() {
-    vector<shared_ptr<ASTSimpleExpr>> simpleExpressions;
-    simpleExpressions.push_back(ParseSimpleExpression());
-    GetNextToken();
-    while (lookaheadToken1->GetTokenName()=="<RelationalOp>" ) {
-        simpleExpressions.push_back(ParseSimpleExpression());
-        GetNextToken();
-    }
+    cout<<"\nExpression start"<<endl;
+    shared_ptr<ASTExpr> expr;
+    shared_ptr<ASTExpr> leftExpr;
 
-    return shared_ptr<ASTExpr>(make_shared<ASTExpr>(simpleExpressions));
+    leftExpr=ParseSimpleExpression();
+
+    if(lookaheadToken1->GetTokenName()=="<RelationalOp>" ) {
+        GetNextToken();
+        string relationalOp=lookaheadToken1->GetTokenAttribute();
+        shared_ptr<ASTExpr> rightExpr;
+        rightExpr=ParseExpression();
+        expr=shared_ptr<ASTRelationalOp>(make_shared<ASTRelationalOp>(leftExpr, relationalOp, rightExpr));
+    }
+    else{
+        expr = move(leftExpr);
+    }
+    cout<<"\nExpression end"<<endl;
+    return expr;
 }
 
-shared_ptr<ASTSimpleExpr> Parser::ParseSimpleExpression() {
-    vector<shared_ptr<ASTTerm>> terms;
-    terms.push_back(ParseTerm());
-    GetNextToken();
-    while (lookaheadToken1->GetTokenName()=="<AdditiveOp>" ) {
-        terms.push_back(ParseTerm());
-        GetNextToken();
-    }
+shared_ptr<ASTExpr> Parser::ParseSimpleExpression() {
+    cout<<"\nSimple expression start"<<endl;
+    shared_ptr<ASTExpr> simpleExpr;
+    shared_ptr<ASTExpr> leftSimpleExpr;
+    leftSimpleExpr=ParseTerm();
 
-    return shared_ptr<ASTSimpleExpr>(make_shared<ASTSimpleExpr>(terms));
+    if(lookaheadToken1->GetTokenName()=="<AdditiveOp>" ) {
+        GetNextToken();
+        string additiveOp=lookaheadToken1->GetTokenAttribute();
+        shared_ptr<ASTExpr> rightSimpleExpr;
+        rightSimpleExpr=ParseExpression();
+        simpleExpr=shared_ptr<ASTAdditiveOp>(make_shared<ASTAdditiveOp>(leftSimpleExpr, additiveOp, rightSimpleExpr));
+    }
+    else{
+        simpleExpr = move(leftSimpleExpr);
+    }
+    cout<<"\nSimple expression end"<<endl;
+    return simpleExpr;
 }
 
-shared_ptr<ASTTerm> Parser::ParseTerm() {
-    vector<shared_ptr<ASTFactor>> factors;
-    factors.push_back(ParseFactor());
-    GetNextToken();
-    while (lookaheadToken1->GetTokenName()=="<MultiplicativeOp>" ) {
-        factors.push_back(ParseFactor());
-        GetNextToken();
-    }
+shared_ptr<ASTExpr> Parser::ParseTerm() {
+    cout<<"\nTerm start"<<endl;
+    shared_ptr<ASTExpr> term;
+    shared_ptr<ASTExpr> leftTerm;
+    leftTerm=ParseFactor();
 
-    return shared_ptr<ASTTerm>(make_shared<ASTTerm>(factors));
+    if(lookaheadToken1->GetTokenName()=="<MultiplicativeOp>" ) {
+        GetNextToken();
+        string multiplicativeOp=lookaheadToken1->GetTokenAttribute();
+        shared_ptr<ASTExpr> rightTerm;
+        rightTerm=ParseExpression();
+        term=shared_ptr<ASTMultiplicativeOp>(make_shared<ASTMultiplicativeOp>(leftTerm, multiplicativeOp, rightTerm));
+    }
+    else{
+        term = move(leftTerm);
+    }
+    cout<<"\nTerm end"<<endl;
+    return term;
 }
 
 shared_ptr<ASTLiteral> Parser::ParseLiteral() {
     auto literal= make_shared<ASTLiteral>();
     if(lookaheadToken1->GetTokenName() == "<IntegerLiteral>"){
+        cout<<"\nInteger Literal "<<lookaheadToken1->GetTokenAttribute();
         literal=make_shared<ASTIntLiteral>(lookaheadToken1->GetTokenAttribute());
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<BooleanLiteral>"){
+        cout<<"\nBoolean Literal "<<lookaheadToken1->GetTokenAttribute();
         literal=make_shared<ASTBoolLiteral>(lookaheadToken1->GetTokenAttribute());
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<FloatLiteral>"){
+        cout<<"\nFloat Literal "<<lookaheadToken1->GetTokenAttribute();
         literal=make_shared<ASTFloatLiteral>(lookaheadToken1->GetTokenAttribute());
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<ColourLiteral>"){
+        cout<<"\nColour Literal "<<lookaheadToken1->GetTokenAttribute();
         literal=make_shared<ASTColourLiteral>(lookaheadToken1->GetTokenAttribute());
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<PadWidth>"){
         literal=make_shared<ASTPadWidth>(lookaheadToken1->GetTokenAttribute());
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<PadHeight>"){
         literal=make_shared<ASTPadHeight>(lookaheadToken1->GetTokenAttribute());
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<__read>"){
         //Need expression
-        literal=make_shared<ASTPadRead>(lookaheadToken1->GetTokenAttribute());
+        literal=ParsePadRead();
     }
     else{
         cerr<<"\nError: Expected Literal, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
@@ -175,79 +491,165 @@ shared_ptr<ASTLiteral> Parser::ParseLiteral() {
     return literal;
 }
 
-shared_ptr<ASTFactor> Parser::ParseFactor() {
-    auto factor= make_shared<ASTFactor>();
+shared_ptr<ASTPadRead> Parser::ParsePadRead() {
+    shared_ptr<ASTExpr> firstExpression;
+    shared_ptr<ASTExpr> secondExpression;
+    if(lookaheadToken1->GetTokenName()!="<__read>"){
+        cerr<<"\nError: Expected __read, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    firstExpression = ParseExpression();
+
+    if(lookaheadToken1->GetTokenName()!="<Comma>"){
+        cerr<<"\nError: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    secondExpression = ParseExpression();
+
+    return shared_ptr<ASTPadRead>(make_shared<ASTPadRead>(firstExpression,secondExpression));
+}
+
+shared_ptr<ASTExpr> Parser::ParseFactor() {
+    cout<<"\nFactor start"<<endl;
+
+    auto factor= make_shared<ASTExpr>();
     if(lookaheadToken1->GetTokenName() == "<__read>"||lookaheadToken1->GetTokenName() == "<PadHeight>"||lookaheadToken1->GetTokenName() == "<PadWidth>"||lookaheadToken1->GetTokenName() == "<ColourLiteral>"||lookaheadToken1->GetTokenName() == "<IntegerLiteral>" ||lookaheadToken1->GetTokenName() == "<BooleanLiteral>" ||lookaheadToken1->GetTokenName() == "<FloatLiteral>"){
         factor=ParseLiteral();
     }
     else if(lookaheadToken1->GetTokenName() == "<Identifier>" && lookaheadToken2->GetTokenName() == "<(>"){
         factor=ParseFunctionCall();
+        GetNextToken();
     }
     else if(lookaheadToken1->GetTokenName() == "<Identifier>"){
         factor=ParseIdentifier();
+        GetNextToken();
     }
         //SubExpr
     else if(lookaheadToken1->GetTokenName() == "<(>"){
-
+        factor=ParseSubExpression();
+        GetNextToken();
     }
         //Unary - this need to arrange
     else if((lookaheadToken1->GetTokenName() == "<AdditiveOp>" && lookaheadToken1->GetTokenAttribute()=="-")|| lookaheadToken1->GetTokenName() == "<not>"){
-
+        factor=ParseUnary();
     }
         //PadRandI
     else if(lookaheadToken1->GetTokenName() == "<__randi>"){
-
+        factor=ParsePadRandi();
     }
     else{
         cerr<<"\nError: Expected Factor, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
+
+    cout<<"\nFactor end"<<endl;
     return factor;
 }
 
 shared_ptr<ASTFunctionCall> Parser::ParseFunctionCall() {
-    auto identifier=ParseIdentifier();
+    cout<<"\nFunction Call start"<<endl;
+    shared_ptr<ASTIdentifier> identifier=ParseIdentifier();
     GetNextToken();
     if(lookaheadToken1->GetTokenName()!="<(>"){
         cerr<<"\nError: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
-    auto actualParams = ParseActualParams();
-    GetNextToken();
+    shared_ptr<ASTActualParams> actualParams;
+
+    //Check if function has parameters
+    if(lookaheadToken1->GetTokenName()!="<)>"){
+        actualParams = ParseActualParams();
+    }
+    //Check for closing brackets
     if(lookaheadToken1->GetTokenName()!="<)>"){
         cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
-    return make_shared<ASTFunctionCall>(identifier,actualParams);
+
+    cout<<"\nFunction Call end"<<endl;
+    return shared_ptr<ASTFunctionCall>(make_shared<ASTFunctionCall>(identifier,actualParams));
 }
 
 shared_ptr<ASTActualParams> Parser::ParseActualParams() {
+    cout<<"\nActual Params start"<<endl;
     vector<shared_ptr<ASTExpr>> expressions;
     expressions.push_back(ParseExpression());
-    GetNextToken();
+
     while (lookaheadToken1->GetTokenName()=="<Comma>" ) {
+        GetNextToken();
         expressions.push_back(ParseExpression());
+    }
+    cout<<"\nActual Params end"<<endl;
+    return shared_ptr<ASTActualParams>(make_shared<ASTActualParams>(expressions));
+}
+
+shared_ptr<ASTExpr> Parser::ParseUnary() {
+    string unaryOperator;
+    if((lookaheadToken1->GetTokenName()=="<AdditiveOp>"&& lookaheadToken1->GetTokenAttribute()=="-")||lookaheadToken1->GetTokenName()=="<not>"){
+        unaryOperator=lookaheadToken1->GetTokenAttribute();
         GetNextToken();
     }
+    else{
+        cerr<<"\nError: Expected - or not, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    shared_ptr<ASTExpr> expression=ParseExpression();
+    return shared_ptr<ASTUnary>(make_shared<ASTUnary>(expression,unaryOperator));
+}
 
-    return shared_ptr<ASTActualParams>(make_shared<ASTActualParams>(expressions));
+shared_ptr<ASTExpr> Parser::ParsePadRandi() {
+    shared_ptr<ASTExpr> expression;
+    if(lookaheadToken1->GetTokenName()!="<__randi>"){
+        cerr<<"\nError: Expected __randi, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+
+    GetNextToken();
+    expression=ParseExpression();
+    return shared_ptr<ASTPadRandi>(make_shared<ASTPadRandi>(expression));
+}
+
+shared_ptr<ASTExpr> Parser::ParseSubExpression() {
+    shared_ptr<ASTExpr> expression;
+    if(lookaheadToken1->GetTokenName()!="<(>"){
+        cerr<<"\nError: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+
+    GetNextToken();
+    if(lookaheadToken1->GetTokenName()!="<)>"){
+        expression = ParseExpression();
+    }
+    if(lookaheadToken1->GetTokenName()!="<)>"){
+        cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+
+    return shared_ptr<ASTSubExpr>(make_shared<ASTSubExpr>(expression));
 }
 
 
 void Parser::GetNextToken() {
-    lookaheadToken1=lookaheadToken2;
     if(!file.eof()){
+        lookaheadToken1=lookaheadToken2;
         lookaheadToken2 = lexer->GetNextToken(file);
         CheckValidToken(lookaheadToken2);
-        while(!file.eof() &&lookaheadToken2->GetTokenName()=="<TokenDelim>"||lookaheadToken2->GetTokenName()=="<TokenDelimEnter>") {
+        while(!file.eof() &&(lookaheadToken2->GetTokenName()=="<TokenDelim>"||lookaheadToken2->GetTokenName()=="<Comment>")) {
             lookaheadToken2 = lexer->GetNextToken(file);
             CheckValidToken(lookaheadToken2);
         }
     }
     else{
+        lookaheadToken1=lookaheadToken2;
         EOFFlag=true;
     }
+    if(lookaheadToken1!= nullptr){
+        cout<<"token: "<<lookaheadToken1->GetTokenAttribute();
+    }
+
 }
 
 
