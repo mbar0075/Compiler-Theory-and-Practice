@@ -3,16 +3,31 @@
 
 CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj: \
  ../ASTNode.cpp \
- ../HeaderFile.h
+ ../ASTNodes.h \
+ ../HeaderFile.h \
+ ../VisitorDesign.h
 CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj: \
+ ../ASTNodes.h \
  ../HeaderFile.h \
- ../Lexer.cpp
+ ../Lexer.cpp \
+ ../VisitorDesign.h
 CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj: \
+ ../ASTNodes.h \
  ../HeaderFile.h \
- ../MainClass.cpp
+ ../MainClass.cpp \
+ ../VisitorDesign.h
 CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj: \
+ ../ASTNodes.h \
  ../HeaderFile.h \
- ../Parser.cpp
+ ../Parser.cpp \
+ ../VisitorDesign.h
 CMakeFiles/Compiler_Theory.dir/Token.cpp.obj: \
+ ../ASTNodes.h \
  ../HeaderFile.h \
- ../Token.cpp
+ ../Token.cpp \
+ ../VisitorDesign.h
+CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj: \
+ ../ASTNodes.h \
+ ../HeaderFile.h \
+ ../VisitorDesign.cpp \
+ ../VisitorDesign.h

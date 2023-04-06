@@ -6,7 +6,11 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/User/Documents/Compiler Theory/ASTNode.cpp
+HeaderFile.h
 C:/Users/User/Documents/Compiler Theory/HeaderFile.h
+
+C:/Users/User/Documents/Compiler Theory/ASTNodes.h
 iostream
 -
 fstream
@@ -26,7 +30,11 @@ vector
 utility
 -
 
-C:/Users/User/Documents/Compiler Theory/Parser.cpp
-HeaderFile.h
 C:/Users/User/Documents/Compiler Theory/HeaderFile.h
+VisitorDesign.h
+C:/Users/User/Documents/Compiler Theory/VisitorDesign.h
+
+C:/Users/User/Documents/Compiler Theory/VisitorDesign.h
+ASTNodes.h
+C:/Users/User/Documents/Compiler Theory/ASTNodes.h
 

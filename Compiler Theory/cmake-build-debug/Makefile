@@ -248,6 +248,30 @@ Token.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Token.cpp.s
 .PHONY : Token.cpp.s
 
+VisitorDesign.obj: VisitorDesign.cpp.obj
+.PHONY : VisitorDesign.obj
+
+# target to build an object file
+VisitorDesign.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj
+.PHONY : VisitorDesign.cpp.obj
+
+VisitorDesign.i: VisitorDesign.cpp.i
+.PHONY : VisitorDesign.i
+
+# target to preprocess a source file
+VisitorDesign.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.i
+.PHONY : VisitorDesign.cpp.i
+
+VisitorDesign.s: VisitorDesign.cpp.s
+.PHONY : VisitorDesign.s
+
+# target to generate assembly for a file
+VisitorDesign.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.s
+.PHONY : VisitorDesign.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -272,6 +296,9 @@ help:
 	@echo ... Token.obj
 	@echo ... Token.i
 	@echo ... Token.s
+	@echo ... VisitorDesign.obj
+	@echo ... VisitorDesign.i
+	@echo ... VisitorDesign.s
 .PHONY : help
 
 

@@ -97,6 +97,12 @@
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Token.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/VisitorDesign.cpp">
+			<Option target="Compiler_Theory"/>
+		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/VisitorDesign.h">
+			<Option target="Compiler_Theory"/>
+		</Unit>
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

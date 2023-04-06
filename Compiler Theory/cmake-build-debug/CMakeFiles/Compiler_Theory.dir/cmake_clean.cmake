@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj"
   "CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj"
   "CMakeFiles/Compiler_Theory.dir/Token.cpp.obj"
+  "CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj"
   "Compiler_Theory.exe"
   "Compiler_Theory.exe.manifest"
   "Compiler_Theory.pdb"

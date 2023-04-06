@@ -1,21 +1,21 @@
 #include "HeaderFile.h"
 
 
-ASTProgram::ASTProgram(const vector<shared_ptr<ASTStatement>>& program) {
-    this->program=program;
+ASTProgram::ASTProgram( vector<shared_ptr<ASTStatement>> program) {
+    this->program=move(program);
 }
 
 ASTProgram::~ASTProgram() {
     program.clear();
 }
 
-ASTIdentifier::ASTIdentifier(const string& identifier) {
-    this->identifier=identifier;
+ASTIdentifier::ASTIdentifier( string identifier) {
+    this->identifier=move(identifier);
 }
 
-ASTAssignment::ASTAssignment(const shared_ptr<ASTIdentifier>& identifier, const shared_ptr<ASTExpr>& expression) {
-    this->identifier=identifier;
-    this->expression=expression;
+ASTAssignment::ASTAssignment( shared_ptr<ASTIdentifier> identifier,  shared_ptr<ASTExpr> expression) {
+    this->identifier=move(identifier);
+    this->expression=move(expression);
 }
 
 ASTAssignment::~ASTAssignment() {
@@ -23,19 +23,19 @@ ASTAssignment::~ASTAssignment() {
     expression.reset();
 }
 
-ASTIntLiteral::ASTIntLiteral(const string& val) {
+ASTIntLiteral::ASTIntLiteral( const string& val) {
     this->value=stoi(val);
 }
 
-ASTColourLiteral::ASTColourLiteral(const string &value) {
-    this->value=value;
+ASTColourLiteral::ASTColourLiteral( string value) {
+    this->value=move(move(value));
 }
 
-ASTFloatLiteral::ASTFloatLiteral(const string &val) {
+ASTFloatLiteral::ASTFloatLiteral( const string& val) {
     this->value =stof(val);
 }
 
-ASTBoolLiteral::ASTBoolLiteral(const string &val) {
+ASTBoolLiteral::ASTBoolLiteral( const string& val) {
     if(val=="true"){
         this->value=true;
     }
@@ -44,13 +44,13 @@ ASTBoolLiteral::ASTBoolLiteral(const string &val) {
     }
 }
 
-ASTPadHeight::ASTPadHeight(const string &value) {
-    this->value=value;
+ASTPadHeight::ASTPadHeight( string value) {
+    this->value=move(value);
 }
 
-ASTPadRead::ASTPadRead(const shared_ptr<ASTExpr> &firstExpression, const shared_ptr<ASTExpr> &secondExpression) {
-    this->firstExpression=firstExpression;
-    this->secondExpression=secondExpression;
+ASTPadRead::ASTPadRead( shared_ptr<ASTExpr> firstExpression,  shared_ptr<ASTExpr> secondExpression) {
+    this->firstExpression=move(firstExpression);
+    this->secondExpression=move(secondExpression);
 }
 
 ASTPadRead::~ASTPadRead() {
@@ -58,13 +58,13 @@ ASTPadRead::~ASTPadRead() {
     secondExpression.reset();
 }
 
-ASTPadWidth::ASTPadWidth(const string &value) {
-    this->value=value;
+ASTPadWidth::ASTPadWidth( string value) {
+    this->value=move(value);
 }
 
-ASTFunctionCall::ASTFunctionCall(const shared_ptr<ASTIdentifier>& identifier,const shared_ptr<ASTActualParams>& actualParams) {
-    this->identifier=identifier;
-    this->actualParams=actualParams;
+ASTFunctionCall::ASTFunctionCall( shared_ptr<ASTIdentifier> identifier, shared_ptr<ASTActualParams> actualParams) {
+    this->identifier=move(identifier);
+    this->actualParams=move(actualParams);
 }
 
 ASTFunctionCall::~ASTFunctionCall() {
@@ -72,53 +72,53 @@ ASTFunctionCall::~ASTFunctionCall() {
     actualParams.reset();
 }
 
-ASTActualParams::ASTActualParams(const vector<shared_ptr<ASTExpr>> &expressions) {
-    this->expressions=expressions;
+ASTActualParams::ASTActualParams( vector<shared_ptr<ASTExpr>> expressions) {
+    this->expressions=move(expressions);
 }
 
 ASTActualParams::~ASTActualParams(){
     expressions.clear();
 }
 
-ASTExpr::ASTExpr(const vector<shared_ptr<ASTSimpleExpr>> &simpleExpressions) {
-    this->simpleExpressions=simpleExpressions;
+ASTExpr::ASTExpr( vector<shared_ptr<ASTSimpleExpr>> simpleExpressions) {
+    this->simpleExpressions=move(simpleExpressions);
 }
 
 ASTExpr::~ASTExpr() {
     simpleExpressions.clear();
 }
 
-ASTSimpleExpr::ASTSimpleExpr(const vector<shared_ptr<ASTTerm>> &terms) {
-    this->terms=terms;
+ASTSimpleExpr::ASTSimpleExpr( vector<shared_ptr<ASTTerm>> terms) {
+    this->terms=move(terms);
 }
 
 ASTSimpleExpr::~ASTSimpleExpr(){
     this->terms.clear();
 }
 
-ASTTerm::ASTTerm(const vector<shared_ptr<ASTFactor>> &factors) {
-    this->factors=factors;
+ASTTerm::ASTTerm( vector<shared_ptr<ASTFactor>> factors) {
+    this->factors=move(factors);
 }
 
 ASTTerm::~ASTTerm(){
     factors.clear();
 }
 
-ASTMultiplicativeOp::ASTMultiplicativeOp(const shared_ptr<ASTExpr>& leftFactor,const string& multiplicativeOp ,const shared_ptr<ASTExpr>& rightExpression){
-    this->leftFactor = leftFactor;
-    this->multiplicativeOp = multiplicativeOp;
-    this->rightExpression = rightExpression;
+ASTMultiplicativeOp::ASTMultiplicativeOp( shared_ptr<ASTExpr> leftFactor, string multiplicativeOp , shared_ptr<ASTExpr> rightFactor){
+    this->leftFactor = move(leftFactor);
+    this->multiplicativeOp = move(multiplicativeOp);
+    this->rightFactor = move(rightFactor);
 }
 
 ASTMultiplicativeOp::~ASTMultiplicativeOp(){
     leftFactor.reset();
-    rightExpression.reset();
+    rightFactor.reset();
 }
 
-ASTAdditiveOp::ASTAdditiveOp(const shared_ptr<ASTExpr>& leftTerm,const string& additiveOp ,const shared_ptr<ASTExpr>& rightTerm){
-    this->leftTerm = leftTerm;
-    this->additiveOp = additiveOp;
-    this->rightTerm = rightTerm;
+ASTAdditiveOp::ASTAdditiveOp( shared_ptr<ASTExpr> leftTerm, string additiveOp , shared_ptr<ASTExpr> rightTerm){
+    this->leftTerm = move(leftTerm);
+    this->additiveOp = move(additiveOp);
+    this->rightTerm = move(rightTerm);
 }
 
 ASTAdditiveOp::~ASTAdditiveOp(){
@@ -126,10 +126,10 @@ ASTAdditiveOp::~ASTAdditiveOp(){
     rightTerm.reset();
 }
 
-ASTRelationalOp::ASTRelationalOp(const shared_ptr<ASTExpr>& leftSimpleExpr,const string& relationalOp ,const shared_ptr<ASTExpr>& rightSimpleExpr){
-    this->leftSimpleExpr = leftSimpleExpr;
-    this->relationalOp = relationalOp;
-    this->rightSimpleExpr = rightSimpleExpr;
+ASTRelationalOp::ASTRelationalOp( shared_ptr<ASTExpr> leftSimpleExpr, string relationalOp , shared_ptr<ASTExpr> rightSimpleExpr){
+    this->leftSimpleExpr = move(leftSimpleExpr);
+    this->relationalOp = move(relationalOp);
+    this->rightSimpleExpr = move(rightSimpleExpr);
 }
 
 ASTRelationalOp::~ASTRelationalOp(){
@@ -137,10 +137,10 @@ ASTRelationalOp::~ASTRelationalOp(){
     rightSimpleExpr.reset();
 }
 
-ASTVariableDecl::ASTVariableDecl(const shared_ptr<ASTIdentifier>& identifier,const shared_ptr<ASTType>& type,const shared_ptr<ASTExpr>& expression) {
-    this->identifier=identifier;
-    this->type=type;
-    this->expression=expression;
+ASTVariableDecl::ASTVariableDecl( shared_ptr<ASTIdentifier> identifier, shared_ptr<ASTType> type, shared_ptr<ASTExpr> expression) {
+    this->identifier=move(identifier);
+    this->type=move(type);
+    this->expression=move(expression);
 }
 
 ASTVariableDecl::~ASTVariableDecl() {
@@ -149,80 +149,80 @@ ASTVariableDecl::~ASTVariableDecl() {
     expression.reset();
 }
 
-ASTType::ASTType(const string& value) {
-    this->value=value;
+ASTType::ASTType( string value) {
+    this->value=move(value);
 }
 
-ASTSubExpr::ASTSubExpr(const shared_ptr<ASTExpr> &expression) {
-    this->expression=expression;
+ASTSubExpr::ASTSubExpr( shared_ptr<ASTExpr> expression) {
+    this->expression=move(expression);
 }
 
 ASTSubExpr::~ASTSubExpr() {
     expression.reset();
 }
 
-ASTUnary::ASTUnary(const shared_ptr<ASTExpr> &expression, const string& UnaryOperator) {
-    this->expression=expression;
-    this->UnaryOperator=UnaryOperator;
+ASTUnary::ASTUnary( shared_ptr<ASTExpr> expression,  string UnaryOperator) {
+    this->expression=move(expression);
+    this->UnaryOperator=move(UnaryOperator);
 }
 
 ASTUnary::~ASTUnary() {
     expression.reset();
 }
 
-ASTPadRandi::ASTPadRandi(const shared_ptr<ASTExpr>& expression) {
-    this->expression=expression;
+ASTPadRandi::ASTPadRandi( shared_ptr<ASTExpr> expression) {
+    this->expression=move(expression);
 }
 
 ASTPadRandi::~ASTPadRandi() {
     expression.reset();
 }
 
-ASTBlock::ASTBlock(const vector<shared_ptr<ASTStatement>> &statements) {
-    this->statements=statements;
+ASTBlock::ASTBlock( vector<shared_ptr<ASTStatement>> statements) {
+    this->statements=move(statements);
 }
 
 ASTBlock::~ASTBlock() {
     statements.clear();
 }
 
-ASTPrintStatement::ASTPrintStatement(const shared_ptr<ASTExpr> &expression) {
-    this->expression=expression;
+ASTPrintStatement::ASTPrintStatement( shared_ptr<ASTExpr> expression) {
+    this->expression=move(expression);
 }
 
 ASTPrintStatement::~ASTPrintStatement() {
     expression.reset();
 }
 
-ASTDelayStatement::ASTDelayStatement(const shared_ptr<ASTExpr> &expression) {
-    this->expression=expression;
+ASTDelayStatement::ASTDelayStatement( shared_ptr<ASTExpr> expression) {
+    this->expression=move(expression);
 }
 
 ASTDelayStatement::~ASTDelayStatement() {
     expression.reset();
 }
 
-ASTRtrnStatement::ASTRtrnStatement(const shared_ptr<ASTExpr> &expression) {
-    this->expression=expression;
+ASTRtrnStatement::ASTRtrnStatement( shared_ptr<ASTExpr> expression) {
+    this->expression=move(expression);
 }
 
 ASTRtrnStatement::~ASTRtrnStatement() {
     expression.reset();
 }
 
-ASTPixelStatement::ASTPixelStatement(const string& value,const vector<shared_ptr<ASTExpr>>& expressions) {
-    this->value=value;
-    this->expressions=expressions;
+ASTPixelStatement::ASTPixelStatement( string value, vector<shared_ptr<ASTExpr>> expressions) {
+    this->value=move(value);
+    this->expressions=move(expressions);
 }
 
 ASTPixelStatement::~ASTPixelStatement() {
     expressions.clear();
 }
 
-ASTIfStatement::ASTIfStatement(const shared_ptr<ASTExpr> &expression, const shared_ptr<ASTBlock> &firstBlock,const shared_ptr<ASTBlock> &secondBlock) {
-    this->expression=expression;
-    this->firstBlock=firstBlock;
-    this->secondBlock=secondBlock;
+ASTIfStatement::ASTIfStatement( shared_ptr<ASTExpr> expression,  shared_ptr<ASTBlock> firstBlock, shared_ptr<ASTBlock> secondBlock) {
+    this->expression=move(expression);
+    this->firstBlock=move(firstBlock);
+    this->secondBlock=move(secondBlock);
 }
 
 ASTIfStatement::~ASTIfStatement() {
@@ -231,11 +231,11 @@ ASTIfStatement::~ASTIfStatement() {
     secondBlock.reset();
 }
 
-ASTForStatement::ASTForStatement(const shared_ptr<ASTExpr> &expression, const shared_ptr<ASTAssignment> &assignment,const shared_ptr<ASTVariableDecl> &variableDecl, const shared_ptr<ASTBlock> &block) {
-    this->expression=expression;
-    this->assignment=assignment;
-    this->variableDecl=variableDecl;
-    this->block=block;
+ASTForStatement::ASTForStatement( shared_ptr<ASTExpr> expression,  shared_ptr<ASTAssignment> assignment, shared_ptr<ASTVariableDecl> variableDecl,  shared_ptr<ASTBlock> block) {
+    this->expression=move(expression);
+    this->assignment=move(assignment);
+    this->variableDecl=move(variableDecl);
+    this->block=move(block);
 }
 
 ASTForStatement::~ASTForStatement() {
@@ -245,9 +245,9 @@ ASTForStatement::~ASTForStatement() {
     block.reset();
 }
 
-ASTWhileStatement::ASTWhileStatement(const shared_ptr<ASTExpr> &expression, const shared_ptr<ASTBlock> &block) {
-    this->expression=expression;
-    this->block=block;
+ASTWhileStatement::ASTWhileStatement( shared_ptr<ASTExpr> expression,  shared_ptr<ASTBlock> block) {
+    this->expression=move(expression);
+    this->block=move(block);
 }
 
 ASTWhileStatement::~ASTWhileStatement() {
@@ -255,9 +255,9 @@ ASTWhileStatement::~ASTWhileStatement() {
     block.reset();
 }
 
-ASTFormalParam::ASTFormalParam(const shared_ptr<ASTIdentifier> &identifier, const shared_ptr<ASTType> &type) {
-    this->identifier=identifier;
-    this->type=type;
+ASTFormalParam::ASTFormalParam( shared_ptr<ASTIdentifier> identifier,  shared_ptr<ASTType> type) {
+    this->identifier=move(identifier);
+    this->type=move(type);
 }
 
 ASTFormalParam::~ASTFormalParam() {
@@ -265,19 +265,19 @@ ASTFormalParam::~ASTFormalParam() {
     type.reset();
 }
 
-ASTFormalParams::ASTFormalParams(const vector<shared_ptr<ASTFormalParam>> &formalParams) {
-    this->formalParams=formalParams;
+ASTFormalParams::ASTFormalParams( vector<shared_ptr<ASTFormalParam>> formalParams) {
+    this->formalParams=move(formalParams);
 }
 
 ASTFormalParams::~ASTFormalParams(){
     formalParams.clear();
 }
 
-ASTFunctionDecl::ASTFunctionDecl(const shared_ptr<ASTIdentifier> &identifier,const shared_ptr<ASTFormalParams> &formalParams, const shared_ptr<ASTType> &type,const shared_ptr<ASTBlock> &block) {
-    this->identifier=identifier;
-    this->formalParams=formalParams;
-    this->type=type;
-    this->block=block;
+ASTFunctionDecl::ASTFunctionDecl( shared_ptr<ASTIdentifier> identifier, shared_ptr<ASTFormalParams> formalParams,  shared_ptr<ASTType> type, shared_ptr<ASTBlock> block) {
+    this->identifier=move(identifier);
+    this->formalParams=move(formalParams);
+    this->type=move(type);
+    this->block=move(block);
 }
 
 ASTFunctionDecl::~ASTFunctionDecl() {
@@ -285,4 +285,153 @@ ASTFunctionDecl::~ASTFunctionDecl() {
     formalParams.reset();
     type.reset();
     block.reset();
+}
+
+void ASTNode::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTProgram::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTBlock::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTExpr::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTIdentifier::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTActualParams::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTVariableDecl::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+    cout<<this;
+}
+
+void ASTFormalParam::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTFormalParams::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTSimpleExpr::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTTerm::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTDelayStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTAssignment::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTAdditiveOp::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTSubExpr::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTFunctionCall::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTFunctionDecl::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTPadRandi::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTPrintStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTPadRead::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTPadWidth::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTForStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTWhileStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTIfStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTUnary::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTLiteral::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTColourLiteral::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTFloatLiteral::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTIntLiteral::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTBoolLiteral::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTPixelStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTFactor::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTPadHeight::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTRtrnStatement::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTRelationalOp::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
+}
+
+void ASTMultiplicativeOp::accept(shared_ptr<VisitorNode> visitor) {
+    visitor->visit(shared_from_this());
 }

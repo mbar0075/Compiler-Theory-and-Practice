@@ -8,8 +8,7 @@ int main() {
     fstream readFilePointer;
     readFilePointer.open("../"+filename, ios::in);
     //parser->LLKParse(readFilePointer);
-    shared_ptr<ASTProgram> program =parser->ParseProgram(readFilePointer);
-    program.reset();
+    parser->XMLPass(readFilePointer);
     parser.reset();
 
     return 0;
