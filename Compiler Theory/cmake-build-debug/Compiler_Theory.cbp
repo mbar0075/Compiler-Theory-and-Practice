@@ -82,7 +82,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/User/Documents/Compiler Theory/ASTNode.cpp">
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/ASTNodes.cpp">
+			<Option target="Compiler_Theory"/>
+		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/ASTNodes.h">
 			<Option target="Compiler_Theory"/>
 		</Unit>
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Lexer.cpp">
@@ -97,10 +100,10 @@
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Token.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>
-		<Unit filename="C:/Users/User/Documents/Compiler Theory/VisitorDesign.cpp">
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>
-		<Unit filename="C:/Users/User/Documents/Compiler Theory/VisitorDesign.h">
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.h">
 			<Option target="Compiler_Theory"/>
 		</Unit>
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/CMakeLists.txt">

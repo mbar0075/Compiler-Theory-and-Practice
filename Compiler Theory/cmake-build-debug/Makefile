@@ -128,29 +128,29 @@ Compiler_Theory/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/build
 .PHONY : Compiler_Theory/fast
 
-ASTNode.obj: ASTNode.cpp.obj
-.PHONY : ASTNode.obj
+ASTNodes.obj: ASTNodes.cpp.obj
+.PHONY : ASTNodes.obj
 
 # target to build an object file
-ASTNode.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj
-.PHONY : ASTNode.cpp.obj
+ASTNodes.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj
+.PHONY : ASTNodes.cpp.obj
 
-ASTNode.i: ASTNode.cpp.i
-.PHONY : ASTNode.i
+ASTNodes.i: ASTNodes.cpp.i
+.PHONY : ASTNodes.i
 
 # target to preprocess a source file
-ASTNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.i
-.PHONY : ASTNode.cpp.i
+ASTNodes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.i
+.PHONY : ASTNodes.cpp.i
 
-ASTNode.s: ASTNode.cpp.s
-.PHONY : ASTNode.s
+ASTNodes.s: ASTNodes.cpp.s
+.PHONY : ASTNodes.s
 
 # target to generate assembly for a file
-ASTNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.s
-.PHONY : ASTNode.cpp.s
+ASTNodes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.s
+.PHONY : ASTNodes.cpp.s
 
 Lexer.obj: Lexer.cpp.obj
 .PHONY : Lexer.obj
@@ -248,29 +248,29 @@ Token.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Token.cpp.s
 .PHONY : Token.cpp.s
 
-VisitorDesign.obj: VisitorDesign.cpp.obj
-.PHONY : VisitorDesign.obj
+XMLVisitorNodes.obj: XMLVisitorNodes.cpp.obj
+.PHONY : XMLVisitorNodes.obj
 
 # target to build an object file
-VisitorDesign.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj
-.PHONY : VisitorDesign.cpp.obj
+XMLVisitorNodes.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj
+.PHONY : XMLVisitorNodes.cpp.obj
 
-VisitorDesign.i: VisitorDesign.cpp.i
-.PHONY : VisitorDesign.i
+XMLVisitorNodes.i: XMLVisitorNodes.cpp.i
+.PHONY : XMLVisitorNodes.i
 
 # target to preprocess a source file
-VisitorDesign.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.i
-.PHONY : VisitorDesign.cpp.i
+XMLVisitorNodes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.i
+.PHONY : XMLVisitorNodes.cpp.i
 
-VisitorDesign.s: VisitorDesign.cpp.s
-.PHONY : VisitorDesign.s
+XMLVisitorNodes.s: XMLVisitorNodes.cpp.s
+.PHONY : XMLVisitorNodes.s
 
 # target to generate assembly for a file
-VisitorDesign.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.s
-.PHONY : VisitorDesign.cpp.s
+XMLVisitorNodes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.s
+.PHONY : XMLVisitorNodes.cpp.s
 
 # Help Target
 help:
@@ -281,9 +281,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Compiler_Theory
-	@echo ... ASTNode.obj
-	@echo ... ASTNode.i
-	@echo ... ASTNode.s
+	@echo ... ASTNodes.obj
+	@echo ... ASTNodes.i
+	@echo ... ASTNodes.s
 	@echo ... Lexer.obj
 	@echo ... Lexer.i
 	@echo ... Lexer.s
@@ -296,9 +296,9 @@ help:
 	@echo ... Token.obj
 	@echo ... Token.i
 	@echo ... Token.s
-	@echo ... VisitorDesign.obj
-	@echo ... VisitorDesign.i
-	@echo ... VisitorDesign.s
+	@echo ... XMLVisitorNodes.obj
+	@echo ... XMLVisitorNodes.i
+	@echo ... XMLVisitorNodes.s
 .PHONY : help
 
 

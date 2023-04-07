@@ -117,31 +117,31 @@ CMakeFiles/Compiler_Theory.dir/Parser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/Parser.cpp.s"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\Parser.cpp" -o CMakeFiles\Compiler_Theory.dir\Parser.cpp.s
 
-CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj: CMakeFiles/Compiler_Theory.dir/flags.make
-CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj: ../ASTNode.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Compiler_Theory.dir\ASTNode.cpp.obj -c "C:\Users\User\Documents\Compiler Theory\ASTNode.cpp"
+CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj: CMakeFiles/Compiler_Theory.dir/flags.make
+CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj: ../ASTNodes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Compiler_Theory.dir\ASTNodes.cpp.obj -c "C:\Users\User\Documents\Compiler Theory\ASTNodes.cpp"
 
-CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.i"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\User\Documents\Compiler Theory\ASTNode.cpp" > CMakeFiles\Compiler_Theory.dir\ASTNode.cpp.i
+CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\User\Documents\Compiler Theory\ASTNodes.cpp" > CMakeFiles\Compiler_Theory.dir\ASTNodes.cpp.i
 
-CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.s"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\ASTNode.cpp" -o CMakeFiles\Compiler_Theory.dir\ASTNode.cpp.s
+CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\ASTNodes.cpp" -o CMakeFiles\Compiler_Theory.dir\ASTNodes.cpp.s
 
-CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj: CMakeFiles/Compiler_Theory.dir/flags.make
-CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj: ../VisitorDesign.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Compiler_Theory.dir\VisitorDesign.cpp.obj -c "C:\Users\User\Documents\Compiler Theory\VisitorDesign.cpp"
+CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj: CMakeFiles/Compiler_Theory.dir/flags.make
+CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj: ../XMLVisitorNodes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Compiler_Theory.dir\XMLVisitorNodes.cpp.obj -c "C:\Users\User\Documents\Compiler Theory\XMLVisitorNodes.cpp"
 
-CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.i"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\User\Documents\Compiler Theory\VisitorDesign.cpp" > CMakeFiles\Compiler_Theory.dir\VisitorDesign.cpp.i
+CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\User\Documents\Compiler Theory\XMLVisitorNodes.cpp" > CMakeFiles\Compiler_Theory.dir\XMLVisitorNodes.cpp.i
 
-CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.s"
-	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\VisitorDesign.cpp" -o CMakeFiles\Compiler_Theory.dir\VisitorDesign.cpp.s
+CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\XMLVisitorNodes.cpp" -o CMakeFiles\Compiler_Theory.dir\XMLVisitorNodes.cpp.s
 
 # Object files for target Compiler_Theory
 Compiler_Theory_OBJECTS = \
@@ -149,8 +149,8 @@ Compiler_Theory_OBJECTS = \
 "CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj" \
 "CMakeFiles/Compiler_Theory.dir/Token.cpp.obj" \
 "CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj" \
-"CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj" \
-"CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj"
+"CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj" \
+"CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj"
 
 # External object files for target Compiler_Theory
 Compiler_Theory_EXTERNAL_OBJECTS =
@@ -159,8 +159,8 @@ Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/Token.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj
-Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj
-Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj
+Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj
+Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/build.make
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/linklibs.rsp
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/objects1.rsp

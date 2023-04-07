@@ -1,0 +1,6 @@
+let x: float = 56.7;
+x=7.9;
+__print 5+4;
+__delay true>56.8;
+__pixelr 1+1,2+2,3+3,4+4,5+5;
+__pixel 1+1,2+2,3+3;

@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/User/Documents/Compiler Theory/ASTNode.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/ASTNode.cpp.obj"
+  "C:/Users/User/Documents/Compiler Theory/ASTNodes.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/Lexer.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/MainClass.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/Parser.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/Token.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Token.cpp.obj"
-  "C:/Users/User/Documents/Compiler Theory/VisitorDesign.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/VisitorDesign.cpp.obj"
+  "C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

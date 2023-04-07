@@ -1,8 +1,10 @@
 //
 // Created by Matthias on 24/03/2023.
 //
-#include "VisitorDesign.h"
+//Inclusion of relevant header File
+#include "XMLVisitorNodes.h"
 
+//Token Class with its relevant variables and methods
 class Token{
 private:
     string name;
@@ -16,6 +18,7 @@ public:
     ~Token()=default;
 };
 
+//Lexer Class with its relevant variables and methods
 class Lexer{
 private:
     stack<string> stack;//Stack
@@ -31,6 +34,7 @@ public:
     ~Lexer()=default;
 };
 
+//Parser Class with its relevant variables and methods
 class Parser{
 private:
     string validHexCharacters="ABCDEFabcdef0123456789";
@@ -77,6 +81,4 @@ public:
     void GetNextToken();
     Parser()=default;
     ~Parser();
-
-
 };
