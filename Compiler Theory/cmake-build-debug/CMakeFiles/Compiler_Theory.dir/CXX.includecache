@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/User/Documents/Compiler Theory/ASTNodes.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
 C:/Users/User/Documents/Compiler Theory/ASTNodes.h
 iostream
 -
@@ -34,23 +30,7 @@ C:/Users/User/Documents/Compiler Theory/HeaderFile.h
 XMLVisitorNodes.h
 C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.h
 
-C:/Users/User/Documents/Compiler Theory/Lexer.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
-C:/Users/User/Documents/Compiler Theory/MainClass.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
 C:/Users/User/Documents/Compiler Theory/Parser.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
-C:/Users/User/Documents/Compiler Theory/Token.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
-C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.cpp
 HeaderFile.h
 C:/Users/User/Documents/Compiler Theory/HeaderFile.h
 

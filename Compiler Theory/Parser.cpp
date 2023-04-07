@@ -79,13 +79,13 @@ shared_ptr<ASTStatement> Parser::ParseStatement() {
         checkSemiColon= true;
     }
     else{
-        cerr<<"\nError: Unexpected: "<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\n Statement Error: Unexpected: "<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     if(checkSemiColon){
         //Error Checking when ; is not matched for the relevant cases
         if(lookaheadToken1->GetTokenName()!="<;>"){
-            cerr<<"\nError: "<<lookaheadToken1->GetTokenAttribute()<<" ; expected "<<endl;
+            cerr<<"\n Statement Error: "<<lookaheadToken1->GetTokenAttribute()<<" ; expected "<<endl;
             exit(4);
         }
         GetNextToken();
@@ -99,7 +99,7 @@ shared_ptr<ASTBlock> Parser::ParseBlock() {
     shared_ptr<ASTStatement> singleStatement;
     //Error Checking when { is not matched
     if(lookaheadToken1->GetTokenName()!="<{>"){
-        cerr<<"\nError: Expected {, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nBlock Error: Expected {, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -110,7 +110,7 @@ shared_ptr<ASTBlock> Parser::ParseBlock() {
     }
     //Error Checking when } is not matched
     if(lookaheadToken1->GetTokenName()!="<}>"){
-        cerr<<"\nError: Expected }, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nBlock Error: Expected }, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -128,7 +128,7 @@ shared_ptr<ASTIfStatement> Parser::ParseIfStatement() {
         expression=ParseExpression();
         //Error Checking when ) is not matched
         if(lookaheadToken1->GetTokenName()!="<)>"){
-            cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            cerr<<"\nIf Statement Error: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
             exit(4);
         }
         GetNextToken();
@@ -139,7 +139,7 @@ shared_ptr<ASTIfStatement> Parser::ParseIfStatement() {
             secondBlock=ParseBlock();
         }
     }else{//Error Checking when if is not matched
-        cerr<<"\nError: Expected if, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nIf Statement Error: Expected if, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTIfStatement>(expression,firstBlock,secondBlock);
@@ -155,13 +155,13 @@ shared_ptr<ASTWhileStatement> Parser::ParseWhileStatement() {
         expression=ParseExpression();
         //Error Checking when ) is not matched
         if(lookaheadToken1->GetTokenName()!="<)>"){
-            cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            cerr<<"\nWhile Statement Error: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
             exit(4);
         }
         GetNextToken();
         block=ParseBlock();
     }else{//Error Checking when while ( is not matched
-        cerr<<"\nError: Expected while, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nWhile Statement Error: Expected while, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTWhileStatement>(expression,block);
@@ -175,7 +175,7 @@ shared_ptr<ASTFormalParam> Parser::ParseFormalParam() {
     GetNextToken();
     //Error Checking when : is not matched
     if(lookaheadToken1->GetTokenName()!="<:>"){
-        cerr<<"\nError: Expected :, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nFormal Parameter Error: Expected :, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -213,13 +213,13 @@ shared_ptr<ASTFunctionDecl> Parser::ParseFunctionDecl() {
             }
             //Error Checking when ) is not matched
             if(lookaheadToken1->GetTokenName()!="<)>"){
-                cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                cerr<<"\nFunction Declaration Error: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
                 exit(4);
             }
             GetNextToken();
             //Error Checking when -> is not matched
             if(lookaheadToken1->GetTokenName()!="<->>"){
-                cerr<<"\nError: Expected ->, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                cerr<<"\nFunction Declaration Error: Expected ->, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
                 exit(4);
             }
             GetNextToken();
@@ -228,7 +228,7 @@ shared_ptr<ASTFunctionDecl> Parser::ParseFunctionDecl() {
             block=ParseBlock();
         }
     }else{//Error Checking when fun is not matched
-        cerr<<"\nError: Expected fun, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nFunction Declaration Error: Expected fun, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTFunctionDecl>(identifier, formalParams, type, block);
@@ -244,7 +244,7 @@ shared_ptr<ASTForStatement> Parser::ParseForStatement() {
         GetNextToken();
         //Error Checking when ( is not matched
         if(lookaheadToken1->GetTokenName()!="<(>") {
-            cerr<<"\nError: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            cerr<<"\nFor Statement Error: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
             exit(4);
         }
         GetNextToken();
@@ -253,14 +253,14 @@ shared_ptr<ASTForStatement> Parser::ParseForStatement() {
         }
         //Error Checking when ; is not matched
         if(lookaheadToken1->GetTokenName()!="<;>") {
-            cerr<<"\nError: Expected ;, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            cerr<<"\nFor Statement Error: Expected ;, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
             exit(4);
         }
         GetNextToken();
         expression=ParseExpression();
         //Error Checking when ; is not matched
         if(lookaheadToken1->GetTokenName()!="<;>") {
-            cerr<<"\nError: Expected ;, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            cerr<<"\nExpression Error: Expected ;, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
             exit(4);
         }
         GetNextToken();
@@ -269,13 +269,13 @@ shared_ptr<ASTForStatement> Parser::ParseForStatement() {
         }
         //Error Checking when ) is not matched
         if(lookaheadToken1->GetTokenName()!="<)>") {
-            cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+            cerr<<"\nExpression Error: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
             exit(4);
         }
         GetNextToken();
         block=ParseBlock();
     }else{//Error Checking when for is not matched
-        cerr<<"\nError: Expected for, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nExpression Error: Expected for, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTForStatement>(expression,assignment,variableDecl,block);
@@ -293,7 +293,7 @@ shared_ptr<ASTPixelStatement> Parser::ParsePixelStatement() {
             expressions.push_back(ParseExpression());
             //Error Checking when Comma is not matched
             if(c<4 && lookaheadToken1->GetTokenName()!="<Comma>"){
-                cerr<<"\nError: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                cerr<<"\nPixel Statement Error: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
                 exit(4);
             }
             else if(c<4){
@@ -308,7 +308,7 @@ shared_ptr<ASTPixelStatement> Parser::ParsePixelStatement() {
             expressions.push_back(ParseExpression());
             //Error Checking when Comma is not matched
             if(c<2 && lookaheadToken1->GetTokenName()!="<Comma>"){
-                cerr<<"\nError: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+                cerr<<"\nPixel Statement Error: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
                 exit(4);
             }
             else if(c<2){
@@ -317,7 +317,7 @@ shared_ptr<ASTPixelStatement> Parser::ParsePixelStatement() {
         }
     }
     else{//Error Checking when pixel keywords are not matched
-        cerr<<"\nError: Expected __pixelr or __pixel, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nPixel Statement Error: Expected __pixelr or __pixel, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTPixelStatement>(value,expressions);
@@ -328,7 +328,7 @@ shared_ptr<ASTPrintStatement> Parser::ParsePrintStatement() {
     shared_ptr<ASTExpr> expression;
     //Error Checking when __print is not matched
     if(lookaheadToken1->GetTokenName()!="<__print>"){
-        cerr<<"\nError: Expected __print, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nPrint Statement Error: Expected __print, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -341,7 +341,7 @@ shared_ptr<ASTDelayStatement> Parser::ParseDelayStatement() {
     shared_ptr<ASTExpr> expression;
     //Error Checking when __delay is not matched
     if(lookaheadToken1->GetTokenName()!="<__delay>"){
-        cerr<<"\nError: Expected __delay, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nDelay Statement Error: Expected __delay, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -354,7 +354,7 @@ shared_ptr<ASTRtrnStatement> Parser::ParseReturnStatement() {
     shared_ptr<ASTExpr> expression;
     //Error Checking when return is not matched
     if(lookaheadToken1->GetTokenName()!="<return>"){
-        cerr<<"\nError: Expected return, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nReturn Statement Error: Expected return, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -369,21 +369,21 @@ shared_ptr<ASTVariableDecl> Parser::ParseVariableDecl() {
     GetNextToken();
     //Error Checking when : is not matched
     if(lookaheadToken1->GetTokenName()!="<:>"){
-        cerr<<"\nError: Expected :, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nVariable Declaration Error: Expected :, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
     shared_ptr<ASTType> type;
     //Error Checking when Type token is not matched
     if(lookaheadToken1->GetTokenName()!="<Type>"){
-        cerr<<"\nError: Expected Type, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nVariable Declaration Error: Expected Type, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     type=ParseType();
     GetNextToken();
     //Error Checking when = is not matched
     if(lookaheadToken1->GetTokenName()!="<=>"){
-        cerr<<"\nError: Expected =, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nVariable Declaration Error: Expected =, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -397,7 +397,7 @@ shared_ptr<ASTAssignment> Parser::ParseAssignment() {
     GetNextToken();
     //Error Checking when = is not matched
     if(lookaheadToken1->GetTokenName()!="<=>"){
-        cerr<<"\nError: Expected =, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nAssignment Statement Error: Expected =, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -409,7 +409,7 @@ shared_ptr<ASTIdentifier> Parser::ParseIdentifier(){
     /*(Retrieving Identifier from Lexer Token)
      * Matching Case:〈Identifier 〉 ::= ( 〈Letter 〉 ) { ‘ ’ | 〈Letter 〉 | 〈Digit〉 }*/
     if(lookaheadToken1->GetTokenName()!="<Identifier>"){
-        cerr<<"\nError: Expected Identifier, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nIdentifier Error: Expected Identifier, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTIdentifier>(lookaheadToken1->GetTokenAttribute());
@@ -515,7 +515,7 @@ shared_ptr<ASTLiteral> Parser::ParseLiteral() {
         literal=ParsePadRead();
     }
     else{//Error Checking when literal is not matched
-        cerr<<"\nError: Expected Literal, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nLiteral Error: Expected Literal, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return literal;
@@ -527,14 +527,14 @@ shared_ptr<ASTPadRead> Parser::ParsePadRead() {
     shared_ptr<ASTExpr> secondExpression;
     //Error Checking when __read is not matched
     if(lookaheadToken1->GetTokenName()!="<__read>"){
-        cerr<<"\nError: Expected __read, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nPad Read Error: Expected __read, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
     firstExpression = ParseExpression();
     //Error Checking when Comma is not matched
     if(lookaheadToken1->GetTokenName()!="<Comma>"){
-        cerr<<"\nError: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nPad Read Error: Expected ',', received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -575,7 +575,7 @@ shared_ptr<ASTExpr> Parser::ParseFactor() {
         factor=ParsePadRandi();
     }
     else{//Error Checking when not factor is matched
-        cerr<<"\nError: Expected Factor, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nFactor Error: Expected Factor, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return factor;
@@ -587,7 +587,7 @@ shared_ptr<ASTFunctionCall> Parser::ParseFunctionCall() {
     GetNextToken();
     //Error Checking when ( is not matched
     if(lookaheadToken1->GetTokenName()!="<(>"){
-        cerr<<"\nError: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nFunction Call Error: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -598,7 +598,7 @@ shared_ptr<ASTFunctionCall> Parser::ParseFunctionCall() {
     }
     //Error Checking when ) is not matched
     if(lookaheadToken1->GetTokenName()!="<)>"){
-        cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nFunction Call Error: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTFunctionCall>(identifier,actualParams);
@@ -624,7 +624,7 @@ shared_ptr<ASTExpr> Parser::ParseUnary() {
         GetNextToken();
     }
     else{//Error Checking when Unary Operator is not matched
-        cerr<<"\nError: Expected - or not, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nUnary Expression Error: Expected - or not, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     shared_ptr<ASTExpr> expression=ParseExpression();
@@ -636,7 +636,7 @@ shared_ptr<ASTExpr> Parser::ParsePadRandi() {
     shared_ptr<ASTExpr> expression;
     //Error Checking when __randi is not matched
     if(lookaheadToken1->GetTokenName()!="<__randi>"){
-        cerr<<"\nError: Expected __randi, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nPad Randi Error: Expected __randi, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -649,7 +649,7 @@ shared_ptr<ASTExpr> Parser::ParseSubExpression() {
     shared_ptr<ASTExpr> expression;
     //Error Checking when ( is not matched
     if(lookaheadToken1->GetTokenName()!="<(>"){
-        cerr<<"\nError: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nSub Expression Error: Expected (, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     GetNextToken();
@@ -658,7 +658,7 @@ shared_ptr<ASTExpr> Parser::ParseSubExpression() {
         expression = ParseExpression();
     }
     if(lookaheadToken1->GetTokenName()!="<)>"){
-        cerr<<"\nError: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        cerr<<"\nSub Expression Error: Expected ), received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
         exit(4);
     }
     return make_shared<ASTSubExpr>(expression);
@@ -679,6 +679,9 @@ void Parser::GetNextToken() {
         }
     }
     else{
+        EOFFlag=true;
+    }
+    if(lookaheadToken2->GetTokenName()=="<Empty>"){
         EOFFlag=true;
     }
 }
