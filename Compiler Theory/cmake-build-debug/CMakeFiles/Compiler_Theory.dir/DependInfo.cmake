@@ -12,6 +12,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/User/Documents/Compiler Theory/Lexer.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/MainClass.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/Parser.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj"
+  "C:/Users/User/Documents/Compiler Theory/SemanticVisitorNodes.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj"
+  "C:/Users/User/Documents/Compiler Theory/SymbolTable.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/Token.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/Token.cpp.obj"
   "C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.cpp" "C:/Users/User/Documents/Compiler Theory/cmake-build-debug/CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj"
   )

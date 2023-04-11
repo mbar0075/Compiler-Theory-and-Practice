@@ -97,6 +97,15 @@
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Parser.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/SemanticVisitorNodes.cpp">
+			<Option target="Compiler_Theory"/>
+		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/SymbolTable.cpp">
+			<Option target="Compiler_Theory"/>
+		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/SymbolTable.h">
+			<Option target="Compiler_Theory"/>
+		</Unit>
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Token.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>

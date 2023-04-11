@@ -8,8 +8,7 @@ int main() {
     //Loading File
     fstream readFilePointer;
     readFilePointer.open("../"+filename, ios::in);
-    //parser->LLKParse(readFilePointer);
-    parser->XMLPass(readFilePointer);
+    parser->Compile(readFilePointer);
     parser.reset();
 
     return 0;

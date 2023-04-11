@@ -2,7 +2,7 @@
 // Created by Matthias on 24/03/2023.
 //
 //Inclusion of relevant header File
-#include "XMLVisitorNodes.h"
+#include "VisitorNodes.h"
 
 //Token Class with its relevant variables and methods
 class Token{
@@ -76,7 +76,9 @@ public:
     shared_ptr<ASTFormalParam> ParseFormalParam();
     shared_ptr<ASTFormalParams> ParseFormalParams();
     shared_ptr<ASTFunctionDecl> ParseFunctionDecl();
-    void XMLPass(fstream &readFilePointer);
+    void XMLPass();
+    void SemanticPass();
+    void Compile(fstream &readFilePointer);
     shared_ptr<ASTType> ParseType();
     void GetNextToken();
     Parser()=default;

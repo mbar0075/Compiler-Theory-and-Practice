@@ -5,29 +5,44 @@ CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj: \
  ../ASTNodes.cpp \
  ../ASTNodes.h \
  ../HeaderFile.h \
- ../XMLVisitorNodes.h
+ ../SymbolTable.h \
+ ../VisitorNodes.h
 CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj: \
  ../ASTNodes.h \
  ../HeaderFile.h \
  ../Lexer.cpp \
- ../XMLVisitorNodes.h
+ ../SymbolTable.h \
+ ../VisitorNodes.h
 CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj: \
  ../ASTNodes.h \
  ../HeaderFile.h \
  ../MainClass.cpp \
- ../XMLVisitorNodes.h
+ ../SymbolTable.h \
+ ../VisitorNodes.h
 CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj: \
  ../ASTNodes.h \
  ../HeaderFile.h \
  ../Parser.cpp \
- ../XMLVisitorNodes.h
+ ../SymbolTable.h \
+ ../VisitorNodes.h
+CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj: \
+ ../ASTNodes.h \
+ ../SemanticVisitorNodes.cpp \
+ ../SymbolTable.h \
+ ../VisitorNodes.h
+CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj: \
+ ../ASTNodes.h \
+ ../SymbolTable.cpp \
+ ../SymbolTable.h
 CMakeFiles/Compiler_Theory.dir/Token.cpp.obj: \
  ../ASTNodes.h \
  ../HeaderFile.h \
+ ../SymbolTable.h \
  ../Token.cpp \
- ../XMLVisitorNodes.h
+ ../VisitorNodes.h
 CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj: \
  ../ASTNodes.h \
  ../HeaderFile.h \
- ../XMLVisitorNodes.cpp \
- ../XMLVisitorNodes.h
+ ../SymbolTable.h \
+ ../VisitorNodes.h \
+ ../XMLVisitorNodes.cpp

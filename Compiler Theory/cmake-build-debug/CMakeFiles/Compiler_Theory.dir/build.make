@@ -143,6 +143,32 @@ CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.s"
 	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\XMLVisitorNodes.cpp" -o CMakeFiles\Compiler_Theory.dir\XMLVisitorNodes.cpp.s
 
+CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj: CMakeFiles/Compiler_Theory.dir/flags.make
+CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj: ../SemanticVisitorNodes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Compiler_Theory.dir\SemanticVisitorNodes.cpp.obj -c "C:\Users\User\Documents\Compiler Theory\SemanticVisitorNodes.cpp"
+
+CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\User\Documents\Compiler Theory\SemanticVisitorNodes.cpp" > CMakeFiles\Compiler_Theory.dir\SemanticVisitorNodes.cpp.i
+
+CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\SemanticVisitorNodes.cpp" -o CMakeFiles\Compiler_Theory.dir\SemanticVisitorNodes.cpp.s
+
+CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj: CMakeFiles/Compiler_Theory.dir/flags.make
+CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj: ../SymbolTable.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Compiler_Theory.dir\SymbolTable.cpp.obj -c "C:\Users\User\Documents\Compiler Theory\SymbolTable.cpp"
+
+CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.i"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\User\Documents\Compiler Theory\SymbolTable.cpp" > CMakeFiles\Compiler_Theory.dir\SymbolTable.cpp.i
+
+CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.s"
+	C:\msys64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\User\Documents\Compiler Theory\SymbolTable.cpp" -o CMakeFiles\Compiler_Theory.dir\SymbolTable.cpp.s
+
 # Object files for target Compiler_Theory
 Compiler_Theory_OBJECTS = \
 "CMakeFiles/Compiler_Theory.dir/MainClass.cpp.obj" \
@@ -150,7 +176,9 @@ Compiler_Theory_OBJECTS = \
 "CMakeFiles/Compiler_Theory.dir/Token.cpp.obj" \
 "CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj" \
 "CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj" \
-"CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj"
+"CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj" \
+"CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj" \
+"CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj"
 
 # External object files for target Compiler_Theory
 Compiler_Theory_EXTERNAL_OBJECTS =
@@ -161,11 +189,13 @@ Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/Token.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/Parser.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj
+Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj
+Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/build.make
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/linklibs.rsp
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/objects1.rsp
 Compiler_Theory.exe: CMakeFiles/Compiler_Theory.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Compiler_Theory.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Users\User\Documents\Compiler Theory\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable Compiler_Theory.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Compiler_Theory.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

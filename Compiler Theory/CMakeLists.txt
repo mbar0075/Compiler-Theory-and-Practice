@@ -7,5 +7,7 @@ add_executable(Compiler_Theory MainClass.cpp
                                 Lexer.cpp
                                 Token.cpp
                                 Parser.cpp
-        ASTNodes.cpp
-        XMLVisitorNodes.cpp)
+                                ASTNodes.cpp
+        XMLVisitorNodes.cpp
+                                SemanticVisitorNodes.cpp
+                                SymbolTable.cpp)

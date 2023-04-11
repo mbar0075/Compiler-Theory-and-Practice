@@ -1,9 +1,21 @@
 //Inclusion of relevant header File
 #include "HeaderFile.h"
-//Method which Initiates XML Pass
-void Parser::XMLPass(fstream &readFilePointer) {
+
+void Parser::Compile(fstream &readFilePointer) {
     //Parsing Program
     this->program =ParseProgram(readFilePointer);
+    //Calling the Respective Passes
+    //XMLPass();
+    SemanticPass();
+}
+//Method which Initiates a Semantic Pass
+void Parser::SemanticPass() {
+    //Creating new Semantic Visitor Node, and initiating accept method from node
+    auto* node= new SemanticVisitorNode();
+    program->accept(node);
+}
+//Method which Initiates a XML Pass
+void Parser::XMLPass() {
     //Creating new XML Visitor Node, and initiating accept method from node
     auto* node= new XMLVisitorNode();
     program->accept(node);

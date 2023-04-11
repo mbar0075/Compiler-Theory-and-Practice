@@ -224,6 +224,54 @@ Parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/Parser.cpp.s
 .PHONY : Parser.cpp.s
 
+SemanticVisitorNodes.obj: SemanticVisitorNodes.cpp.obj
+.PHONY : SemanticVisitorNodes.obj
+
+# target to build an object file
+SemanticVisitorNodes.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.obj
+.PHONY : SemanticVisitorNodes.cpp.obj
+
+SemanticVisitorNodes.i: SemanticVisitorNodes.cpp.i
+.PHONY : SemanticVisitorNodes.i
+
+# target to preprocess a source file
+SemanticVisitorNodes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.i
+.PHONY : SemanticVisitorNodes.cpp.i
+
+SemanticVisitorNodes.s: SemanticVisitorNodes.cpp.s
+.PHONY : SemanticVisitorNodes.s
+
+# target to generate assembly for a file
+SemanticVisitorNodes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/SemanticVisitorNodes.cpp.s
+.PHONY : SemanticVisitorNodes.cpp.s
+
+SymbolTable.obj: SymbolTable.cpp.obj
+.PHONY : SymbolTable.obj
+
+# target to build an object file
+SymbolTable.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.obj
+.PHONY : SymbolTable.cpp.obj
+
+SymbolTable.i: SymbolTable.cpp.i
+.PHONY : SymbolTable.i
+
+# target to preprocess a source file
+SymbolTable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.i
+.PHONY : SymbolTable.cpp.i
+
+SymbolTable.s: SymbolTable.cpp.s
+.PHONY : SymbolTable.s
+
+# target to generate assembly for a file
+SymbolTable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/SymbolTable.cpp.s
+.PHONY : SymbolTable.cpp.s
+
 Token.obj: Token.cpp.obj
 .PHONY : Token.obj
 
@@ -293,6 +341,12 @@ help:
 	@echo ... Parser.obj
 	@echo ... Parser.i
 	@echo ... Parser.s
+	@echo ... SemanticVisitorNodes.obj
+	@echo ... SemanticVisitorNodes.i
+	@echo ... SemanticVisitorNodes.s
+	@echo ... SymbolTable.obj
+	@echo ... SymbolTable.i
+	@echo ... SymbolTable.s
 	@echo ... Token.obj
 	@echo ... Token.i
 	@echo ... Token.s
