@@ -96,7 +96,7 @@ class ASTPixelStatement: public ASTStatement{
 public:
     ASTPixelStatement()=default;
     void accept(VisitorNode * visitor) override;
-    ASTPixelStatement( string value, vector<shared_ptr<ASTExpr>> expressions);
+    explicit ASTPixelStatement( string value, vector<shared_ptr<ASTExpr>> expressions);
     string value;
     vector<shared_ptr<ASTExpr>> expressions;
     ~ASTPixelStatement();

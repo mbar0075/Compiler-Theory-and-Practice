@@ -1,5 +1,5 @@
 //Inclusion of relevant header File
-#include "HeaderFile.h"
+#include "VisitorNodes.h"
 
 //Method which prints relevant indent based on tabCounter
 void XMLVisitorNode::printIndent() {

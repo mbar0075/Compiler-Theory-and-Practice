@@ -42,7 +42,6 @@ CMakeFiles/Compiler_Theory.dir/Token.cpp.obj: \
  ../VisitorNodes.h
 CMakeFiles/Compiler_Theory.dir/XMLVisitorNodes.cpp.obj: \
  ../ASTNodes.h \
- ../HeaderFile.h \
  ../SymbolTable.h \
  ../VisitorNodes.h \
  ../XMLVisitorNodes.cpp

@@ -14,5 +14,8 @@ public:
     vector<Scope> scopeStack;
     void push(const Scope& scope);
     Scope pop();
+    bool CheckIdentifierExists(const string& identifier);
+    string ReturnIdentifierType(const string& identifier);
+    string ReturnFunctionParameters(const string& identifier);
     ~SymbolTable()=default;
 };

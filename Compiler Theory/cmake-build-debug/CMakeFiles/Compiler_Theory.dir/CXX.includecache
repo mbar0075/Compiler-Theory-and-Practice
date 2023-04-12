@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/User/Documents/Compiler Theory/ASTNodes.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
 C:/Users/User/Documents/Compiler Theory/ASTNodes.h
 iostream
 -
@@ -30,35 +26,15 @@ vector
 utility
 -
 
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
+C:/Users/User/Documents/Compiler Theory/SemanticVisitorNodes.cpp
 VisitorNodes.h
 C:/Users/User/Documents/Compiler Theory/VisitorNodes.h
-
-C:/Users/User/Documents/Compiler Theory/Lexer.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
-C:/Users/User/Documents/Compiler Theory/MainClass.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
-C:/Users/User/Documents/Compiler Theory/Parser.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
 
 C:/Users/User/Documents/Compiler Theory/SymbolTable.h
 ASTNodes.h
 C:/Users/User/Documents/Compiler Theory/ASTNodes.h
 
-C:/Users/User/Documents/Compiler Theory/Token.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
-
 C:/Users/User/Documents/Compiler Theory/VisitorNodes.h
 SymbolTable.h
 C:/Users/User/Documents/Compiler Theory/SymbolTable.h
-
-C:/Users/User/Documents/Compiler Theory/XMLVisitorNodes.cpp
-HeaderFile.h
-C:/Users/User/Documents/Compiler Theory/HeaderFile.h
 

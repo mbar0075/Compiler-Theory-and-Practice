@@ -5,7 +5,7 @@ void Parser::Compile(fstream &readFilePointer) {
     //Parsing Program
     this->program =ParseProgram(readFilePointer);
     //Calling the Respective Passes
-    //XMLPass();
+//    XMLPass();
     SemanticPass();
 }
 //Method which Initiates a Semantic Pass
@@ -14,7 +14,7 @@ void Parser::SemanticPass() {
     auto* node= new SemanticVisitorNode();
     program->accept(node);
 }
-//Method which Initiates a XML Pass
+//Method which Initiates an XML Pass
 void Parser::XMLPass() {
     //Creating new XML Visitor Node, and initiating accept method from node
     auto* node= new XMLVisitorNode();
@@ -50,7 +50,7 @@ shared_ptr<ASTStatement> Parser::ParseStatement() {
                                     | 〈FunctionDecl〉
                                     | 〈Block〉*/
     shared_ptr<ASTStatement> singleStatement;
-    bool checkSemiColon=false;//Variable being used to check whether statement requires a semicolon delimeter
+    bool checkSemiColon=false;//Variable being used to check whether statement requires a semicolon delimiter
     if(lookaheadToken1->GetTokenName()=="<Identifier>"){
         singleStatement = ParseAssignment();
         checkSemiColon= true;
@@ -604,7 +604,7 @@ shared_ptr<ASTFunctionCall> Parser::ParseFunctionCall() {
     }
     GetNextToken();
     shared_ptr<ASTActualParams> actualParams;
-    //Checkint whether function has parameters
+    //Checking whether function has parameters
     if(lookaheadToken1->GetTokenName()!="<)>"){
         actualParams = ParseActualParams();
     }

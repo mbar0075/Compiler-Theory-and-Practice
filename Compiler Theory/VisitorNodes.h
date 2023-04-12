@@ -99,6 +99,12 @@ public:
 class SemanticVisitorNode: public VisitorNode{
 public:
     unique_ptr<SymbolTable> symbolTable= make_unique<SymbolTable>();
+    string currentStoredType;
+    string currentStoredFunctionName;
+    bool zeroFlag=false;
+    bool assignmentFlag=false;
+    bool returnFlag=false;
+    void RemoveFunctionParameters(const shared_ptr<ASTFormalParams>& pointer) const;
     SemanticVisitorNode()=default;
     void visit( ASTNode *pointer)override;
     void visit( ASTProgram *pointer)override;
