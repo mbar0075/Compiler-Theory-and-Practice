@@ -96,13 +96,17 @@ public:
     ~XMLVisitorNode()=default;
 };
 
+//Semantic Visitor Node class with its relevant variables and methods
 class SemanticVisitorNode: public VisitorNode{
 public:
     unique_ptr<SymbolTable> symbolTable= make_unique<SymbolTable>();
+    //Variable to store the current Type, to determine the current expression type
     string currentStoredType;
+    //Variable to store the current Function Name, to determine the current function being processed
     string currentStoredFunctionName;
+    //Variable will act as a flag, and fire when there is a division by zero
     bool zeroFlag=false;
-    bool assignmentFlag=false;
+    //Variable will acr as a flag, and fire when a function does not have a return statement
     bool returnFlag=false;
     void RemoveFunctionParameters(const shared_ptr<ASTFormalParams>& pointer) const;
     SemanticVisitorNode()=default;

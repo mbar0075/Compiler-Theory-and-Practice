@@ -9,10 +9,10 @@ void XMLVisitorNode::printIndent() {
 }
 
 //visit methods for the relevant AST Nodes passed as parameters
-void XMLVisitorNode::visit(ASTNode * pointer){}
-void XMLVisitorNode::visit(ASTStatement * pointer) {}
-void XMLVisitorNode::visit(ASTFactor * pointer) {}
-void XMLVisitorNode::visit(ASTLiteral * pointer) {}
+void XMLVisitorNode::visit(ASTNode * pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void XMLVisitorNode::visit(ASTStatement * pointer) {/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void XMLVisitorNode::visit(ASTFactor * pointer) {/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void XMLVisitorNode::visit(ASTLiteral * pointer) {/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void XMLVisitorNode::visit(ASTProgram * pointer) {
     for(auto iter = pointer->program.begin(); iter < pointer->program.end(); iter++)
     {

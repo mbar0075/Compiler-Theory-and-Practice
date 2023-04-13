@@ -69,3 +69,19 @@ let c2 : colour = #0000ff; // blue
 let m: int = height ; // the he i ght (y-va lue s ) o f the pad
 let w:bool = Race ( c1 , c2 , m); // c a l l func ti on Race
 __print w; // p ri n ts value o f e x p r e ssi on to VM l o g s
+
+let x:int=7;
+fun ABC_5() -> bool {
+    if(1>2){
+        return true;
+    }
+    return not true;
+}
+let u:bool=7>5;
+fun ABC_6(y:int,d:int) -> int {
+let k:float=5.5;
+   fun ABC_7(g:float) -> int {
+        return 6;
+   }
+   return ABC_7(5.5);
+}
