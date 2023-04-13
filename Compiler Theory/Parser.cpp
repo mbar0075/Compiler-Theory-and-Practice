@@ -5,8 +5,28 @@ void Parser::Compile(fstream &readFilePointer) {
     //Parsing Program
     this->program =ParseProgram(readFilePointer);
     //Calling the Respective Passes
-//    XMLPass();
+    system("Color 0A");
+    cout<<"\n<Parsing Complete>"<<endl;
+    system("Color 0F");
+    cout<<"\nXML Pass: \n"<<endl;
+    system("Color 0B");
+    XMLPass();
+    system("Color 0F");
+    cout<<"\nSemantic Pass: \n"<<endl;
     SemanticPass();
+    system("Color 0A");
+    cout<<"<No Semantic Errors>"<<endl;
+    system("Color 0F");
+    cout<<"\nCode Generation Pass: \n"<<endl;
+    system("Color 0E");
+    CodeGenerationPass();
+    system("Color 0F");
+}
+//Method which Initiates a Code Generation Pass
+void Parser::CodeGenerationPass() {
+    //Creating new Code Generator Visitor Node, and initiating accept method from node
+    auto* node= new CodeGeneratorVisitorNode();
+    program->accept(node);
 }
 //Method which Initiates a Semantic Pass
 void Parser::SemanticPass() {

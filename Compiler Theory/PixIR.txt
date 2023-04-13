@@ -1,87 +1,27 @@
-/* Multi-l i n e comment
-* This func ti on t ake s two i n t e g e rs and r e turn true i f
-* the f i r s t argument is g r e a t e r than the second .
-* Otherwise i f r e turns f a ls e .
-*/
-fun XGreaterY( x:int , y:int )->bool{
-let ans:bool=true;
-if(y > x){ ans = false;}
-return ans;
-}
-//Single-line comment
-//Same fu n c ti o n a l it y as func ti on above but using l e ss code
-fun XGreaterY2(x:int , y : int ) -> bool {
-return x > y ;
-}
-// Al l o c a t e s memory space f o r 4 v a ri a b l e s .
-fun AverageOfTwo(x:int,y:int)->float {
-let t0:bool= y;
-let t1:bool = t0/2;
-return t1;
-/*
-* Same f u n c ti o n a l it y as func ti on above but using l e ss code .
-* Note the use o f the br a cke ts in the e x p r e ssi on f o l l o w i n g
-* the r e turn statement . Al l o c a t e s space f o r 2 v a ri a b l e s .
-*/
-}
-fun AverageOfTwo2( x:int , y:int)->float{
-return(x+y)/2;
-}
-//Takes two i n t e g e rs and r e turns the max o f the two .
-fun Max( x : int , y : int ) -> int {
-let m: int = x ;
-if ( y > m) {m = y ;}
-return m;
-}
-/*
-* This func ti on t ake s two c o l o u rs ( p l a y e rs ) and a max s c o r e .
-* A whil e loop is used to it e r a ti v e l y draw random numbers f o r the two
-* p l a y e rs and advance ( along the y-a x is ) the pl aye r that g e ts the
-* hi ghe st s c o r e . Returns the winner ( e it h e r 1 or 2) when max s c o r e is
-* reached by any o f the p l a y e rs .
-*/
-fun Race ( p1_c : colour , p2_c : colour , score_max : int ) -> int {
-let p1_score : int = 0 ;
-let p2_score : int = 0 ;
-// while (Max( p1_score , p2_score ) < score_max ) // Alt e r n a ti v e loop
-while ( p1_score < score_max and p2_score < score_max )
-{
-let p1_toss : int = __randi 1000;
-let p2_toss : int = __randi 1000;
-if ( p1_toss > p2_toss ) {
-p1_score = p1_score + 1 ;
-} else {
-p2_score = p2_score + 1 ;
-}
-__pixel 1 , p1_score , p1_c ;
-__pixel 2 , p2_score , p2_c ;
-}
-let winner : int = 1 ;
-if ( p2_score > p1_score ) {winner = 2 ;}
-return winner ;
+fun Race (p1_c: colour, p2_c: colour, score_max: int) -> int {
+    let p1_score: int = 0;
+    let p2_score: int = 0;
 
-}
-//Execution ( program entry point ) st a rts at the f i r s t statement
-// that is not a func ti on d e c l a r a ti o n . This should go in the . main
-// func ti on o f PixIR .
-let c1 : colour = #00ff00; // gr e en
-let c2 : colour = #0000ff; // blue
-let m: int = height ; // the he i ght (y-va lue s ) o f the pad
-let w:bool = Race ( c1 , c2 , m); // c a l l func ti on Race
-__print w; // p ri n ts value o f e x p r e ssi on to VM l o g s
+    while ((p1_score < score_max) and (p2_score < score_max)){
 
-let x:int=7;
-fun ABC_5() -> bool {
-    if(1>2){
-        return true;
+        let p1_toss: int = __randi 1000;
+        let p2_toss: int = __randi 1000;
+
+        if (p1_toss > p2_toss) {
+            p1_score = p1_score + 1;
+        }
+        else {
+            p2_score = p2_score + 1;
+        }
+        __pixel 1, p1_score, p1_c;
+        __pixel 2, p2_score, p2_c;
     }
-    return not true;
-}
-let u:bool=7>5;
-fun ABC_6(y:int,d:int) -> int {
-let k:float=5.5;
-   fun ABC_7(g:float) -> int {
-        return 6;
-   }
-   return ABC_7(5.5);
+
+    let winner: int = 1;
+
+    if (p2_score > p1_score) {
+        winner = 2;
+    }
+
+    return winner;
 }

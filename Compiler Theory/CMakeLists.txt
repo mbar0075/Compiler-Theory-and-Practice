@@ -10,4 +10,5 @@ add_executable(Compiler_Theory MainClass.cpp
                                 ASTNodes.cpp
                                 XMLVisitorNodes.cpp
                                 SemanticVisitorNodes.cpp
-                                SymbolTable.cpp)
+                                SymbolTable.cpp
+                                CodeGeneratorVisitorNodes.cpp)

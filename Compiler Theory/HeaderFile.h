@@ -78,6 +78,7 @@ public:
     shared_ptr<ASTFunctionDecl> ParseFunctionDecl();
     void XMLPass();
     void SemanticPass();
+    void CodeGenerationPass();
     void Compile(fstream &readFilePointer);
     shared_ptr<ASTType> ParseType();
     void GetNextToken();

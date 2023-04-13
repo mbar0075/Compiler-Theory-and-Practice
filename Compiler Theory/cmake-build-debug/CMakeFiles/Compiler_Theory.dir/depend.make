@@ -7,6 +7,11 @@ CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.obj: \
  ../HeaderFile.h \
  ../SymbolTable.h \
  ../VisitorNodes.h
+CMakeFiles/Compiler_Theory.dir/CodeGeneratorVisitorNodes.cpp.obj: \
+ ../ASTNodes.h \
+ ../CodeGeneratorVisitorNodes.cpp \
+ ../SymbolTable.h \
+ ../VisitorNodes.h
 CMakeFiles/Compiler_Theory.dir/Lexer.cpp.obj: \
  ../ASTNodes.h \
  ../HeaderFile.h \

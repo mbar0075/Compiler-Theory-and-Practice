@@ -152,6 +152,30 @@ ASTNodes.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/ASTNodes.cpp.s
 .PHONY : ASTNodes.cpp.s
 
+CodeGeneratorVisitorNodes.obj: CodeGeneratorVisitorNodes.cpp.obj
+.PHONY : CodeGeneratorVisitorNodes.obj
+
+# target to build an object file
+CodeGeneratorVisitorNodes.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/CodeGeneratorVisitorNodes.cpp.obj
+.PHONY : CodeGeneratorVisitorNodes.cpp.obj
+
+CodeGeneratorVisitorNodes.i: CodeGeneratorVisitorNodes.cpp.i
+.PHONY : CodeGeneratorVisitorNodes.i
+
+# target to preprocess a source file
+CodeGeneratorVisitorNodes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/CodeGeneratorVisitorNodes.cpp.i
+.PHONY : CodeGeneratorVisitorNodes.cpp.i
+
+CodeGeneratorVisitorNodes.s: CodeGeneratorVisitorNodes.cpp.s
+.PHONY : CodeGeneratorVisitorNodes.s
+
+# target to generate assembly for a file
+CodeGeneratorVisitorNodes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Compiler_Theory.dir\build.make CMakeFiles/Compiler_Theory.dir/CodeGeneratorVisitorNodes.cpp.s
+.PHONY : CodeGeneratorVisitorNodes.cpp.s
+
 Lexer.obj: Lexer.cpp.obj
 .PHONY : Lexer.obj
 
@@ -332,6 +356,9 @@ help:
 	@echo ... ASTNodes.obj
 	@echo ... ASTNodes.i
 	@echo ... ASTNodes.s
+	@echo ... CodeGeneratorVisitorNodes.obj
+	@echo ... CodeGeneratorVisitorNodes.i
+	@echo ... CodeGeneratorVisitorNodes.s
 	@echo ... Lexer.obj
 	@echo ... Lexer.i
 	@echo ... Lexer.s

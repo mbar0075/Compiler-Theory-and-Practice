@@ -88,6 +88,9 @@
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/ASTNodes.h">
 			<Option target="Compiler_Theory"/>
 		</Unit>
+		<Unit filename="C:/Users/User/Documents/Compiler Theory/CodeGeneratorVisitorNodes.cpp">
+			<Option target="Compiler_Theory"/>
+		</Unit>
 		<Unit filename="C:/Users/User/Documents/Compiler Theory/Lexer.cpp">
 			<Option target="Compiler_Theory"/>
 		</Unit>
