@@ -39,7 +39,7 @@ class Parser{
 private:
     string validHexCharacters="ABCDEFabcdef0123456789";
     map<string,string> specialCase1={{ "__read", "<__read>" }};
-    map<string,string> specialCase2={{ "__randi", "<__randi>" },{ "__print", "<__print>" },{ "__delay", "<__delay>" },{ "__pixel", "<__pixel>" },{ "__width", "<PadWidth>" }};
+    map<string,string> specialCase2={{ "__clear", "<__clear>" },{ "__randi", "<__randi>" },{ "__print", "<__print>" },{ "__delay", "<__delay>" },{ "__pixel", "<__pixel>" },{ "__width", "<PadWidth>" }};
     map<string,string> specialCase3={{ "__pixelr", "<__pixelr>" },{ "__height", "<PadHeight>" }};
     unique_ptr<Lexer> lexer= make_unique<Lexer>();
     shared_ptr<Token> lookaheadToken1;
@@ -67,6 +67,7 @@ public:
     shared_ptr<ASTExpr> ParseUnary();
     shared_ptr<ASTPadRead> ParsePadRead();
     shared_ptr<ASTPrintStatement> ParsePrintStatement();
+    shared_ptr<ASTClearStatement> ParseClearStatement();
     shared_ptr<ASTDelayStatement> ParseDelayStatement();
     shared_ptr<ASTRtrnStatement> ParseReturnStatement();
     shared_ptr<ASTPixelStatement> ParsePixelStatement();

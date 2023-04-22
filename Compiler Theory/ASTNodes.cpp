@@ -1,4 +1,6 @@
 //Inclusion of relevant header File
+#include <utility>
+
 #include "HeaderFile.h"
 
 //Constructors for the relevant AST Nodes
@@ -131,6 +133,9 @@ ASTFunctionDecl::ASTFunctionDecl( shared_ptr<ASTIdentifier> identifier, shared_p
     this->formalParams=move(formalParams);
     this->type=move(type);
     this->block=move(block);
+}
+ASTClearStatement::ASTClearStatement(string value) {
+    this->value=std::move(value);
 }
 
 //Destructors for the relevant AST Nodes
@@ -344,5 +349,8 @@ void ASTRelationalOp::accept(VisitorNode * visitor) {
     visitor->visit(this);
 }
 void ASTMultiplicativeOp::accept(VisitorNode * visitor) {
+    visitor->visit(this);
+}
+void ASTClearStatement::accept(VisitorNode *visitor) {
     visitor->visit(this);
 }

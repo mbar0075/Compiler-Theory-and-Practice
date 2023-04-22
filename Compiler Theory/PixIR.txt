@@ -1,27 +1,2 @@
-fun Race (p1_c: colour, p2_c: colour, score_max: int) -> int {
-    let p1_score: int = 0;
-    let p2_score: int = 0;
-
-    while ((p1_score < score_max) and (p2_score < score_max)){
-
-        let p1_toss: int = __randi 1000;
-        let p2_toss: int = __randi 1000;
-
-        if (p1_toss > p2_toss) {
-            p1_score = p1_score + 1;
-        }
-        else {
-            p2_score = p2_score + 1;
-        }
-        __pixel 1, p1_score, p1_c;
-        __pixel 2, p2_score, p2_c;
-    }
-
-    let winner: int = 1;
-
-    if (p2_score > p1_score) {
-        winner = 2;
-    }
-
-    return winner;
-}
+let x:int =5;
+__print x;

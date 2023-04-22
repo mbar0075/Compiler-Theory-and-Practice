@@ -9,8 +9,8 @@ void SemanticVisitorNode::visit( ASTFactor *pointer){/*Empty Method not being us
 void SemanticVisitorNode::visit( ASTLiteral *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void SemanticVisitorNode::visit( ASTTerm *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void SemanticVisitorNode::visit( ASTExpr *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
-void SemanticVisitorNode::visit( ASTSubExpr *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void SemanticVisitorNode::visit( ASTSimpleExpr *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void SemanticVisitorNode::visit(ASTClearStatement *pointer) {/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void SemanticVisitorNode::visit(ASTProgram * pointer) {
     //Creating a new Scope and pushing it onto the symbol Table
     Scope initialScope;
@@ -444,6 +444,9 @@ void SemanticVisitorNode::visit( ASTActualParams *pointer){
         cerr<<"\nSemantic Error: Function Call \""<<currentStoredFunctionName<<"()\" has missing parameters, when should be given \""<<allParams<<"\" parameters"<<endl;
         exit(5);
     }
+}
+void SemanticVisitorNode::visit( ASTSubExpr *pointer){
+    pointer->expression->accept(this);
 }
 //Destructor for class
 SemanticVisitorNode::~SemanticVisitorNode() {

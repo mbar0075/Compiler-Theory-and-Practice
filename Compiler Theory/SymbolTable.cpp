@@ -59,3 +59,15 @@ string SymbolTable::ReturnFunctionParameters(const string &identifier) {
     //Returning "No Parameters", as Identifier was not found
     return "No Parameters";
 }
+//Method which given an Identifier, returns the Identifier Address
+string SymbolTable::ReturnIdentifierAddress(const string &identifier) {
+    auto iter= scopeStack.end();
+    for(iter--; iter >= scopeStack.begin(); iter--){
+        //If Identifier is found, returning its Address
+        if((*iter).scope.find(identifier) != (*iter).scope.end()){
+            return (*iter).scope[identifier]["Address"];
+        }
+    }
+    //Returning 0
+    return "0";
+}

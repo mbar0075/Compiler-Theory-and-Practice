@@ -14,10 +14,16 @@ void XMLVisitorNode::visit(ASTStatement * pointer) {/*Empty Method not being use
 void XMLVisitorNode::visit(ASTFactor * pointer) {/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void XMLVisitorNode::visit(ASTLiteral * pointer) {/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void XMLVisitorNode::visit(ASTProgram * pointer) {
+    printIndent();
+    cout<<"<Program>"<<endl;
+    tabCounter++;
     for(auto iter = pointer->program.begin(); iter < pointer->program.end(); iter++)
     {
         ((*iter))->accept(this);
     }
+    tabCounter--;
+    printIndent();
+    cout<<"</Program>"<<endl;
 }
 void XMLVisitorNode::visit(ASTVariableDecl * pointer) {
     printIndent();
@@ -323,4 +329,8 @@ void XMLVisitorNode::visit(ASTPixelStatement * pointer) {
     tabCounter--;
     printIndent();
     cout<<"</Pixel>"<<endl;
+}
+void XMLVisitorNode::visit(ASTClearStatement *pointer) {
+    printIndent();
+    cout<<"<Clear Colour=\""+pointer->value+"\"></Clear>"<<endl;
 }

@@ -6,19 +6,26 @@ void Parser::Compile(fstream &readFilePointer) {
     this->program =ParseProgram(readFilePointer);
     //Calling the Respective Passes
     system("Color 0A");
+
     cout<<"\n<Parsing Complete>"<<endl;
     system("Color 0F");
+
     cout<<"\nXML Pass: \n"<<endl;
     system("Color 0B");
+
     XMLPass();
     system("Color 0F");
+
     cout<<"\nSemantic Pass: \n"<<endl;
     SemanticPass();
     system("Color 0A");
+
     cout<<"<No Semantic Errors>"<<endl;
     system("Color 0F");
+
     cout<<"\nCode Generation Pass: \n"<<endl;
     system("Color 0E");
+
     CodeGenerationPass();
     system("Color 0F");
 }
@@ -47,6 +54,10 @@ shared_ptr<ASTProgram> Parser::ParseProgram(fstream &readFilePointer) {
     vector<shared_ptr<ASTStatement>> allStatements;
     GetNextToken();
     GetNextToken();
+    //Error Checking for empty file, and first two tokens, in case of EOF Flag being set
+    if(EOFFlag&&lookaheadToken1->GetTokenName()!="<Empty>"){
+        allStatements.push_back(ParseStatement());
+    }
     //Looping until not reached end of file
     while (!EOFFlag||(lookaheadToken1->GetTokenName()=="<{>"&&lookaheadToken2->GetTokenName()=="<}>")) {
         allStatements.push_back(ParseStatement());
@@ -63,6 +74,7 @@ shared_ptr<ASTStatement> Parser::ParseStatement() {
                                     | 〈PrintStatement〉 ‘;’
                                     | 〈DelayStatement〉 ‘;’
                                     | 〈PixelStatement〉 ‘;’
+                                    | 〈ClearStatement〉 ‘;’
                                     | 〈IfStatement〉
                                     | 〈ForStatement〉
                                     | 〈WhileStatement〉
@@ -88,6 +100,10 @@ shared_ptr<ASTStatement> Parser::ParseStatement() {
     }
     else if(lookaheadToken1->GetTokenName()=="<return>"){
         singleStatement = ParseReturnStatement();
+        checkSemiColon= true;
+    }
+    else if(lookaheadToken1->GetTokenName()=="<__clear>"){
+        singleStatement = ParseClearStatement();
         checkSemiColon= true;
     }
     else if(lookaheadToken1->GetTokenName()=="<while>"){
@@ -117,7 +133,7 @@ shared_ptr<ASTStatement> Parser::ParseStatement() {
     if(checkSemiColon){
         //Error Checking when ; is not matched for the relevant cases
         if(lookaheadToken1->GetTokenName()!="<;>"){
-            cerr<<"\n Statement Error: "<<lookaheadToken1->GetTokenAttribute()<<" ; expected "<<endl;
+            cerr<<"\n Statement Error: Received: \""<<lookaheadToken1->GetTokenAttribute()<<R"(", ";" expected )"<<endl;
             exit(4);
         }
         GetNextToken();
@@ -366,6 +382,24 @@ shared_ptr<ASTPrintStatement> Parser::ParsePrintStatement() {
     GetNextToken();
     expression=ParseExpression();
     return make_shared<ASTPrintStatement>(expression);
+}
+//Method which Parses a Clear Statement, and returns pointer of ASTClearStatement
+shared_ptr<ASTClearStatement> Parser::ParseClearStatement() {
+    /*Matching Case:〈ClearStatement〉 ::= ‘__clear’ <ColourLiteral> */
+    //Error Checking when __clear is not matched
+    if(lookaheadToken1->GetTokenName()!="<__clear>"){
+        cerr<<"\nClear Statement Error: Expected __clear, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    GetNextToken();
+    //Error Checking when Colour Literal is not matched
+    if(lookaheadToken1->GetTokenName()!="<ColourLiteral>"){
+        cerr<<"\nClear Statement Error: Expected Colour Literal, received:"<<lookaheadToken1->GetTokenAttribute()<<endl;
+        exit(4);
+    }
+    string value=lookaheadToken1->GetTokenAttribute();
+    GetNextToken();
+    return make_shared<ASTClearStatement>(value);
 }
 //Method which Parses a Delay Statement, and returns pointer of ASTDelayStatement
 shared_ptr<ASTDelayStatement> Parser::ParseDelayStatement() {

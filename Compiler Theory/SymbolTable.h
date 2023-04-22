@@ -19,5 +19,6 @@ public:
     bool CheckIdentifierExists(const string& identifier, bool functionFlag);
     string ReturnIdentifierType(const string& identifier);
     string ReturnFunctionParameters(const string& identifier);
+    string ReturnIdentifierAddress(const string& identifier);
     ~SymbolTable()=default;
 };

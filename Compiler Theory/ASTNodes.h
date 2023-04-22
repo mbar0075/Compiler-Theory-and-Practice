@@ -101,7 +101,6 @@ public:
     string value;
     vector<shared_ptr<ASTExpr>> expressions;
     ~ASTPixelStatement();
-
 };
 class ASTDelayStatement: public ASTStatement{
 public:
@@ -110,6 +109,14 @@ public:
     explicit ASTDelayStatement( shared_ptr<ASTExpr> expression);
     shared_ptr<ASTExpr> expression;
     ~ASTDelayStatement();
+};
+class ASTClearStatement: public ASTStatement{
+public:
+    ASTClearStatement()=default;
+    void accept(VisitorNode * visitor) override;
+    explicit ASTClearStatement( string value);
+    string value;
+    ~ASTClearStatement()=default;
 };
 class ASTPrintStatement: public ASTStatement{
 public:

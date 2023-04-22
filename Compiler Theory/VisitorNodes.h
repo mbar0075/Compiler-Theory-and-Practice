@@ -47,6 +47,7 @@ public:
     virtual void visit( ASTUnary *pointer)=0;
     virtual void visit( ASTActualParams *pointer)=0;
     virtual void visit( ASTPixelStatement *pointer)=0;
+    virtual void visit( ASTClearStatement *pointer)=0;
     ~VisitorNode()=default;
 };
 
@@ -93,6 +94,7 @@ public:
     void visit( ASTUnary *pointer)override;
     void visit( ASTActualParams *pointer)override;
     void visit( ASTPixelStatement *pointer)override;
+    void visit( ASTClearStatement *pointer) override;
     ~XMLVisitorNode()=default;
 };
 
@@ -148,6 +150,7 @@ public:
     void visit( ASTUnary *pointer)override;
     void visit( ASTActualParams *pointer)override;
     void visit( ASTPixelStatement *pointer)override;
+    void visit( ASTClearStatement *pointer) override;
     ~SemanticVisitorNode();
 };
 
@@ -156,6 +159,10 @@ class CodeGeneratorVisitorNode: public VisitorNode{
 public:
     unique_ptr<SymbolTable> symbolTable= make_unique<SymbolTable>();
     vector<string> functionNames;
+    map<string,string> printList;
+    int frameIndex=0;
+    bool negativeFlag=false;
+    bool notFlag=false;
     string currentStoredFunctionName;
     CodeGeneratorVisitorNode()=default;
     void PrintProgram();
@@ -197,5 +204,6 @@ public:
     void visit( ASTUnary *pointer)override;
     void visit( ASTActualParams *pointer)override;
     void visit( ASTPixelStatement *pointer)override;
+    void visit( ASTClearStatement *pointer) override;
     ~CodeGeneratorVisitorNode();
 };
