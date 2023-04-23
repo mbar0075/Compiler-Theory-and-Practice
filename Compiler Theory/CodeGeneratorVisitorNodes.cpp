@@ -86,18 +86,25 @@ void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
     }
 }
 void CodeGeneratorVisitorNode::visit( ASTVariableDecl *pointer){
-    //Adding the relevant instructions to the printList
-//    printList[currentStoredFunctionName] += "push 1\nalloc\n";
+    //Accepting Identifier and expression
     pointer->identifier->accept(this);
     pointer->expression->accept(this);
+    //Adding the respective instructions to the printList
     auto iter = symbolTable->scopeStack.end();iter--;
     printList[currentStoredFunctionName] += "push "+to_string((*iter).scope.size())+"\n";
     printList[currentStoredFunctionName] += "push "+to_string(frameIndex)+"\n";
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTAssignment *pointer){
-    pointer->identifier->accept(this);
+    string identifier=pointer->identifier->identifier;
     pointer->expression->accept(this);
+
+    string address=symbolTable->ReturnIdentifierAddress(identifier);
+    string delimiter=":";
+
+    printList[currentStoredFunctionName] += "push "+address.substr(1, address.find(delimiter)-1)+"\n";
+    printList[currentStoredFunctionName] += "push "+address.substr(address.find(delimiter)+1, (address.length()-(address.find(delimiter)+2)))+"\n";
+    printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
     //Updating the currentStoredFunctionName, to the identifier
@@ -122,15 +129,18 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionCall *pointer){
 }
 void CodeGeneratorVisitorNode::visit( ASTIdentifier *pointer){
     string identifier=pointer->identifier;
+    //Calling CheckIdentifierExists function, to check whether identifier exists from symbol table
     bool exists=symbolTable->CheckIdentifierExists(identifier,false);
     //Checking whether Identifier exists
     if(exists) {
-        //Calling CheckIdentifierExists function, to check whether identifier exists from symbol table
+        //Adding respective instruction to the printList
         printList[currentStoredFunctionName] += "push " + symbolTable->ReturnIdentifierAddress(identifier) + "\n";
     }
     else {
+        //Calculating and adding the respective identifier storage to the symbol table
         auto iter = symbolTable->scopeStack.end();iter--;
-        (*iter).scope[identifier]["Address"] ="[" + to_string(frameIndex) + ":" + to_string((*iter).scope.size()+1) + "]";
+        (*iter).scope[identifier]["Address"] ="[" + to_string((*iter).scope.size()+1)  + ":" + to_string(frameIndex)+ "]";
+        //Adding respective instruction to the printList
         printList[currentStoredFunctionName] += "push 1\nalloc\n";
     }
 }
