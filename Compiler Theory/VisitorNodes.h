@@ -161,11 +161,13 @@ public:
     vector<string> functionNames;
     map<string,string> printList;
     int frameIndex=0;
+    int conditionalCounter=0;
     bool negativeFlag=false;
     bool notFlag=false;
     string currentStoredFunctionName;
     CodeGeneratorVisitorNode()=default;
     void PrintProgram();
+    static int CalculateJumpAddress(const string& print);
     void visit( ASTNode *pointer)override;
     void visit( ASTProgram *pointer)override;
     void visit( ASTStatement *pointer)override;

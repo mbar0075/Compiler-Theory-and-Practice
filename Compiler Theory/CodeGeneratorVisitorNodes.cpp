@@ -79,11 +79,30 @@ void CodeGeneratorVisitorNode::visit( ASTWhileStatement *pointer){
     pointer->block->accept(this);
 }
 void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
+    conditionalCounter++;
     pointer->expression->accept(this);
-    pointer->firstBlock->accept(this);
+    string currentStoredProgram=printList[currentStoredFunctionName];
+    int initialCount= CalculateJumpAddress(currentStoredProgram);
+    string currentInstruction;
+
     if(pointer->secondBlock!= nullptr){
         pointer->secondBlock->accept(this);
+        currentInstruction="push #PC+"+ to_string(CalculateJumpAddress(printList[currentStoredFunctionName])-1)+"\ncjmp2\n";
+        printList[currentStoredFunctionName]=currentStoredProgram+currentInstruction;
+        pointer->secondBlock->accept(this);
     }
+    initialCount= CalculateJumpAddress(printList[currentStoredFunctionName]);
+    currentStoredProgram=printList[currentStoredFunctionName];
+    pointer->firstBlock->accept(this);
+    if(pointer->secondBlock!= nullptr){
+        currentInstruction="push #PC+"+ to_string(CalculateJumpAddress(printList[currentStoredFunctionName])-initialCount+2)+"\njmp\n";
+    }
+    else{
+        currentInstruction="push #PC+"+ to_string(CalculateJumpAddress(printList[currentStoredFunctionName])-initialCount+2)+"\ncjmp\n";
+    }
+    printList[currentStoredFunctionName]=currentStoredProgram+currentInstruction;
+    pointer->firstBlock->accept(this);
+    conditionalCounter--;
 }
 void CodeGeneratorVisitorNode::visit( ASTVariableDecl *pointer){
     //Accepting Identifier and expression
@@ -323,6 +342,16 @@ void CodeGeneratorVisitorNode::PrintProgram() {
     for(auto & functionName : functionNames){
         cout << printList[functionName];
     }
+}
+
+int CodeGeneratorVisitorNode::CalculateJumpAddress(const string& print) {
+    int noOfLines=0;
+    for(auto &character : print){
+        if(character=='\n'){
+            noOfLines++;
+        }
+    }
+    return noOfLines+1;
 }
 //Destructor for class
 CodeGeneratorVisitorNode::~CodeGeneratorVisitorNode(){
