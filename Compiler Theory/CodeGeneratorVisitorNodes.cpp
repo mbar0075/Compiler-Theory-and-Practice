@@ -7,10 +7,10 @@ void CodeGeneratorVisitorNode::visit( ASTLiteral *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTType *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTFactor *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTExpr *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTFormalParam *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTFormalParams *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTSimpleExpr *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTTerm *pointer){}
+void CodeGeneratorVisitorNode::visit( ASTFormalParam *pointer){}
+void CodeGeneratorVisitorNode::visit( ASTFormalParams *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTProgram *pointer){
     //Creating a new Scope and pushing it onto the symbol Table
     Scope initialScope;
@@ -19,7 +19,7 @@ void CodeGeneratorVisitorNode::visit( ASTProgram *pointer){
     currentStoredFunctionName="main";
     functionNames.emplace_back("main");
     //Updating the print key for the currentStoredFunctionName in the symbol table
-    printList[currentStoredFunctionName]+=".main\n";
+    printList[currentStoredFunctionName]+=".main\noframe\n";
     string currentFunctionName=currentStoredFunctionName;
     //Iterating through all the statements in the program, and resetting the currentStoredFunctionName, for every iteration
     for(auto iter = pointer->program.begin(); iter < pointer->program.end(); iter++)
@@ -29,7 +29,7 @@ void CodeGeneratorVisitorNode::visit( ASTProgram *pointer){
     }
     currentStoredFunctionName=currentFunctionName;
     //Updating the print key for the currentStoredFunctionName in the symbol table
-    printList[currentStoredFunctionName]+="halt\n";
+    printList[currentStoredFunctionName]+="cframe\nhalt\n";
     PrintProgram();
     //Popping initialScope from the symbol Table
     symbolTable->pop();
@@ -87,23 +87,30 @@ void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
 }
 void CodeGeneratorVisitorNode::visit( ASTVariableDecl *pointer){
     //Accepting Identifier and expression
-    pointer->identifier->accept(this);
+    printList[currentStoredFunctionName] += "push 1\nalloc\n";
     pointer->expression->accept(this);
     //Adding the respective instructions to the printList
     auto iter = symbolTable->scopeStack.end();iter--;
-    printList[currentStoredFunctionName] += "push "+to_string((*iter).scope.size())+"\n";
+
+    string identifier=pointer->identifier->identifier;
+    //Calculating and adding the respective identifier storage to the symbol table
+    (*iter).scope[identifier]["Address"] ="[" + to_string((*iter).scope.size())  + ":" + to_string(frameIndex)+ "]";
+    //Adding respective instruction to the printList
+
+    printList[currentStoredFunctionName] += "push "+to_string((*iter).scope.size()-1)+"\n";
     printList[currentStoredFunctionName] += "push "+to_string(frameIndex)+"\n";
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTAssignment *pointer){
     string identifier=pointer->identifier->identifier;
+    //Accepting expression
     pointer->expression->accept(this);
-
+    //Retrieving the memory address from the symbol table
     string address=symbolTable->ReturnIdentifierAddress(identifier);
     string delimiter=":";
-
-    printList[currentStoredFunctionName] += "push "+address.substr(1, address.find(delimiter)-1)+"\n";
-    printList[currentStoredFunctionName] += "push "+address.substr(address.find(delimiter)+1, (address.length()-(address.find(delimiter)+2)))+"\n";
+    //Adding the relevant instructions to the printList
+    printList[currentStoredFunctionName] += "push "+address.substr(6, address.find(delimiter)-6)+"\n";
+    printList[currentStoredFunctionName] += "push "+address.substr(address.find(delimiter)+1, (address.length()-(address.find(delimiter)+3)))+"\n";
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
@@ -114,35 +121,40 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
     printList[currentStoredFunctionName]+="\n."+identifier+"\n";
     functionNames.emplace_back(identifier);
     //Accepting block
-    pointer->block->accept(this);
+    //pointer->block->accept(this);
+    Scope funScope;
+    symbolTable->push(funScope);
+    //Incrementing frameIndex and adding oframe instruction to the printList
+    frameIndex++;
+    string currentFunctionName=currentStoredFunctionName;
+    //Iterating through all the statements in the block, and resetting the currentStoredFunctionName, for every iteration
+    for(auto iter = pointer->block->statements.begin(); iter < pointer->block->statements.end(); iter++)
+    {
+        currentStoredFunctionName=currentFunctionName;
+        ((*iter))->accept(this);
+    }
+    //Adding the ret instruction to the printList
+    printList[currentStoredFunctionName]+="ret\n";
+    //Popping initialScope from the symbol Table
+    symbolTable->pop();
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionCall *pointer){
     //Checking whether actualParams is not a nullptr
+    printList[currentStoredFunctionName] +="oframe\n";
     if(pointer->actualParams!= nullptr) {
         pointer->actualParams->accept(this);
     }
     else{
-        printList[currentStoredFunctionName] +="push 0";
+        printList[currentStoredFunctionName] +="push 0\n";
     }
     //Adding the push functionName instruction and call instruction to the printList
-    printList[currentStoredFunctionName]+= "\npush ." +pointer->identifier->identifier + "\ncall\n";
+    printList[currentStoredFunctionName]+= "push ." +pointer->identifier->identifier + "\ncall\n";
+    printList[currentStoredFunctionName] +="cframe\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTIdentifier *pointer){
     string identifier=pointer->identifier;
-    //Calling CheckIdentifierExists function, to check whether identifier exists from symbol table
-    bool exists=symbolTable->CheckIdentifierExists(identifier,false);
-    //Checking whether Identifier exists
-    if(exists) {
-        //Adding respective instruction to the printList
-        printList[currentStoredFunctionName] += "push " + symbolTable->ReturnIdentifierAddress(identifier) + "\n";
-    }
-    else {
-        //Calculating and adding the respective identifier storage to the symbol table
-        auto iter = symbolTable->scopeStack.end();iter--;
-        (*iter).scope[identifier]["Address"] ="[" + to_string((*iter).scope.size()+1)  + ":" + to_string(frameIndex)+ "]";
-        //Adding respective instruction to the printList
-        printList[currentStoredFunctionName] += "push 1\nalloc\n";
-    }
+    //Adding respective instruction to the printList
+    printList[currentStoredFunctionName] +=  symbolTable->ReturnIdentifierAddress(identifier);
 }
 void CodeGeneratorVisitorNode::visit( ASTMultiplicativeOp *pointer){
     //Accepting right and left factors
@@ -198,9 +210,8 @@ void CodeGeneratorVisitorNode::visit( ASTRelationalOp *pointer){
     }
 }
 void CodeGeneratorVisitorNode::visit( ASTRtrnStatement *pointer){
-    //Accepting expression, and adding the respective ret instruction to the printList
+    //Accepting expression
     pointer->expression->accept(this);
-    printList[currentStoredFunctionName]+="ret\n";
 }
 void CodeGeneratorVisitorNode::visit(ASTClearStatement *pointer) {
     //Adding the respective push instruction, followed by clear instruction to the printList
@@ -291,8 +302,6 @@ void CodeGeneratorVisitorNode::visit( ASTActualParams *pointer){
     {
         ((*iter))->accept(this);
     }
-    //Adding the push instruction to the printList
-    printList[currentStoredFunctionName]+="push " + to_string(pointer->expressions.size());
 }
 void CodeGeneratorVisitorNode::visit( ASTPixelStatement *pointer){
     //Iterating through all the Pixel Expressions

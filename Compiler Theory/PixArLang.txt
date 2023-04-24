@@ -1,0 +1,12 @@
+
+fun Add(k:int)-> int{
+let p:int =10;
+p=17;
+return k+p;
+}
+
+let x:int =5;
+let y:int =7;
+x=Add(x);
+__print x;
+

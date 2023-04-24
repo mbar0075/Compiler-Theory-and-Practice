@@ -65,9 +65,9 @@ string SymbolTable::ReturnIdentifierAddress(const string &identifier) {
     for(iter--; iter >= scopeStack.begin(); iter--){
         //If Identifier is found, returning its Address
         if((*iter).scope.find(identifier) != (*iter).scope.end()){
-            return (*iter).scope[identifier]["Address"];
+            return "push "+(*iter).scope[identifier]["Address"]+"\n";
         }
     }
-    //Returning 0
-    return "0";
+    //Returning empty string
+    return "";
 }
