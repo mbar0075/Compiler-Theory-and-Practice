@@ -75,8 +75,27 @@ void CodeGeneratorVisitorNode::visit( ASTForStatement *pointer){
     pointer->block->accept(this);
 }
 void CodeGeneratorVisitorNode::visit( ASTWhileStatement *pointer){
+    conditionalCounter++;
     pointer->expression->accept(this);
-    pointer->block->accept(this);
+    string previousFunction=currentStoredFunctionName;
+    string newKey="While "+to_string(conditionalCounter);
+    currentStoredFunctionName=newKey;
+
+    for(auto iter = pointer->block->statements.begin(); iter < pointer->block->statements.end(); iter++)
+    {
+        ((*iter))->accept(this);
+    }
+    int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName])+1;
+    printList[previousFunction]+="not\npush #PC+"+ to_string(noOfLines)+"\ncjmp2\n"+printList[currentStoredFunctionName];
+    pointer->expression->accept(this);
+    noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName])+1;
+    printList[previousFunction]+=printList[currentStoredFunctionName]+"not\npush #PC-"+ to_string(noOfLines)+"\ncjmp2\n";
+
+    //Erasing key
+    auto it=printList.find(newKey);
+    printList.erase (it);
+    currentStoredFunctionName=previousFunction;
+    conditionalCounter--;
 }
 void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
     conditionalCounter++;
@@ -98,7 +117,7 @@ void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
         currentInstruction="push #PC+"+ to_string(noOfLines)+"\njmp\n";
     }
     else{
-        currentInstruction="push #PC+"+ to_string(noOfLines)+"\ncjmp\n";
+        currentInstruction="not\npush #PC+"+ to_string(noOfLines)+"\ncjmp2\n";
     }
     printList[previousFunction]+=currentInstruction+printList[currentStoredFunctionName];
 
