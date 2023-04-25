@@ -81,27 +81,31 @@ void CodeGeneratorVisitorNode::visit( ASTWhileStatement *pointer){
 void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
     conditionalCounter++;
     pointer->expression->accept(this);
-    string currentStoredProgram=printList[currentStoredFunctionName];
-    int initialCount= CalculateJumpAddress(currentStoredProgram);
-    string currentInstruction;
+    string previousFunction=currentStoredFunctionName;
+    string newKey="If "+to_string(conditionalCounter);
+    currentStoredFunctionName=newKey;
 
     if(pointer->secondBlock!= nullptr){
         pointer->secondBlock->accept(this);
-        currentInstruction="push #PC+"+ to_string(CalculateJumpAddress(printList[currentStoredFunctionName])-1)+"\ncjmp2\n";
-        printList[currentStoredFunctionName]=currentStoredProgram+currentInstruction;
-        pointer->secondBlock->accept(this);
+        int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName])+3;
+        printList[previousFunction]+="push #PC+"+to_string(noOfLines)+"\ncjmp2\n"+printList[currentStoredFunctionName];
+        printList[currentStoredFunctionName]="";
     }
-    initialCount= CalculateJumpAddress(printList[currentStoredFunctionName]);
-    currentStoredProgram=printList[currentStoredFunctionName];
+    string currentInstruction;
     pointer->firstBlock->accept(this);
+    int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName])+1;
     if(pointer->secondBlock!= nullptr){
-        currentInstruction="push #PC+"+ to_string(CalculateJumpAddress(printList[currentStoredFunctionName])-initialCount+2)+"\njmp\n";
+        currentInstruction="push #PC+"+ to_string(noOfLines)+"\njmp\n";
     }
     else{
-        currentInstruction="push #PC+"+ to_string(CalculateJumpAddress(printList[currentStoredFunctionName])-initialCount+2)+"\ncjmp\n";
+        currentInstruction="push #PC+"+ to_string(noOfLines)+"\ncjmp\n";
     }
-    printList[currentStoredFunctionName]=currentStoredProgram+currentInstruction;
-    pointer->firstBlock->accept(this);
+    printList[previousFunction]+=currentInstruction+printList[currentStoredFunctionName];
+
+    //Erasing key
+    auto it=printList.find(newKey);
+    printList.erase (it);
+    currentStoredFunctionName=previousFunction;
     conditionalCounter--;
 }
 void CodeGeneratorVisitorNode::visit( ASTVariableDecl *pointer){
@@ -204,7 +208,7 @@ void CodeGeneratorVisitorNode::visit( ASTAdditiveOp *pointer){
     }
     else if(pointer->additiveOp=="and"){
         //Since min of 1 or something is 0, and thus both need to be 1
-        printList[currentStoredFunctionName]+="min\n";
+        printList[currentStoredFunctionName]+="and\n";
     }
 }
 void CodeGeneratorVisitorNode::visit( ASTRelationalOp *pointer){
@@ -218,7 +222,7 @@ void CodeGeneratorVisitorNode::visit( ASTRelationalOp *pointer){
     else if(pointer->relationalOp==">"){
         printList[currentStoredFunctionName]+="gt\n";
     }
-    else if(pointer->relationalOp=="=="||pointer->relationalOp=="!="){
+    else if(pointer->relationalOp=="=="){
         printList[currentStoredFunctionName]+="eq\n";
     }
     else if(pointer->relationalOp==">="){
@@ -226,6 +230,9 @@ void CodeGeneratorVisitorNode::visit( ASTRelationalOp *pointer){
     }
     else if(pointer->relationalOp=="<="){
         printList[currentStoredFunctionName]+="le\n";
+    }
+    else if(pointer->relationalOp=="!="){
+        printList[currentStoredFunctionName]+="neq\n";
     }
 }
 void CodeGeneratorVisitorNode::visit( ASTRtrnStatement *pointer){

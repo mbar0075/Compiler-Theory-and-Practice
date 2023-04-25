@@ -1,5 +1,7 @@
-if(5>7){
-__print 5;
+if(7>5){
+    if(4>3){
+    __print 5;
+    }
 }
 else{
 __print 7;
