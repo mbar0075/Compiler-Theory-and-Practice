@@ -1,5 +1,9 @@
-let x:int=0;
-while(x<3){
-__print x;
-x=x+1;
+let x:int = 0;
+
+fun y()->int{
+    __print x;
+    return x;
 }
+
+let z:int = y();
+__print z;
