@@ -365,14 +365,8 @@ void SemanticVisitorNode::visit( ASTPadRead *pointer){
     }
 }
 void SemanticVisitorNode::visit( ASTPadRandi *pointer){
-    //Calling accept method on expression, and Retrieving Type
+    //Calling accept method on expression
     pointer->expression->accept(this);
-    string Type=currentStoredType;
-    //Checking for Type Mismatch Error
-    if(Type!="int"){
-        cerr<<"\nType Mismatch Error: PadRandi can only take \"int\" type"<<endl;
-        exit(6);
-    }
 }
 void SemanticVisitorNode::visit( ASTPadWidth *pointer){
     //Setting the currentStoredType to int

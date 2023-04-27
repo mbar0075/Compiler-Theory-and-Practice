@@ -9,8 +9,11 @@ void CodeGeneratorVisitorNode::visit( ASTFactor *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTExpr *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTSimpleExpr *pointer){}
 void CodeGeneratorVisitorNode::visit( ASTTerm *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTFormalParam *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTFormalParams *pointer){}
+void CodeGeneratorVisitorNode::visit( ASTFormalParam *pointer){
+}
+void CodeGeneratorVisitorNode::visit( ASTFormalParams *pointer){
+
+}
 void CodeGeneratorVisitorNode::visit( ASTProgram *pointer){
     //Creating a new Scope and pushing it onto the symbol Table
     Scope initialScope;
@@ -19,7 +22,7 @@ void CodeGeneratorVisitorNode::visit( ASTProgram *pointer){
     currentStoredFunctionName="main";
     functionNames.emplace_back("main");
     //Updating the print key for the currentStoredFunctionName in the symbol table
-    printList[currentStoredFunctionName]+=".main\noframe\n";
+    printList[currentStoredFunctionName]+=".main\npush 0\noframe\n";
     string currentFunctionName=currentStoredFunctionName;
     //Iterating through all the statements in the program, and resetting the currentStoredFunctionName, for every iteration
     for(auto iter = pointer->program.begin(); iter < pointer->program.end(); iter++)
@@ -39,8 +42,8 @@ void CodeGeneratorVisitorNode::visit( ASTBlock *pointer){
     Scope blockScope;
     symbolTable->push(blockScope);
     //Incrementing frameIndex and adding oframe instruction to the printList
-//    frameIndex++;
-//    printList[currentStoredFunctionName]+="oframe\n";
+    frameIndex++;
+    printList[currentStoredFunctionName]+="push 0\noframe\n";
     string currentFunctionName=currentStoredFunctionName;
     //Iterating through all the statements in the block, and resetting the currentStoredFunctionName, for every iteration
     for(auto iter = pointer->statements.begin(); iter < pointer->statements.end(); iter++)
@@ -49,8 +52,8 @@ void CodeGeneratorVisitorNode::visit( ASTBlock *pointer){
         ((*iter))->accept(this);
     }
     //Decrementing frameIndex and adding cframe instruction to the printList
-//    frameIndex--;
-//    printList[currentStoredFunctionName]+="cframe\n";
+    frameIndex--;
+    printList[currentStoredFunctionName]+="cframe\n";
     //Popping blockScope from the symbol Table
     symbolTable->pop();
 }
@@ -149,11 +152,11 @@ void CodeGeneratorVisitorNode::visit( ASTVariableDecl *pointer){
 
     string identifier=pointer->identifier->identifier;
     //Calculating and adding the respective identifier storage to the symbol table
-    (*iter).scope[identifier]["Address"] ="[" + to_string((*iter).scope.size())  + ":" + to_string(frameIndex)+ "]";
+    (*iter).scope[identifier]["Address"] ="[" + to_string((*iter).scope.size())  + ":" + to_string(0)+ "]";
     //Adding respective instruction to the printList
 
     printList[currentStoredFunctionName] += "push "+to_string((*iter).scope.size()-1)+"\n";
-    printList[currentStoredFunctionName] += "push "+to_string(frameIndex)+"\n";
+    printList[currentStoredFunctionName] += "push "+to_string(0)+"\n";
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTAssignment *pointer){
@@ -169,6 +172,7 @@ void CodeGeneratorVisitorNode::visit( ASTAssignment *pointer){
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
+    frameIndex++;
     //Updating the currentStoredFunctionName, to the identifier
     string identifier=pointer->identifier->identifier;
     currentStoredFunctionName=identifier;
@@ -176,18 +180,36 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
     printList[currentStoredFunctionName]+="\n."+identifier+"\n";
     functionNames.emplace_back(identifier);
 
+
+
     Scope funScope;
     symbolTable->push(funScope);
+
+
+    auto scopeIter = symbolTable->scopeStack.end();scopeIter--;
+    for(auto iter = pointer->formalParams->formalParams.begin(); iter < pointer->formalParams->formalParams.end(); iter++)
+    {
+        string paramIdentifier=((*iter))->identifier->identifier;
+        (*scopeIter).scope[paramIdentifier]["Address"] ="[" + to_string((*scopeIter).scope.size())  + ":" + to_string(frameIndex)+ "]";
+    }
+
+
     //Incrementing frameIndex and adding oframe instruction to the printList
-    frameIndex++;
-    printList[currentStoredFunctionName]+="oframe\n";
     //Accepting block
     pointer->block->accept(this);
-    printList[currentStoredFunctionName]+="cframe\n";
+
     //Adding the ret instruction to the printList
     printList[currentStoredFunctionName]+="ret\n";
-    //Popping initialScope from the symbol Table
+
+    scopeIter = symbolTable->scopeStack.end();scopeIter--;
+    for(auto iter = pointer->formalParams->formalParams.begin(); iter < pointer->formalParams->formalParams.end(); iter++)
+    {
+        string paramIdentifier=((*iter))->identifier->identifier;
+        auto it=(*scopeIter).scope.find(paramIdentifier);
+        (*scopeIter).scope.erase (it);
+    }
     symbolTable->pop();
+    //Popping initialScope from the symbol Table
     frameIndex--;
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionCall *pointer){
@@ -218,7 +240,6 @@ void CodeGeneratorVisitorNode::visit( ASTMultiplicativeOp *pointer){
         printList[currentStoredFunctionName]+="div\n";
     }
     else if(pointer->multiplicativeOp=="or"){
-        //Since max of 1 or something is 1, thus having either 1 will result in 1
         printList[currentStoredFunctionName]+="or\n";
     }
 }
@@ -234,7 +255,6 @@ void CodeGeneratorVisitorNode::visit( ASTAdditiveOp *pointer){
         printList[currentStoredFunctionName]+="sub\n";
     }
     else if(pointer->additiveOp=="and"){
-        //Since min of 1 or something is 0, and thus both need to be 1
         printList[currentStoredFunctionName]+="and\n";
     }
 }

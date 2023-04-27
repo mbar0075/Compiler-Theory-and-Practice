@@ -61,12 +61,21 @@ string SymbolTable::ReturnFunctionParameters(const string &identifier) {
 }
 //Method which given an Identifier, returns the Identifier Address
 string SymbolTable::ReturnIdentifierAddress(const string &identifier) {
+    int frameCounter=0;
     auto iter= scopeStack.end();
     for(iter--; iter >= scopeStack.begin(); iter--){
         //If Identifier is found, returning its Address
         if((*iter).scope.find(identifier) != (*iter).scope.end()){
-            return "push "+(*iter).scope[identifier]["Address"]+"\n";
+            //Parsing through address to retrieve the scopeIndex, and frame Index
+            string address=(*iter).scope[identifier]["Address"];
+            string delimiter=":";
+            string scopeIndex=address.substr(1, address.find(delimiter)-1);
+            int frameIndex=stoi(address.substr(address.find(delimiter) + 1,(address.length() - (address.find(delimiter) + 1))))+frameCounter;
+            //Returning Instruction with updated frame Index
+            return "push ["+scopeIndex+":"+ to_string(frameIndex)+"]\n";
         }
+        //Incrementing frame Counter
+        frameCounter++;
     }
     //Returning empty string
     return "";

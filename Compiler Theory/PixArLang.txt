@@ -1,9 +1,13 @@
-let x:int = 0;
+fun Spiral(xStart:int,yStart:int)-> int{
+    for(let x:int=xStart; x<=__width; x=x+1){
+        for(let y:int=yStart; y<=__height; y=y+1){
+            __pixel x,y, __randi #ffffff;
+        }
+    }
 
-fun y()->int{
-    __print x;
-    return x;
+    return 0;
 }
 
-let z:int = y();
-__print z;
+let width:int=3;
+let height:int=3;
+let program:int=Spiral(5,5);

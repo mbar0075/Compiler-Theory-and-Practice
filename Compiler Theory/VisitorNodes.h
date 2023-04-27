@@ -165,6 +165,7 @@ public:
     bool negativeFlag=false;
     bool notFlag=false;
     string currentStoredFunctionName;
+    map<string,string> parameterMappings;
     CodeGeneratorVisitorNode()=default;
     void PrintProgram();
     static int CalculateJumpAddress(const string& print);

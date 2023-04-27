@@ -1,0 +1,24 @@
+let xWidth:int=3;
+let yWidth:int=4;
+for(let x:int=0; x<=__width; x=x+1){
+    for(let y:int=0; y<=__height; y=y+1){
+        __pixelr x,y,xWidth,yWidth,__randi #ffffff;
+    }
+}
+__clear #ffffff;
+let xLimit:int =100;
+let xCount:int =0;
+while(xCount<xLimit){
+    __pixelr __randi __width,__randi __height,xWidth,yWidth,__randi #ffffff;
+    xCount=xCount+1;
+}
+xCount=0;
+while(xCount<__height * __width){
+    __pixelr __randi __width,__randi __height,xWidth,yWidth,#ffffff;
+    xCount=xCount+1;
+}
+xCount=0;
+while(xCount<__height * __width){
+    __pixel __randi __width,__randi __height,__randi #ffffff;
+    xCount=xCount+1;
+}

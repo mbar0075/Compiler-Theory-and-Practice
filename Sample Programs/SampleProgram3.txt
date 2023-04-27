@@ -1,0 +1,13 @@
+let xMin:int =0;
+let yMin:int=0;
+let counter:int =0;
+__clear #ffffff;
+while((counter<(__width*__height))){
+    __clear #ffffff;
+    xMin=__randi __width;
+    yMin=__randi __height;
+    counter=counter+1;
+    __pixelr xMin,yMin,5,5,#ffff00;
+    __delay 100;
+}
+__print 0;

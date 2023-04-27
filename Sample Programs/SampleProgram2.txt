@@ -1,0 +1,17 @@
+let xMin:int =0;
+let yMin:int=0;
+let counter:int =0;
+__clear #ffffff;
+while((counter<(__width*__height*4))){
+    xMin=__randi __width;
+    yMin=__randi __height;
+    counter=counter+1;
+    if(counter<__width*__height*3)
+    {
+        __pixel xMin,yMin,__randi #ffffff;
+    }
+    else{
+        __pixelr xMin,yMin,__randi 10,__randi 10,__randi #ffffff;
+    }
+}
+__print 0;
