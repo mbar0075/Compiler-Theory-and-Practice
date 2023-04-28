@@ -1,38 +1,16 @@
+let y:int =5;
 fun Spiral(xStart:int,yStart:int)-> int{
     let wEnd:int = __width-1;
     let hEnd:int = __height-1;
     let clr:colour = __randi #ffffff;
-
-    for(let x:int = 0; x<=__width; x=x+1){
-        for(let w:int=xStart; w<wEnd; w=w+1){
-            let buffer:int=xStart;
-            __pixel w,buffer, clr;buffer=buffer+1;
-        }
-        for(let h:int=yStart; h<hEnd; h=h+1){
-            let buffer:int=wEnd;
-            __pixel buffer,h, clr;buffer=buffer-1;
-        }
-        for(let z:int=wEnd; z>xStart; z=z-1){
-              let buffer:int=hEnd;
-            __pixel z,buffer, clr;buffer=buffer-1;
-        }
-
-        for(let v:int=hEnd; v>yStart; v=v-1){
-            let buffer:int=yStart;
-             __pixel buffer,v, clr;buffer=buffer+1;
-        }
-
-        xStart = xStart+1;
-        yStart = yStart+1;
-        wEnd = wEnd-1;
-        hEnd = hEnd-1;
-        clr = __randi #ffffff;
-    }
-
+    __print xStart;
+    __print wEnd;
+    __print y;
     return 0;
 }
+
 
 let width:int=0;
 let height:int=0;
 __clear #ffffff;
-let program:int=Spiral(width,height);
+let program:int=Spiral(90,height); 

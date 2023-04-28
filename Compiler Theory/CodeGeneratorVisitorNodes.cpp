@@ -1,19 +1,17 @@
 //Inclusion of the relevant header File
 #include "VisitorNodes.h"
 
-void CodeGeneratorVisitorNode::visit( ASTNode *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTStatement *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTLiteral *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTType *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTFactor *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTExpr *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTSimpleExpr *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTTerm *pointer){}
-void CodeGeneratorVisitorNode::visit( ASTFormalParam *pointer){
-}
-void CodeGeneratorVisitorNode::visit( ASTFormalParams *pointer){
-
-}
+//visit methods for the relevant AST Nodes passed as parameters
+void CodeGeneratorVisitorNode::visit( ASTNode *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTStatement *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTLiteral *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTType *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTFactor *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTExpr *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTSimpleExpr *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTTerm *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTFormalParam *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
+void CodeGeneratorVisitorNode::visit( ASTFormalParams *pointer){/*Empty Method not being used, however kept since it is virtual method in VisitorNode class*/}
 void CodeGeneratorVisitorNode::visit( ASTProgram *pointer){
     //Creating a new Scope and pushing it onto the symbol Table
     Scope initialScope;
@@ -41,7 +39,7 @@ void CodeGeneratorVisitorNode::visit( ASTBlock *pointer){
     //Creating a new Scope and pushing it onto the symbol Table
     Scope blockScope;
     symbolTable->push(blockScope);
-    //Incrementing frameIndex and adding oframe instruction to the printList
+    //Incrementing frameIndex and adding relevant instructions to the printList
     frameIndex++;
     printList[currentStoredFunctionName]+="push 0\noframe\n";
     string currentFunctionName=currentStoredFunctionName;
@@ -68,98 +66,123 @@ void CodeGeneratorVisitorNode::visit( ASTDelayStatement *pointer){
     printList[currentStoredFunctionName]+="delay\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTForStatement *pointer){
+    //Checking whether the variable declaration node is not a nullptr, and if so will proceed to accept the variableDecl Node
     if(pointer->variableDecl!= nullptr){
         pointer->variableDecl->accept(this);
     }
+    //Incrementing the Conditional Counter
     conditionalCounter++;
+    //Accepting Expression
     pointer->expression->accept(this);
+    //Storing the currentStoredFunctionName in a variable, and calculating the new Function key
     string previousFunction=currentStoredFunctionName;
     string newKey="For "+to_string(conditionalCounter);
+    //Changing the currentStoredFunctionName to newKey, to make the printList to act as a temporary buffer for storing the output
     currentStoredFunctionName=newKey;
-
+    //Accepting block Node
     pointer->block->accept(this);
+    //Checking whether the assignment node is not a nullptr, and if so will proceed to accept the assignment Node
     if(pointer->assignment!= nullptr) {
         pointer->assignment->accept(this);
     }
+    //Accepting Expression
     pointer->expression->accept(this);
+    //Calling CalculateJumpAddress function to obtain the number of address lines are in the current Conditional Statement Block
     int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName]);
-
+    //Adding the respective instructions to the printList for the previousFunction
     printList[previousFunction]+="not\npush #PC+"+ to_string(noOfLines+3)+"\ncjmp2\n"+printList[currentStoredFunctionName];
     printList[previousFunction]+="push #PC-"+ to_string(noOfLines-1)+"\ncjmp2\n";
-
-    //Erasing key
+    //Erasing the newKey from printList, as it is no longer needed
     auto it=printList.find(newKey);
     printList.erase (it);
+    //Resetting variables
     currentStoredFunctionName=previousFunction;
     conditionalCounter--;
 }
 void CodeGeneratorVisitorNode::visit( ASTWhileStatement *pointer){
+    //Incrementing the Conditional Counter
     conditionalCounter++;
+    //Accepting Expression
     pointer->expression->accept(this);
+    //Storing the currentStoredFunctionName in a variable, and calculating the new Function key
     string previousFunction=currentStoredFunctionName;
     string newKey="While "+to_string(conditionalCounter);
+    //Changing the currentStoredFunctionName to newKey, to make the printList to act as a temporary buffer for storing the output
     currentStoredFunctionName=newKey;
-
+    //Accepting block and expression
     pointer->block->accept(this);
     pointer->expression->accept(this);
+    //Calling CalculateJumpAddress function to obtain the number of address lines are in the current Conditional Statement Block
     int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName]);
-
+    //Adding the respective instructions to the printList for the previousFunction
     printList[previousFunction]+="not\npush #PC+"+ to_string(noOfLines+3)+"\ncjmp2\n"+printList[currentStoredFunctionName];
     printList[previousFunction]+="push #PC-"+ to_string(noOfLines-1)+"\ncjmp2\n";
-
-    //Erasing key
+    //Erasing the newKey from printList, as it is no longer needed
     auto it=printList.find(newKey);
     printList.erase (it);
+    //Resetting variables
     currentStoredFunctionName=previousFunction;
     conditionalCounter--;
 }
 void CodeGeneratorVisitorNode::visit( ASTIfStatement *pointer){
+    //Incrementing the Conditional Counter
     conditionalCounter++;
+    //Accepting Expression
     pointer->expression->accept(this);
+    //Storing the currentStoredFunctionName in a variable, and calculating the new Function key
     string previousFunction=currentStoredFunctionName;
     string newKey="If "+to_string(conditionalCounter);
+    //Changing the currentStoredFunctionName to newKey, to make the printList to act as a temporary buffer for storing the output
     currentStoredFunctionName=newKey;
-
+    //Checking secondBlock is not nullptr
     if(pointer->secondBlock!= nullptr){
+        //Accepting secondBlock
         pointer->secondBlock->accept(this);
+        //Calling CalculateJumpAddress function to obtain the number of address lines are in the current Conditional Statement Block
         int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName])+3;
+        //Adding the respective instructions to the printList for the previousFunction, and resetting current buffer
         printList[previousFunction]+="push #PC+"+to_string(noOfLines)+"\ncjmp2\n"+printList[currentStoredFunctionName];
         printList[currentStoredFunctionName]="";
     }
     string currentInstruction;
+    //Accepting the firstBlock
     pointer->firstBlock->accept(this);
+    //Calling CalculateJumpAddress function to obtain the number of address lines are in the current Conditional Statement Block
     int noOfLines=CalculateJumpAddress(printList[currentStoredFunctionName])+1;
+    //Assigning the respective instructions to the currentInstruction, based on whether secondBlock node is a nullptr or not
     if(pointer->secondBlock!= nullptr){
         currentInstruction="push #PC+"+ to_string(noOfLines)+"\njmp\n";
     }
     else{
         currentInstruction="not\npush #PC+"+ to_string(noOfLines)+"\ncjmp2\n";
     }
+    //Adding the respective instructions to the printList for the previousFunction
     printList[previousFunction]+=currentInstruction+printList[currentStoredFunctionName];
-
-    //Erasing key
+    //Erasing the newKey from printList, as it is no longer needed
     auto it=printList.find(newKey);
     printList.erase (it);
+    //Resetting variables
     currentStoredFunctionName=previousFunction;
     conditionalCounter--;
 }
 void CodeGeneratorVisitorNode::visit( ASTVariableDecl *pointer){
-    //Accepting Identifier and expression
-    printList[currentStoredFunctionName] += "push 1\nalloc\n";
-    pointer->expression->accept(this);
     //Adding the respective instructions to the printList
+    printList[currentStoredFunctionName] += "push 1\nalloc\n";
+    //Accepting expression
+    pointer->expression->accept(this);
+    //Retrieving currentScope in symbol table
     auto iter = symbolTable->scopeStack.end();iter--;
-
+    //Retrieving string Identifier
     string identifier=pointer->identifier->identifier;
     //Calculating and adding the respective identifier storage to the symbol table
     (*iter).scope[identifier]["Address"] ="[" + to_string((*iter).scope.size())  + ":" + to_string(0)+ "]";
-    //Adding respective instruction to the printList
-
+    //Adding the relevant instructions to the printList
     printList[currentStoredFunctionName] += "push "+to_string((*iter).scope.size()-1)+"\n";
     printList[currentStoredFunctionName] += "push "+to_string(0)+"\n";
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTAssignment *pointer){
+    //Retrieving string Identifier
     string identifier=pointer->identifier->identifier;
     //Accepting expression
     pointer->expression->accept(this);
@@ -172,6 +195,7 @@ void CodeGeneratorVisitorNode::visit( ASTAssignment *pointer){
     printList[currentStoredFunctionName] += "st\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
+    //Incrementing frameIndex
     frameIndex++;
     //Updating the currentStoredFunctionName, to the identifier
     string identifier=pointer->identifier->identifier;
@@ -180,10 +204,11 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
     printList[currentStoredFunctionName]+="\n."+identifier+"\n";
     functionNames.emplace_back(identifier);
 
+    Scope funScope1;
+    symbolTable->push(funScope1);
 
-
-    Scope funScope;
-    symbolTable->push(funScope);
+    Scope funScope2;
+    symbolTable->push(funScope2);
 
     auto scopeIter = symbolTable->scopeStack.end();
     if(pointer->formalParams!= nullptr) {
@@ -213,6 +238,7 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
         }
     }
     symbolTable->pop();
+    symbolTable->pop();
     //Popping initialScope from the symbol Table
     frameIndex--;
 }
@@ -233,6 +259,7 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionCall *pointer){
     symbolTable->pop();
 }
 void CodeGeneratorVisitorNode::visit( ASTIdentifier *pointer){
+    //Retrieving string Identifier
     string identifier=pointer->identifier;
     //Adding respective instruction to the printList
     printList[currentStoredFunctionName] +=  symbolTable->ReturnIdentifierAddress(identifier);
@@ -348,6 +375,7 @@ void CodeGeneratorVisitorNode::visit( ASTPadRead *pointer){
     printList[currentStoredFunctionName]+="read\n";
 }
 void CodeGeneratorVisitorNode::visit( ASTPadRandi *pointer){
+    //Accepting expression, and adding the respective instruction to the printList
     pointer->expression->accept(this);
     printList[currentStoredFunctionName]+="irnd\n";
 }
@@ -378,12 +406,15 @@ void CodeGeneratorVisitorNode::visit( ASTUnary *pointer){
     negativeFlag=false;
 }
 void CodeGeneratorVisitorNode::visit( ASTActualParams *pointer){
+    //Adding the respective instructions to the printList
     printList[currentStoredFunctionName] +="push "+ to_string(pointer->expressions.size())+"\nalloc\n";
-    int scopeIndex=pointer->expressions.size()-1;
+    //Retrieving the current scopeIndex
+    size_t scopeIndex=pointer->expressions.size()-1;
     //Looping through all the expressions
     auto iter = pointer->expressions.end();
     for(iter--; iter >= pointer->expressions.begin(); iter--)
     {
+        //Accepting expression, and adding the relevant instructions to the printList, whilst decrementing the scopeIndex
         ((*iter))->accept(this);
         printList[currentStoredFunctionName] +="push "+ to_string(scopeIndex)+"\npush 0\nst\n";
         scopeIndex--;
@@ -406,18 +437,24 @@ void CodeGeneratorVisitorNode::visit( ASTPixelStatement *pointer){
 }
 //Function which Prints the Program by iterating through the different Function Names and printing their respective print
 void CodeGeneratorVisitorNode::PrintProgram() {
+    //Looping through the list of FunctionNames in order of first stored
     for(auto & functionName : functionNames){
+        //Outputting the respective print for the current function Name
         cout << printList[functionName];
     }
 }
-
+//Function which Calculates the Jump Address, given a string print buffer
 int CodeGeneratorVisitorNode::CalculateJumpAddress(const string& print) {
+    //Declaring the number of lines
     int noOfLines=0;
+    //Looping through all the characters in the print buffer
     for(auto &character : print){
+        //Checking whether the current character is a '\n', i.e, indicating a new line, thus incrementing the number of lines
         if(character=='\n'){
             noOfLines++;
         }
     }
+    //Returning the number of lines, and adding +1, to cater for the first line
     return noOfLines+1;
 }
 //Destructor for class
