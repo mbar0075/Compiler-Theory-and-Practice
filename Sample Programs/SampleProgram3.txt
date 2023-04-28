@@ -1,13 +1,16 @@
-let xMin:int =0;
-let yMin:int=0;
-let counter:int =0;
-__clear #ffffff;
-while((counter<(__width*__height))){
+fun RandomiseBall(maxXWidth:int,maxYWidth:int,xLimit:int)->int{
     __clear #ffffff;
-    xMin=__randi __width;
-    yMin=__randi __height;
-    counter=counter+1;
-    __pixelr xMin,yMin,5,5,#ffff00;
-    __delay 100;
+    let xCount:int =0;
+    while(xCount<xLimit){
+        __clear #ffffff;
+        __pixelr __randi __width,__randi __height,maxXWidth,maxYWidth, #ffff00;
+        xCount=xCount+1;
+        __delay 70;
+    }
+    return 2;
 }
+
+let xLimit:int =100;
+let randomise4:int=RandomiseBall(5,5,__width*__height*3);
 __print 0;
+

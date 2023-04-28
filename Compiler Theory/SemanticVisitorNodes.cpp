@@ -166,6 +166,7 @@ void SemanticVisitorNode::visit( ASTAssignment *pointer){
     }
 }
 void SemanticVisitorNode::visit( ASTFunctionDecl *pointer){
+
     //Setting returnFlag to true
     returnFlag=true;
     //Retrieving access to the last scope pushed in the symbol table
@@ -178,6 +179,11 @@ void SemanticVisitorNode::visit( ASTFunctionDecl *pointer){
     //Checking for Semantic Error
     if(exists){
         cerr<<"\nSemantic Error: Identifier already exists, cannot create Function with name: \""<<identifier<<"()\""<<endl;
+        exit(5);
+    }
+    //Checking for Semantic Error (Nested Function Declarations)
+    if(!currentStoredFunctionName.empty()){
+        cerr<<"\nSemantic Error: Cannot have a Nested Function Declaration of : \""<<identifier<<"()\" in Function: \""<<currentStoredFunctionName<<"()\""<<endl;
         exit(5);
     }
     //Updating symbol table for current Identifier, and updating currentStoredFunctionName

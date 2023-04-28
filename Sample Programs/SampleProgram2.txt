@@ -1,17 +1,13 @@
-let xMin:int =0;
-let yMin:int=0;
-let counter:int =0;
-__clear #ffffff;
-while((counter<(__width*__height*4))){
-    xMin=__randi __width;
-    yMin=__randi __height;
-    counter=counter+1;
-    if(counter<__width*__height*3)
-    {
-        __pixel xMin,yMin,__randi #ffffff;
+fun Randomise4(maxXWidth:int,maxYWidth:int,xLimit:int)->int{
+    __clear #ffffff;
+    let xCount:int =0;
+    while(xCount<xLimit){
+        __pixelr __randi __width,__randi __height,__randi maxXWidth,__randi maxYWidth,__randi #ffffff;
+        xCount=xCount+1;
     }
-    else{
-        __pixelr xMin,yMin,__randi 10,__randi 10,__randi #ffffff;
-    }
+    return 2;
 }
+
+let xLimit:int =100;
+let randomise4:int=Randomise4(10,10,__width*__height*3);
 __print 0;

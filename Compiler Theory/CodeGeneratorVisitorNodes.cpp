@@ -185,14 +185,16 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
     Scope funScope;
     symbolTable->push(funScope);
 
-
-    auto scopeIter = symbolTable->scopeStack.end();scopeIter--;
-    for(auto iter = pointer->formalParams->formalParams.begin(); iter < pointer->formalParams->formalParams.end(); iter++)
-    {
-        string paramIdentifier=((*iter))->identifier->identifier;
-        (*scopeIter).scope[paramIdentifier]["Address"] ="[" + to_string((*scopeIter).scope.size())  + ":" + to_string(frameIndex)+ "]";
+    auto scopeIter = symbolTable->scopeStack.end();
+    if(pointer->formalParams!= nullptr) {
+        scopeIter--;
+        for (auto iter = pointer->formalParams->formalParams.begin();
+             iter < pointer->formalParams->formalParams.end(); iter++) {
+            string paramIdentifier = ((*iter))->identifier->identifier;
+            (*scopeIter).scope[paramIdentifier]["Address"] =
+                    "[" + to_string((*scopeIter).scope.size()) + ":" + to_string(frameIndex) + "]";
+        }
     }
-
 
     //Incrementing frameIndex and adding oframe instruction to the printList
     //Accepting block
@@ -200,28 +202,35 @@ void CodeGeneratorVisitorNode::visit( ASTFunctionDecl *pointer){
 
     //Adding the ret instruction to the printList
     printList[currentStoredFunctionName]+="ret\n";
-
-    scopeIter = symbolTable->scopeStack.end();scopeIter--;
-    for(auto iter = pointer->formalParams->formalParams.begin(); iter < pointer->formalParams->formalParams.end(); iter++)
-    {
-        string paramIdentifier=((*iter))->identifier->identifier;
-        auto it=(*scopeIter).scope.find(paramIdentifier);
-        (*scopeIter).scope.erase (it);
+    if(pointer->formalParams!= nullptr) {
+        scopeIter = symbolTable->scopeStack.end();
+        scopeIter--;
+        for (auto iter = pointer->formalParams->formalParams.begin();
+             iter < pointer->formalParams->formalParams.end(); iter++) {
+            string paramIdentifier = ((*iter))->identifier->identifier;
+            auto it = (*scopeIter).scope.find(paramIdentifier);
+            (*scopeIter).scope.erase(it);
+        }
     }
     symbolTable->pop();
     //Popping initialScope from the symbol Table
     frameIndex--;
 }
 void CodeGeneratorVisitorNode::visit( ASTFunctionCall *pointer){
+    Scope funScope;
+    symbolTable->push(funScope);
+    printList[currentStoredFunctionName] +="oframe\n";
     //Checking whether actualParams is not a nullptr
     if(pointer->actualParams!= nullptr) {
         pointer->actualParams->accept(this);
     }
     else{
-        printList[currentStoredFunctionName] +="push 0\n";
+        printList[currentStoredFunctionName] +="push 0\nalloc\n";
     }
     //Adding the push functionName instruction and call instruction to the printList
     printList[currentStoredFunctionName]+= "push ." +pointer->identifier->identifier + "\ncall\n";
+    printList[currentStoredFunctionName] +="cframe\n";
+    symbolTable->pop();
 }
 void CodeGeneratorVisitorNode::visit( ASTIdentifier *pointer){
     string identifier=pointer->identifier;
@@ -369,11 +378,15 @@ void CodeGeneratorVisitorNode::visit( ASTUnary *pointer){
     negativeFlag=false;
 }
 void CodeGeneratorVisitorNode::visit( ASTActualParams *pointer){
+    printList[currentStoredFunctionName] +="push "+ to_string(pointer->expressions.size())+"\nalloc\n";
+    int scopeIndex=pointer->expressions.size()-1;
     //Looping through all the expressions
     auto iter = pointer->expressions.end();
     for(iter--; iter >= pointer->expressions.begin(); iter--)
     {
         ((*iter))->accept(this);
+        printList[currentStoredFunctionName] +="push "+ to_string(scopeIndex)+"\npush 0\nst\n";
+        scopeIndex--;
     }
 }
 void CodeGeneratorVisitorNode::visit( ASTPixelStatement *pointer){

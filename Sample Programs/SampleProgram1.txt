@@ -1,24 +1,44 @@
-let xWidth:int=3;
-let yWidth:int=4;
-for(let x:int=0; x<=__width; x=x+1){
-    for(let y:int=0; y<=__height; y=y+1){
-        __pixelr x,y,xWidth,yWidth,__randi #ffffff;
+fun Randomise1(xWidth:int,yWidth:int)->int{
+    __clear #ffffff;
+    for(let x:int=0; x<=__width; x=x+1){
+        for(let y:int=0; y<=__height; y=y+1){
+            __pixelr x,y,xWidth,yWidth,__randi #ffffff;
+        }
     }
+    return 1;
 }
-__clear #ffffff;
+
+fun Randomise2(xWidth:int,yWidth:int,xLimit:int)->int{
+    __clear #ffffff;
+    let xCount:int =0;
+    while(xCount<xLimit){
+        __pixelr __randi __width,__randi __height,xWidth,yWidth,__randi #ffffff;
+        xCount=xCount+1;
+    }
+    return 2;
+}
+
+fun ClearRandom(xWidth:int,yWidth:int,xLimit:int)->int{
+   let xCount:int =0;
+   while(xCount<xLimit){
+       __pixelr __randi __width,__randi __height,xWidth,yWidth,#ffffff;
+       xCount=xCount+1;
+   }
+   return 1;
+}
+
+fun Randomise3(xLimit:int)->int{
+    let xCount:int =0;
+    while(xCount<xLimit){
+        __pixel __randi __width,__randi __height,__randi #ffffff;
+        xCount=xCount+1;
+    }
+    return 3;
+}
+
 let xLimit:int =100;
-let xCount:int =0;
-while(xCount<xLimit){
-    __pixelr __randi __width,__randi __height,xWidth,yWidth,__randi #ffffff;
-    xCount=xCount+1;
-}
-xCount=0;
-while(xCount<__height * __width){
-    __pixelr __randi __width,__randi __height,xWidth,yWidth,#ffffff;
-    xCount=xCount+1;
-}
-xCount=0;
-while(xCount<__height * __width){
-    __pixel __randi __width,__randi __height,__randi #ffffff;
-    xCount=xCount+1;
-}
+let randomise1:int=Randomise1(4,4);
+let randomise2:int=Randomise2(3,3,__width*__height);
+let clear1:int =ClearRandom(2,2,__width*__height*2);
+let randomise3:int=Randomise3(__width*__height*3);
+__print 0;
