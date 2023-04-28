@@ -108,7 +108,7 @@ public:
     string currentStoredFunctionName;
     //Variable will act as a flag, and fire when there is a division by zero
     bool zeroFlag=false;
-    //Variable will acr as a flag, and fire when a function does not have a return statement
+    //Variable will act as a flag, and fire when a function does not have a return statement
     bool returnFlag=false;
     void RemoveFunctionParameters(const shared_ptr<ASTFormalParams>& pointer) const;
     SemanticVisitorNode()=default;
@@ -158,14 +158,20 @@ public:
 class CodeGeneratorVisitorNode: public VisitorNode{
 public:
     unique_ptr<SymbolTable> symbolTable= make_unique<SymbolTable>();
+    //Vector which will store the order of th created functions, and will be used to hold the keys of the printList
     vector<string> functionNames;
+    //Map which will act as a buffer, which will store the code to be printed
     map<string,string> printList;
+    //Variable will act as a counter for the current Frame Index
     int frameIndex=0;
+    //Variable will act as a counter for nested Conditional Statements i.e., if/for and while statements
     int conditionalCounter=0;
+    //Variable will act as a flag, and fire when a - unary operator is found
     bool negativeFlag=false;
+    //Variable will act as a flag, and fire when a not unary operator is found
     bool notFlag=false;
+    //Variable to store the current Function Name, to determine the current function being processed
     string currentStoredFunctionName;
-    map<string,string> parameterMappings;
     CodeGeneratorVisitorNode()=default;
     void PrintProgram();
     static int CalculateJumpAddress(const string& print);

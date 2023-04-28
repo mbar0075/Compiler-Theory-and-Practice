@@ -29,10 +29,21 @@ fun Spiral(xStart:int,yStart:int)-> int{
         clr = __randi #ffffff;
     }
 
+    return 1;
+}
+
+fun LoopSpiral(iterations:int)->int{
+    let width:int=0;
+    let height:int=0;
+    __clear #ffffff;
+    let xCount:int=0;
+    while(xCount<iterations){
+        let spiral:int=Spiral(width,height);
+        __delay 1000;
+        xCount=xCount+1;
+    }
     return 0;
 }
 
-let width:int=0;
-let height:int=0;
-__clear #ffffff;
-let program:int=Spiral(width,height);
+let program:int=LoopSpiral(100);
+__print 0;

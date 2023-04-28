@@ -1,0 +1,62 @@
+fun DrawBow1()-> int{
+    __clear #ffffff;
+    let col1:colour=__randi #ffffff;
+    let col2:colour=__randi #ffffff;
+    for(let x:int=0;x<=__width;x=x+1){
+        for(let y:int=0;y<=x;y=y+1){
+            __pixel x,y,col1;
+            __pixel x,__height-y,col2;
+        }
+    }
+    return 3;
+}
+
+fun DrawBow2()-> int{
+    __clear #ffffff;
+    let col1:colour=__randi #ffffff;
+    let col2:colour=__randi #ffffff;
+    for(let x:int=__width;x>=0;x=x-1){
+        for(let y:int=x-1;y>=0;y=y-1){
+            __pixel x,y,col1;
+            __pixel x,__height-y,col2;
+        }
+    }
+    return 3;
+}
+
+fun DrawStairs() -> int{
+    for(let a:int=0; a<__width; a=a+3){
+        let clr:colour = __randi #ffffff;
+        for(let x:int=a; x<__width; x=x+1){
+            __pixelr x,x,__height-x,__height-x,clr;
+        }
+    }
+    return 0;
+}
+
+fun LoopBow(iterations:int)->int{
+let xCount:int=0;
+    while(xCount<iterations){
+        let random1:int=__randi 3;
+        if(random1==1){
+            let bow:int=DrawBow1();
+        }
+        else{
+            if(random1==2){
+                let stairs:int=DrawStairs();
+            }
+            else{
+                let bow:int=DrawBow2();
+            }
+        }
+        xCount=xCount+1;
+        __delay 100;
+    }
+    return 0;
+}
+
+
+let program:int=LoopBow(100);
+__print 0;
+
+

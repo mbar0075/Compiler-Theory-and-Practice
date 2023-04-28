@@ -1,0 +1,64 @@
+fun Draw1() -> int{
+    let clr:colour = __randi #ffffff;
+    for(let x:int=0; x<__width; x=x+1){
+        __pixelr x,x,1,__height-x,clr;
+    }
+    clr = __randi #ffffff;
+    for(let x2:int=0; x2<__width; x2=x2+1){
+        __pixelr x2,__height-x2,__height-x2,1,clr;
+    }
+    clr = __randi #ffffff;
+    for(let x3:int=0; x3<__width; x3=x3+1){
+        __pixelr x3,x3,x3,x3,clr;
+    }
+    clr = __randi #ffffff;
+    for(let x4:int=0; x4<__width; x4=x4+1){
+        __pixelr x4,x4,__height-x4,1,clr;
+    }
+    clr = __randi #ffffff;
+    let c:int = 0;
+    for(let x5:int=__width-1; x5>=0; x5=x5-1){
+        __pixelr __width-x5,__width-x5,c,c,clr;
+        c = c+1;
+    }
+    return 1;
+}
+
+fun Draw2() -> int{
+    let clr:colour = __randi #ffffff;
+    for(let x:int=__width-1; x>=0; x=x-1){
+        __pixelr x,x,1,__height-x,clr;
+    }
+    clr = __randi #ffffff;
+    for(let x2:int=__width-1; x2>=0; x2=x2-1){
+        __pixelr x2,__height-x2,__height-x2,1,clr;
+    }
+    clr = __randi #ffffff;
+    for(let x3:int=__width-1; x3>=0; x3=x3-1){
+        __pixelr x3,x3,x3,x3,clr;
+    }
+    clr = __randi #ffffff;
+    for(let x4:int=__width-1; x4>=0; x4=x4-1){
+        __pixelr x4,x4,__height-x4,1,clr;
+    }
+    return 2;
+}
+
+fun Loop(iterations:int)-> int{
+    __clear #ffffff;
+    let xCount:int=0;
+    while(xCount<iterations){
+        let random1:int=__randi 2;
+        if(random1==1){
+            let triangle:int=Draw1();
+        }
+        else{
+            let triangle:int=Draw2();
+        }
+        __delay 100;
+    }
+    return 0;
+}
+
+let process:int=Loop(100);
+__print 0;

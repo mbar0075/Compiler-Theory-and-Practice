@@ -121,15 +121,22 @@ void SemanticVisitorNode::visit( ASTPixelStatement *pointer){
     }
 }
 void SemanticVisitorNode::visit( ASTForStatement *pointer){
+    //Variable which will hold the stored variable
+    string declaredVariable;
     //Calling the respective accept methods, if pointers are not null
     if(pointer->variableDecl!= nullptr){
         pointer->variableDecl->accept(this);
+        //Setting declaredVariable to variable identifier
+        declaredVariable=pointer->variableDecl->identifier->identifier;
     }
     pointer->expression->accept(this);
     if(pointer->assignment!= nullptr) {
         pointer->assignment->accept(this);
     }
     pointer->block->accept(this);
+    //Removing declared variable from current Scope
+    auto iter = symbolTable->scopeStack.end();iter--;
+    iter->scope.erase(declaredVariable);
 }
 void SemanticVisitorNode::visit( ASTWhileStatement *pointer){
     //Calling the respective accept methods
@@ -166,7 +173,6 @@ void SemanticVisitorNode::visit( ASTAssignment *pointer){
     }
 }
 void SemanticVisitorNode::visit( ASTFunctionDecl *pointer){
-
     //Setting returnFlag to true
     returnFlag=true;
     //Retrieving access to the last scope pushed in the symbol table
@@ -369,6 +375,7 @@ void SemanticVisitorNode::visit( ASTPadRead *pointer){
         cerr<<"\nType Mismatch Error: PadRead can only take \"int\" type"<<endl;
         exit(6);
     }
+    currentStoredType="colour";
 }
 void SemanticVisitorNode::visit( ASTPadRandi *pointer){
     //Calling accept method on expression

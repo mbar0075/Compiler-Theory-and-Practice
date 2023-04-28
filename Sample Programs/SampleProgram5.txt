@@ -1,0 +1,14 @@
+fun Fibonacci(currentX:int,height:int,oldHeight:int) -> int{
+    let clr:colour = __randi #ffffff;
+    __pixelr currentX,0,1,height,clr;
+    //Utilising recursion
+    if(currentX <= __width){
+        let tmp:int = Fibonacci(currentX+1,height+oldHeight,height);
+    }
+    return 0;
+}
+
+let startX:int=0;
+let height:int=1;
+__clear #ffffff;
+let process:int=Fibonacci(startX,height,height);
