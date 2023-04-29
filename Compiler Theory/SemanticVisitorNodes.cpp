@@ -96,11 +96,6 @@ void SemanticVisitorNode::visit( ASTPrintStatement *pointer){
     //Calling accept method on expression, and retrieving the currentStoredType
     pointer->expression->accept(this);
     string storedType=currentStoredType;
-    //Checking for Type Mismatch Error
-    if(storedType!="int"){
-        cerr<<"\nType Mismatch Error: Print Statement"<<R"(, expected to have "int" type but has ")"<<storedType<<"\" type"<<endl;
-        exit(6);
-    }
 }
 void SemanticVisitorNode::visit( ASTPixelStatement *pointer){
     //Iterating through all the expressions

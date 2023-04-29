@@ -339,6 +339,10 @@ void CodeGeneratorVisitorNode::visit( ASTRelationalOp *pointer){
     else if(pointer->relationalOp=="!="){
         printList[currentStoredFunctionName]+="neq\n";
     }
+    //Checking for not flag
+    if(notFlag){
+        printList[currentStoredFunctionName]+="not\n";
+    }
 }
 void CodeGeneratorVisitorNode::visit( ASTRtrnStatement *pointer){
     //Accepting expression
