@@ -1,4 +1,4 @@
-# Compiler Theory and Practice (CPS2000) Course Assignment 
+# Compiler Theory and Practice Course Assignment 
 
 # Author
 **Matthias Bartolo 0436103L**
