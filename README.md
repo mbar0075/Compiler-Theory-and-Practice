@@ -25,6 +25,13 @@ Throughout the completion of the task, a lexer was created to scan the input cod
 
 The successful completion of this task has significantly contributed to the development of PixArLang, offering PixArDis clients an improved, user-friendly programming interface for the PAD2000 pixel art displays.
 
+## Video:
+
+
+https://github.com/mbar0075/Compiler-Theory-and-Practice/assets/103250564/9f0622fb-c472-40ac-8a03-0a5d20121b10
+
+
+
 ## The PixArLang programming language
 
 The following rules describe the syntax of TinyLang in EBNF. Each rule has three parts: a left
