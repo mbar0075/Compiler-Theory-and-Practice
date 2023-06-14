@@ -9,7 +9,7 @@
 </p>
 
 ## Description of Task:
-The task at hand involved the development of a higher-level and more intuitive programming interface for PixArDis, a startup company specializing in programmable pixel art displays. The objective was to address the mixed reviews received for their first display model, PAD2000, which showcased excellent hardware capabilities utilizing energy-saving LED technology. However, negative feedback pointed out shortcomings in the programming interface.
+This project involved the development of a higher-level and more intuitive programming interface for **PixArDis**, a startup company specializing in programmable pixel art displays. The objective was to address the mixed reviews received for their first display model, PAD2000, which showcased excellent hardware capabilities utilizing energy-saving LED technology. However, negative feedback pointed out shortcomings in the programming interface.
 
 To overcome these concerns, a task was assigned to develop a new imperative-style programming language called PixArLang. The goal was to create a user-friendly interface that could be used by PixArDis clients to program the PAD2000 display. In the interim, the R&D team at PixArDis had developed an online simulator to mimic the behavior of the PAD2000 hardware, facilitating the development of PixArLang.
 
