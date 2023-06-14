@@ -44,74 +44,76 @@ enclosed in square brackets ([ . . . ]) indicating that the item can either be i
 Repeatable items are enclosed in curly brackets ({ . . . }); the items within can be repeated zero or
 more times. For example, a Block consists of zero or more Statement enclosed in curly brackets.
 
-- 〈Letter〉 ::= [A-Za-z]
-- 〈Digit〉 ::= [0-9]
-- 〈Hex 〉 ::= [A-Fa-f] | 〈Digit〉
-- 〈Type〉 ::= ‘float’ | ‘int’ | ‘bool’ | ‘colour’
-- 〈BooleanLiteral〉 ::= ‘true’ | ‘false’
-- 〈IntegerLiteral〉 ::= 〈Digit〉 { 〈Digit〉 }
-- 〈FloatLiteral〉 ::= 〈Digit〉 { 〈Digit〉 } ‘.’ 〈Digit〉 { 〈Digit〉 }
-- 〈ColourLiteral〉 ::= ‘#’ 〈Hex 〉 〈Hex 〉 〈Hex 〉 〈Hex 〉 〈Hex 〉 〈Hex 〉
-- 〈PadWidth〉 :: = ‘__width’
-- 〈PadHeight〉 :: = ‘__height’
-- 〈PadRead〉 :: = ‘__read’ 〈Expr 〉‘,’〈Expr 〉
-- 〈PadRandI〉 :: = ‘__randi’ 〈Expr 〉
-- 〈Literal〉 ::= 〈BooleanLiteral〉
-  - | 〈IntegerLiteral〉
-  - | 〈FloatLiteral〉
-  - | 〈CharLiteral〉
-  - | 〈ColourLiteral〉
-  - | 〈PadWidth〉
-  - | 〈PadHeight〉
-  - | 〈PadRead〉
-- 〈Identifier〉 ::= ( ‘ ’ | 〈Letter 〉 ) { ‘ ’ | 〈Letter 〉 | 〈Digit〉 }
-- 〈MultiplicativeOp〉 ::= ‘*’ | ‘/’ | ‘and’
-- 〈AdditiveOp〉 ::= ‘+’ | ‘-’ | ‘or’
-- 〈RelationalOp〉 ::= ‘<’ | ‘>’ | ‘==’ | ‘!=’ | ‘<=’ | ‘>=’
-- 〈ActualParams〉 ::= 〈Expression〉 { ‘,’ 〈Expression〉 }
-- 〈FunctionCall〉 ::= 〈Identifier 〉 ‘(’ [ 〈ActualParams〉 ] ‘)’
-- 〈SubExpression〉 ::= ‘(’ 〈Expression〉 ‘)’
-- 〈Unary〉 ::= ( ‘-’ | ‘not’ ) 〈Expression〉
-- 〈Factor〉 ::= 〈Literal〉
-  - | 〈Identifier 〉
-  - | 〈FunctionCall〉
-  - | 〈SubExpr 〉
-  - | 〈Unary〉
-  - | 〈PadRandI〉
-  - | 〈PadWidth〉
-  - | 〈PadHeight〉
-  - | 〈PadRead〉
-- 〈Term〉 ::= 〈Factor 〉 { 〈MultiplicativeOp〉 〈Factor 〉 }
-- 〈SimpleExpr〉 ::= 〈Term〉 { 〈AdditiveOp〉 〈Term〉 }
-- 〈Expression〉 ::= 〈SimpleExpr 〉 { 〈RelationalOp〉 〈SimpleExpr 〉 }
-- 〈Assignment〉 ::= 〈Identifier 〉 ‘=’ 〈Expression〉
-- 〈VariableDecl〉 ::= ‘let’ 〈Identifier 〉 ‘:’ 〈Type〉 ‘=’ 〈Expression〉
-- 〈PrintStatement〉 ::= ‘__print’ 〈Expression〉
-- 〈DelayStatement〉 ::= ‘__delay’ 〈Expr 〉
-- 〈PixelStatement〉 ::= ‘__pixelr’ 〈Expr 〉‘,’〈Expr 〉‘,’〈Expr 〉‘,’〈Expr 〉‘,’〈Expr 〉
-  - | ‘__pixel’ 〈Expr 〉‘,’〈Expr 〉‘,’〈Expr 〉
-- 〈RtrnStatement〉 ::= ‘return’ 〈Expression〉
-- 〈IfStatement〉 ::= ‘if’ ‘(’ 〈Expression〉 ‘)’ 〈Block〉 [ ‘else’ 〈Block〉 ]
-- 〈ForStatement〉 ::= ‘for’ ‘(’ [ 〈VariableDecl〉 ] ’;’ 〈Expression〉 ’;’ [ 〈Assignment〉 ] ‘)’ 〈Block〉
-- 〈WhileStatement〉 ::= ‘while’ ‘(’ 〈Expression〉 ‘)’ 〈Block〉
-- 〈FormalParam〉 ::= 〈Identifier 〉 ‘:’ 〈Type〉
-- 〈FormalParams〉 ::= 〈FormalParam〉 { ‘,’ 〈FormalParam〉 }
-- 〈FunctionDecl〉 ::= ‘fun’ 〈Identifier 〉 ‘(’ [ 〈FormalParams〉 ] ‘)’ ‘->’ 〈Type〉 〈Block〉
-- 〈ClearStatement〉 ::= ‘__clear’ 〈ColourLiteral〉
-- 〈Statement〉 ::= 〈VariableDecl〉 ‘;’
-  - | 〈Assignment〉 ‘;’
-  - | 〈PrintStatement〉 ‘;’
-  - | 〈DelayStatement〉 ‘;’
-  - | 〈PixelStatement〉 ‘;’
-  - | 〈ClearStatement〉 ‘;’
-  - | 〈IfStatement〉
-  - | 〈ForStatement〉
-  - | 〈WhileStatement〉
-  - | 〈RtrnStatement〉 ‘;’
-  - | 〈FunctionDecl〉
-  - | 〈Block〉
-- 〈Block〉 ::= ‘{’ { 〈Statement〉 } ‘}’
-- 〈Program〉 ::= { 〈Statement〉 }
+```ebnf
+<Letter> ::= [A-Za-z]
+<Digit> ::= [0-9]
+<Hex> ::= [A-Fa-f] | <Digit>
+<Type> ::= 'float' | 'int' | 'bool' | 'colour'
+<BooleanLiteral> ::= 'true' | 'false'
+<IntegerLiteral> ::= <Digit> { <Digit> }
+<FloatLiteral> ::= <Digit> { <Digit> } '.' <Digit> { <Digit> }
+<ColourLiteral> ::= '#' <Hex> <Hex> <Hex> <Hex> <Hex> <Hex>
+<PadWidth> ::= '__width'
+<PadHeight> ::= '__height'
+<PadRead> ::= '__read' <Expr> ',' <Expr>
+<PadRandI> ::= '__randi' <Expr>
+<Literal> ::= <BooleanLiteral>
+            | <IntegerLiteral>
+            | <FloatLiteral>
+            | <CharLiteral>
+            | <ColourLiteral>
+            | <PadWidth>
+            | <PadHeight>
+            | <PadRead>
+<Identifier> ::= (<Letter> | '_') { <Letter> | <Digit> | '_' }
+<MultiplicativeOp> ::= '*' | '/' | 'and'
+<AdditiveOp> ::= '+' | '-' | 'or'
+<RelationalOp> ::= '<' | '>' | '==' | '!=' | '<=' | '>='
+<ActualParams> ::= <Expression> { ',' <Expression> }
+<FunctionCall> ::= <Identifier> '(' [ <ActualParams> ] ')'
+<SubExpression> ::= '(' <Expression> ')'
+<Unary> ::= ( '-' | 'not' ) <Expression>
+<Factor> ::= <Literal>
+            | <Identifier>
+            | <FunctionCall>
+            | <SubExpression>
+            | <Unary>
+            | <PadRandI>
+            | <PadWidth>
+            | <PadHeight>
+            | <PadRead>
+<Term> ::= <Factor> { <MultiplicativeOp> <Factor> }
+<SimpleExpr> ::= <Term> { <AdditiveOp> <Term> }
+<Expression> ::= <SimpleExpr> { <RelationalOp> <SimpleExpr> }
+<Assignment> ::= <Identifier> '=' <Expression>
+<VariableDecl> ::= 'let' <Identifier> ':' <Type> '=' <Expression>
+<PrintStatement> ::= '__print' <Expression>
+<DelayStatement> ::= '__delay' <Expr>
+<PixelStatement> ::= '__pixelr' <Expr> ',' <Expr> ',' <Expr> ',' <Expr> ',' <Expr>
+                   | '__pixel' <Expr> ',' <Expr> ',' <Expr>
+<RtrnStatement> ::= 'return' <Expression>
+<IfStatement> ::= 'if' '(' <Expression> ')' <Block> [ 'else' <Block> ]
+<ForStatement> ::= 'for' '(' [ <VariableDecl> ] ';' <Expression> ';' [ <Assignment> ] ')' <Block>
+<WhileStatement> ::= 'while' '(' <Expression> ')' <Block>
+<FormalParam> ::= <Identifier> ':' <Type>
+<FormalParams> ::= <FormalParam> { ',' <FormalParam> }
+<FunctionDecl> ::= 'fun' <Identifier> '(' [ <FormalParams> ] ')' '->' <Type> <Block>
+<ClearStatement> ::= '__clear' <ColourLiteral>
+<Statement> ::= <VariableDecl> ';'
+                | <Assignment> ';'
+                | <PrintStatement> ';'
+                | <DelayStatement> ';'
+                | <PixelStatement> ';'
+                | <ClearStatement> ';'
+                | <IfStatement>
+                | <ForStatement>
+                | <WhileStatement>
+                | <RtrnStatement> ';'
+                | <FunctionDecl>
+                | <Block>
+<Block> ::= '{' { <Statement> } '}'
+<Program> ::= { <Statement> }
+```
 
 ## Deterministic Finite State Automata (DFSA)
 The Lexer implementation utilises regular expressions as a transition system, in order to tokenise the
@@ -135,67 +137,67 @@ By implementing the AST in this manner, the task aimed to achieve a robust and e
 </p>
 
 ## Showcasing PixArLang Syntax
+```
+fun DrawBow1()-> int{
+    __clear #ffffff;
+    let col1:colour=__randi #ffffff;
+    let col2:colour=__randi #ffffff;
+    for(let x:int=0;x<=__width;x=x+1){
+        for(let y:int=0;y<=x;y=y+1){
+            __pixel x,y,col1;
+            __pixel x,__height-y,col2;
+        }
+    }
+    return 3;
+}
 
-      fun DrawBow1()-> int{
-          __clear #ffffff;
-          let col1:colour=__randi #ffffff;
-          let col2:colour=__randi #ffffff;
-          for(let x:int=0;x<=__width;x=x+1){
-              for(let y:int=0;y<=x;y=y+1){
-                  __pixel x,y,col1;
-                  __pixel x,__height-y,col2;
-              }
-          }
-          return 3;
-      }
+fun DrawBow2()-> int{
+    __clear #ffffff;
+    let col1:colour=__randi #ffffff;
+    let col2:colour=__randi #ffffff;
+    for(let x:int=__width;x>=0;x=x-1){
+        for(let y:int=x-1;y>=0;y=y-1){
+            __pixel x,y,col1;
+            __pixel x,__height-y,col2;
+        }
+    }
+    return 3;
+}
 
-      fun DrawBow2()-> int{
-          __clear #ffffff;
-          let col1:colour=__randi #ffffff;
-          let col2:colour=__randi #ffffff;
-          for(let x:int=__width;x>=0;x=x-1){
-              for(let y:int=x-1;y>=0;y=y-1){
-                  __pixel x,y,col1;
-                  __pixel x,__height-y,col2;
-              }
-          }
-          return 3;
-      }
+fun DrawStairs() -> int{
+    for(let a:int=0; a<__width; a=a+3){
+        let clr:colour = __randi #ffffff;
+        for(let x:int=a; x<__width; x=x+1){
+            __pixelr x,x,__height-x,__height-x,clr;
+        }
+    }
+    return 0;
+}
 
-      fun DrawStairs() -> int{
-          for(let a:int=0; a<__width; a=a+3){
-              let clr:colour = __randi #ffffff;
-              for(let x:int=a; x<__width; x=x+1){
-                  __pixelr x,x,__height-x,__height-x,clr;
-              }
-          }
-          return 0;
-      }
+fun LoopBow(iterations:int)->int{
+let xCount:int=0;
+    while(xCount<iterations){
+        let random1:int=__randi 3;
+        if(random1==1){
+            let bow:int=DrawBow1();
+        }
+        else{
+            if(random1==2){
+                let stairs:int=DrawStairs();
+            }
+            else{
+                let bow:int=DrawBow2();
+            }
+        }
+        xCount=xCount+1;
+        __delay 100;
+    }
+    return 0;
+}
 
-      fun LoopBow(iterations:int)->int{
-      let xCount:int=0;
-          while(xCount<iterations){
-              let random1:int=__randi 3;
-              if(random1==1){
-                  let bow:int=DrawBow1();
-              }
-              else{
-                  if(random1==2){
-                      let stairs:int=DrawStairs();
-                  }
-                  else{
-                      let bow:int=DrawBow2();
-                  }
-              }
-              xCount=xCount+1;
-              __delay 100;
-          }
-          return 0;
-      }
-      
-      let program:int=LoopBow(100);
-      __print 0;
-
+let program:int=LoopBow(100);
+__print 0;
+```
 </br>The presented illustration showcases a syntax tree that represents an assignment:
 <p align='center'>
   <img src="Report Diagrams/SyntaxTreeExample.png" style="display: block; margin: 0 auto; width: 30%; height: auto;">
