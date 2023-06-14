@@ -126,7 +126,7 @@ The DFSA utilised can be seen pictorially below:
 </p>
 
 ## Abstract Syntax Tree
-The task at hand involved coding the Abstract Syntax Tree (AST) as a tree structure and storing it as a vector of shared pointers that pointed to the child nodes. A class hierarchy was used to represent each node in the AST, accommodating operators, types, identifier names, and other relevant elements. This design choice aimed to achieve efficient storage and traversal of the AST using the visitor design pattern.
+This project also involved coding the Abstract Syntax Tree (AST) as a tree structure and storing it as a vector of shared pointers that pointed to the child nodes. A class hierarchy was used to represent each node in the AST, accommodating operators, types, identifier names, and other relevant elements. This design choice aimed to achieve efficient storage and traversal of the AST using the visitor design pattern.
 
 Shared pointers were employed for ease of deletion and to prevent memory leaks. It was ensured that deleting the starting ASTNode would lead to the automatic deletion of the entire tree structure, thereby maintaining proper memory management.
 
@@ -198,7 +198,7 @@ let xCount:int=0;
 let program:int=LoopBow(100);
 __print 0;
 ```
-</br>The presented illustration showcases a syntax tree that represents an assignment:
+</br> **Additionally, the presented illustration showcases a syntax tree that represents an assignment:** <br>
 <p align='center'>
   <img src="Report Diagrams/SyntaxTreeExample.png" style="display: block; margin: 0 auto; width: 30%; height: auto;">
 </p>
