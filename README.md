@@ -32,7 +32,7 @@ https://github.com/mbar0075/Compiler-Theory-and-Practice/assets/103250564/9f0622
 
 
 
-## The PixArLang programming language
+## The PixArLang Programming Language (EBNF)
 
 The following rules describe the syntax of TinyLang in EBNF. Each rule has three parts: a left
 hand side (LHS), a right-hand side (RHS) and the ‘::=’ symbol separating these two sides. The
